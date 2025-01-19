@@ -1,0 +1,13 @@
+name: Unit test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pytest -v --cov=pyenumerable --cov-report term-missing --cov-report term:skip-covered test
