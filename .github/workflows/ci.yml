@@ -34,6 +34,6 @@ jobs:
 
   unit-test:
     runs-on: ubuntu-latest
-    needs: [setup-environment, lint, typecheck]
+    needs: [setup-environment, lint, type-check]
     steps:
       - run: uv run pytest -v --cov=pyenumerable --cov-report term-missing --cov-report term:skip-covered test
