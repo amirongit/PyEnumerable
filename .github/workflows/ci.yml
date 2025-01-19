@@ -24,16 +24,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup-environment
     steps:
-      - run: ruff check pyenumerable test
+      - run: uv run ruff check pyenumerable test
 
-  typecheck:
+  type-check:
     runs-on: ubuntu-latest
     needs: [setup-environment, lint]
     steps:
-      - run: pyright pyenumerable test
+      - run: uv run pyright pyenumerable test
 
-  unittest:
+  unit-test:
     runs-on: ubuntu-latest
     needs: [setup-environment, lint, typecheck]
     steps:
-      - run: pytest -v --cov=pyenumerable --cov-report term-missing --cov-report term:skip-covered test
+      - run: uv run pytest -v --cov=pyenumerable --cov-report term-missing --cov-report term:skip-covered test
