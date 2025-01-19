@@ -7,33 +7,43 @@ on:
     branches: ["master"]
 
 jobs:
-  setup-environment:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.13]
-
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
       - run: uv sync
-
-  lint:
-    runs-on: ubuntu-latest
-    needs: setup-environment
-    steps:
       - run: uv run ruff check pyenumerable test
 
   type-check:
     runs-on: ubuntu-latest
-    needs: [setup-environment, lint]
+    needs: [lint]
+    strategy:
+      matrix:
+        python-version: [3.13]
     steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: uv sync
       - run: uv run pyright pyenumerable test
 
   unit-test:
     runs-on: ubuntu-latest
-    needs: [setup-environment, lint, type-check]
+    needs: [lint, type-check]
+    strategy:
+      matrix:
+        python-version: [3.13]
     steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: uv sync
       - run: uv run pytest -v --cov=pyenumerable --cov-report term-missing --cov-report term:skip-covered test
