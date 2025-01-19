@@ -28,12 +28,12 @@ jobs:
 
   typecheck:
     runs-on: ubuntu-latest
-    needs: setup-environment
+    needs: [setup-environment, lint]
     steps:
       - uses: ./.github/workflows/typecheck
 
   unittest:
     runs-on: ubuntu-latest
-    needs: setup-environment
+    needs: [setup-environment, lint, typecheck]
     steps:
       - uses: ./.github/workflows/unittest
