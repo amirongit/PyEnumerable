@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from collections.abc import Callable, Collection, Mapping, Set
 
 
-class PyEnumerable[T](ABC, Collection[T]):
+class Enumerable[T](ABC, Collection[T]):
 
     @abstractmethod
     def to_mapping[TK](
