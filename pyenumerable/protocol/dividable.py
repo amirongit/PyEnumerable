@@ -1,41 +1,40 @@
-from __future__ import annotations
-
 from collections.abc import Callable
-from typing import Protocol, overload
+from typing import TYPE_CHECKING, Protocol, overload
 
-from pyenumerable.abc.enumerable import Enumerable
+if TYPE_CHECKING:
+    from pyenumerable.abc.enumerable import Enumerable
 
 
 class Dividable[TSource](Protocol):
     @overload
-    def distinct(self) -> Enumerable[TSource]: ...
+    def distinct(self) -> "Enumerable[TSource]": ...
 
     @overload
     def distinct(
         self,
         comparer: Callable[[TSource, TSource], bool],
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     def distinct(
         self,
         comparer: Callable[[TSource, TSource], bool] | None = None,
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def distinct_by[TKey](
         self,
         func: Callable[[TSource], TKey],
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def distinct_by[TKey](
         self,
         func: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool],
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     def distinct_by[TKey](
         self,
         func: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool] | None = None,
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...

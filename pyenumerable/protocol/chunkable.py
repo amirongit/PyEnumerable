@@ -1,8 +1,9 @@
 from collections.abc import Sequence
-from typing import Protocol
+from typing import TYPE_CHECKING, Protocol
 
-from pyenumerable.abc.enumerable import Enumerable
+if TYPE_CHECKING:
+    from pyenumerable.abc.enumerable import Enumerable
 
 
 class Chunkable[TSource](Protocol):
-    def chunk(self, size: int) -> Sequence[Enumerable[TSource]]: ...
+    def chunk(self, size: int) -> Sequence["Enumerable[TSource]"]: ...

@@ -1,44 +1,48 @@
 from collections.abc import Callable
-from typing import Protocol, overload
+from typing import TYPE_CHECKING, Protocol, overload
 
-from pyenumerable.abc.enumerable import Enumerable
+if TYPE_CHECKING:
+    from pyenumerable.abc.enumerable import Enumerable
 
 
 class Differentiable[TSource](Protocol):
     @overload
-    def except_(self, other: Enumerable[TSource]) -> Enumerable[TSource]: ...
+    def except_(
+        self,
+        other: "Enumerable[TSource]",
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def except_(
         self,
-        other: Enumerable[TSource],
+        other: "Enumerable[TSource]",
         comparer: Callable[[TSource, TSource], bool],
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     def except_(
         self,
-        other: Enumerable[TSource],
+        other: "Enumerable[TSource]",
         comparer: Callable[[TSource, TSource], bool] | None = None,
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def except_by[TKey](
         self,
-        other: Enumerable[TSource],
+        other: "Enumerable[TSource]",
         func: Callable[[TSource], TKey],
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def except_by[TKey](
         self,
-        other: Enumerable[TSource],
+        other: "Enumerable[TSource]",
         func: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool],
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
 
     def except_by[TKey](
         self,
-        other: Enumerable[TSource],
+        other: "Enumerable[TSource]",
         func: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool] | None = None,
-    ) -> Enumerable[TSource]: ...
+    ) -> "Enumerable[TSource]": ...
