@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Protocol, overload
 
-from pyenumerable.protocol.enumerable import Enumerable
+from pyenumerable.abc.enumerable import Enumerable
 
 
 class Differentiable[TSource](Protocol):

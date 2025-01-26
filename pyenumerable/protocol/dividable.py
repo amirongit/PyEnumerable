@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 from collections.abc import Callable
 from typing import Protocol, overload
 
-from pyenumerable.protocol.enumerable import Enumerable
+from pyenumerable.abc.enumerable import Enumerable
 
 
 class Dividable[TSource](Protocol):
