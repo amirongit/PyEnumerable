@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from pyenumerable.abc.linq import LINQ
+    from .queryable import Queryable
 
 
 class Concatable[TSource](Protocol):
-    def concat(self, other: "LINQ[TSource]") -> "LINQ[TSource]": ...
+    def concat(self, other: "Queryable[TSource]") -> "Queryable[TSource]": ...
