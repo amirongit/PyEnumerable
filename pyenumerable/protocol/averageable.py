@@ -6,28 +6,28 @@ class Averageable[TSource](Protocol):
     @overload
     def average[TAccumulate: int](
         self,
-        func: Callable[[TSource], TAccumulate],
+        selector: Callable[[TSource], TAccumulate],
     ) -> TAccumulate: ...
 
     @overload
     def average[TAccumulate: int](
         self,
-        func: Callable[[TSource], TAccumulate | None],
+        selector: Callable[[TSource], TAccumulate | None],
     ) -> TAccumulate: ...
 
     @overload
     def average[TAccumulate: float](
         self,
-        func: Callable[[TSource], TAccumulate],
+        selector: Callable[[TSource], TAccumulate],
     ) -> TAccumulate: ...
 
     @overload
     def average[TAccumulate: float](
         self,
-        func: Callable[[TSource], TAccumulate | None],
+        selector: Callable[[TSource], TAccumulate | None],
     ) -> TAccumulate: ...
 
     def average[TAccumulate: (float, int)](
         self,
-        func: Callable[[TSource], TAccumulate | None],
+        selector: Callable[[TSource], TAccumulate | None],
     ) -> TAccumulate: ...

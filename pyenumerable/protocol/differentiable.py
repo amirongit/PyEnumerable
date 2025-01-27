@@ -26,20 +26,20 @@ class Differentiable[TSource](Protocol):
     def except_by[TKey](
         self,
         other: "Queryable[TSource]",
-        func: Callable[[TSource], TKey],
+        key_selector: Callable[[TSource], TKey],
     ) -> "Queryable[TSource]": ...
 
     @overload
     def except_by[TKey](
         self,
         other: "Queryable[TSource]",
-        func: Callable[[TSource], TKey],
+        key_selector: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool],
     ) -> "Queryable[TSource]": ...
 
     def except_by[TKey](
         self,
         other: "Queryable[TSource]",
-        func: Callable[[TSource], TKey],
+        key_selector: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool] | None = None,
     ) -> "Queryable[TSource]": ...

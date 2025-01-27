@@ -23,18 +23,18 @@ class Dividable[TSource](Protocol):
     @overload
     def distinct_by[TKey](
         self,
-        func: Callable[[TSource], TKey],
+        key_selector: Callable[[TSource], TKey],
     ) -> "Queryable[TSource]": ...
 
     @overload
     def distinct_by[TKey](
         self,
-        func: Callable[[TSource], TKey],
+        key_selector: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool],
     ) -> "Queryable[TSource]": ...
 
     def distinct_by[TKey](
         self,
-        func: Callable[[TSource], TKey],
+        key_selector: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool] | None = None,
     ) -> "Queryable[TSource]": ...
