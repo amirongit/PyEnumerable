@@ -5,4 +5,8 @@ if TYPE_CHECKING:
 
 
 class Castable[TSource](Protocol):
-    def cast[TResult](self, type_: type[TResult]) -> "Queryable[TResult]": ...
+    def cast[TResult](
+        self,
+        type_: type[TResult],
+        /,
+    ) -> "Queryable[TResult]": ...

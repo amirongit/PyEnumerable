@@ -7,17 +7,22 @@ class Fillable[TSource](Protocol):
     def contains(
         self,
         item: TSource,
+        /,
     ) -> bool: ...
 
     @overload
     def contains(
         self,
         item: TSource,
+        /,
+        *,
         comparer: Callable[[TSource, TSource], bool],
     ) -> bool: ...
 
     def contains(
         self,
         item: TSource,
+        /,
+        *,
         comparer: Callable[[TSource, TSource], bool] | None = None,
     ) -> bool: ...

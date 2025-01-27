@@ -7,16 +7,20 @@ if TYPE_CHECKING:
 
 class Dividable[TSource](Protocol):
     @overload
-    def distinct(self) -> "Queryable[TSource]": ...
+    def distinct(self, /) -> "Queryable[TSource]": ...
 
     @overload
     def distinct(
         self,
+        /,
+        *,
         comparer: Callable[[TSource, TSource], bool],
     ) -> "Queryable[TSource]": ...
 
     def distinct(
         self,
+        /,
+        *,
         comparer: Callable[[TSource, TSource], bool] | None = None,
     ) -> "Queryable[TSource]": ...
 
@@ -24,17 +28,22 @@ class Dividable[TSource](Protocol):
     def distinct_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
+        /,
     ) -> "Queryable[TSource]": ...
 
     @overload
     def distinct_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
+        /,
+        *,
         comparer: Callable[[TKey, TKey], bool],
     ) -> "Queryable[TSource]": ...
 
     def distinct_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
+        /,
+        *,
         comparer: Callable[[TKey, TKey], bool] | None = None,
     ) -> "Queryable[TSource]": ...

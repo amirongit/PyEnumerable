@@ -7,12 +7,15 @@ class Aggregable[TSource](Protocol):
     def aggregate[TAccumulate](
         self,
         func: Callable[[TSource, TSource], TAccumulate],
+        /,
     ) -> TAccumulate: ...
 
     @overload
     def aggregate[TAccumulate](
         self,
         func: Callable[[TAccumulate, TSource], TAccumulate],
+        /,
+        *,
         seed: TAccumulate,
     ) -> TAccumulate: ...
 
@@ -25,5 +28,7 @@ class Aggregable[TSource](Protocol):
             [TAccumulate, TSource],
             TAccumulate,
         ],
+        /,
+        *,
         seed: TAccumulate | None = None,
     ) -> TAccumulate: ...

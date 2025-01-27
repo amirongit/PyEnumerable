@@ -7,18 +7,26 @@ if TYPE_CHECKING:
 
 class Differentiable[TSource](Protocol):
     @overload
-    def except_(self, other: "Queryable[TSource]") -> "Queryable[TSource]": ...
+    def except_(
+        self,
+        other: "Queryable[TSource]",
+        /,
+    ) -> "Queryable[TSource]": ...
 
     @overload
     def except_(
         self,
         other: "Queryable[TSource]",
+        /,
+        *,
         comparer: Callable[[TSource, TSource], bool],
     ) -> "Queryable[TSource]": ...
 
     def except_(
         self,
         other: "Queryable[TSource]",
+        /,
+        *,
         comparer: Callable[[TSource, TSource], bool] | None = None,
     ) -> "Queryable[TSource]": ...
 
@@ -27,6 +35,7 @@ class Differentiable[TSource](Protocol):
         self,
         other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
+        /,
     ) -> "Queryable[TSource]": ...
 
     @overload
@@ -34,6 +43,8 @@ class Differentiable[TSource](Protocol):
         self,
         other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
+        /,
+        *,
         comparer: Callable[[TKey, TKey], bool],
     ) -> "Queryable[TSource]": ...
 
@@ -41,5 +52,7 @@ class Differentiable[TSource](Protocol):
         self,
         other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
+        /,
+        *,
         comparer: Callable[[TKey, TKey], bool] | None = None,
     ) -> "Queryable[TSource]": ...

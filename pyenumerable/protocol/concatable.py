@@ -5,4 +5,8 @@ if TYPE_CHECKING:
 
 
 class Concatable[TSource](Protocol):
-    def concat(self, other: "Queryable[TSource]") -> "Queryable[TSource]": ...
+    def concat(
+        self,
+        other: "Queryable[TSource]",
+        /,
+    ) -> "Queryable[TSource]": ...
