@@ -10,3 +10,4 @@ from .differentiable import Differentiable
 from .dividable import Dividable
 from .fillable import Fillable
 from .pickable import Pickable
+from .queryable import Queryable
