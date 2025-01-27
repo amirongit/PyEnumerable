@@ -1,6 +1,6 @@
-from collections.abc import Hashable, Sequence
+from collections.abc import Sequence
 
 from pyenumerable.protocol import Queryable
 
 
-class LINQ[TSource: Hashable](Sequence[TSource], Queryable[TSource]): ...
+class LINQ[TSource](Sequence[TSource], Queryable[TSource]): ...
