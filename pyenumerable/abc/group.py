@@ -1,10 +1,10 @@
-from abc import ABC, abstractmethod
-from collections.abc import Hashable
+from collections.abc import Hashable, Sequence
 
-from pyenumerable.protocol import Queryable
+from pyenumerable.protocol import Associable
 
 
-class Group[TKey: Hashable, TSource](ABC, Hashable, Queryable[TSource]):
-    @property
-    @abstractmethod
-    def key(self) -> TKey: ...
+class Group[TKey, TSource](
+    Hashable,
+    Sequence[TSource],
+    Associable[TKey, TSource],
+): ...

@@ -1,5 +1,6 @@
 from .aggregable import Aggregable
 from .appendable import Appendable
+from .associable import Associable
 from .averageable import Averageable
 from .castable import Castable
 from .checkable import Checkable
