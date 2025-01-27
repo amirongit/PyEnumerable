@@ -2,47 +2,44 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
 if TYPE_CHECKING:
-    from pyenumerable.abc.enumerable import Enumerable
+    from pyenumerable.abc.linq import LINQ
 
 
 class Differentiable[TSource](Protocol):
     @overload
-    def except_(
-        self,
-        other: "Enumerable[TSource]",
-    ) -> "Enumerable[TSource]": ...
+    def except_(self, other: "LINQ[TSource]") -> "LINQ[TSource]": ...
 
     @overload
     def except_(
         self,
-        other: "Enumerable[TSource]",
+        other: "LINQ[TSource]",
         comparer: Callable[[TSource, TSource], bool],
-    ) -> "Enumerable[TSource]": ...
+    ) -> "LINQ[TSource]": ...
 
     def except_(
         self,
-        other: "Enumerable[TSource]",
+        other: "LINQ[TSource]",
         comparer: Callable[[TSource, TSource], bool] | None = None,
-    ) -> "Enumerable[TSource]": ...
+    ) -> "LINQ[TSource]": ...
 
     @overload
     def except_by[TKey](
         self,
-        other: "Enumerable[TSource]",
+        other: "LINQ[TSource]",
         func: Callable[[TSource], TKey],
-    ) -> "Enumerable[TSource]": ...
+    ) -> "LINQ[TSource]": ...
 
     @overload
     def except_by[TKey](
         self,
-        other: "Enumerable[TSource]",
+        other: "LINQ[TSource]",
         func: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool],
-    ) -> "Enumerable[TSource]": ...
+    ) -> "LINQ[TSource]": ...
 
     def except_by[TKey](
         self,
-        other: "Enumerable[TSource]",
+        other: "LINQ[TSource]",
         func: Callable[[TSource], TKey],
         comparer: Callable[[TKey, TKey], bool] | None = None,
-    ) -> "Enumerable[TSource]": ...
+    ) -> "LINQ[TSource]": ...

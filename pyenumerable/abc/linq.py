@@ -16,7 +16,7 @@ from pyenumerable.protocol import (
 )
 
 
-class Enumerable[TSource: Hashable](
+class LINQ[TSource: Hashable](
     Sequence[TSource],
     Aggregable[TSource],
     Appendable[TSource],
