@@ -7,7 +7,9 @@ authors = [
     { name = "AmirHossein Ahmadi", email = "amirthehossein@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "multimethod>=2.0",
+]
 
 [dependency-groups]
 dev = [
