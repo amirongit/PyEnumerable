@@ -8,7 +8,3 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 - [x] Specify list of unsupported operations
 - [ ] Design & Implement `LINQ` constructor(s) for PP implementation
 - [ ] Implement `LINQ` for PP Implementation
-
-### Abbreviations
-#### PP
-- pure python
