@@ -10,5 +10,6 @@ from .countable import Countable
 from .differentiable import Differentiable
 from .dividable import Dividable
 from .fillable import Fillable
+from .groupable import Groupable
 from .pickable import Pickable
 from .queryable import Queryable
