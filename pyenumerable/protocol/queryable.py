@@ -14,6 +14,7 @@ from . import (
     Groupable,
     GroupJoinable,
     Intersectable,
+    Joinable,
     Pickable,
     Subtractable,
 )
@@ -33,6 +34,7 @@ class Queryable[TSource: Hashable](
     Groupable[TSource],
     GroupJoinable[TSource],
     Intersectable[TSource],
+    Joinable[TSource],
     Pickable[TSource],
     Subtractable[TSource],
 ): ...
