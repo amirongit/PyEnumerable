@@ -1,6 +1,8 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
+from pyenumerable.typing_utility import Comparer
+
 if TYPE_CHECKING:
     from ._queryable import Queryable
 
@@ -19,7 +21,7 @@ class SupportsIntersection[TSource](Protocol):
         second: "Queryable[TSource]",
         /,
         *,
-        comparer: Callable[[TSource, TSource], bool],
+        comparer: Comparer[TSource],
     ) -> "Queryable[TSource]": ...
 
     def intersect(
@@ -27,7 +29,7 @@ class SupportsIntersection[TSource](Protocol):
         second: "Queryable[TSource]",
         /,
         *,
-        comparer: Callable[[TSource, TSource], bool] | None = None,
+        comparer: Comparer[TSource] | None = None,
     ) -> "Queryable[TSource]": ...
 
     @overload
@@ -45,7 +47,7 @@ class SupportsIntersection[TSource](Protocol):
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        comparer: Callable[[TKey, TKey], bool],
+        comparer: Comparer[TKey],
     ) -> "Queryable[TSource]": ...
 
     def intersect_by[TKey](
@@ -54,5 +56,5 @@ class SupportsIntersection[TSource](Protocol):
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        comparer: Callable[[TKey, TKey], bool] | None = None,
+        comparer: Comparer[TKey] | None = None,
     ) -> "Queryable[TSource]": ...

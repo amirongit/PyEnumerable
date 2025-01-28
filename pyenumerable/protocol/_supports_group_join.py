@@ -1,6 +1,8 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
+from pyenumerable.typing_utility import Comparer
+
 if TYPE_CHECKING:
     from ._queryable import Queryable
 
@@ -25,7 +27,7 @@ class SupportsGroupJoin[TSource](Protocol):
         result_selector: Callable[[TSource, "Queryable[TInner]"], TResult],
         /,
         *,
-        comparer: Callable[[TKey, TKey], bool],
+        comparer: Comparer[TKey],
     ) -> "Queryable[TResult]": ...
 
     def group_join[TInner, TKey, TResult](
@@ -36,5 +38,5 @@ class SupportsGroupJoin[TSource](Protocol):
         result_selector: Callable[[TSource, "Queryable[TInner]"], TResult],
         /,
         *,
-        comparer: Callable[[TKey, TKey], bool] | None = None,
+        comparer: Comparer[TKey] | None = None,
     ) -> "Queryable[TResult]": ...

@@ -1,6 +1,8 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
+from pyenumerable.typing_utility import Comparer
+
 if TYPE_CHECKING:
     from ._associable import Associable
     from ._queryable import Queryable
@@ -25,7 +27,7 @@ class SupportsGroup[TSource](Protocol):
         *,
         element_selector: Callable[[TSource], TElement],
         result_selector: Callable[[TKey, "Queryable[TElement]"], TResult],
-        comparer: Callable[[TKey, TKey], bool],
+        comparer: Comparer[TKey],
     ) -> "Queryable[TResult]": ...
 
     @overload
@@ -44,7 +46,7 @@ class SupportsGroup[TSource](Protocol):
         /,
         *,
         element_selector: Callable[[TSource], TElement],
-        comparer: Callable[[TKey, TKey], bool],
+        comparer: Comparer[TKey],
     ) -> "Queryable[Associable[TKey, TElement]]": ...
 
     @overload
@@ -63,7 +65,7 @@ class SupportsGroup[TSource](Protocol):
         /,
         *,
         result_selector: Callable[[TKey, "Queryable[TSource]"], TResult],
-        comparer: Callable[[TKey, TKey], bool],
+        comparer: Comparer[TKey],
     ) -> "Queryable[TResult]": ...
 
     @overload
@@ -79,7 +81,7 @@ class SupportsGroup[TSource](Protocol):
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        comparer: Callable[[TKey, TKey], bool],
+        comparer: Comparer[TKey],
     ) -> "Queryable[Associable[TKey, TSource]]": ...
 
     def group_by[TKey, TElement, TResult](
@@ -92,5 +94,5 @@ class SupportsGroup[TSource](Protocol):
             [TKey, "Queryable[TElement]"],
             TResult,
         ] | None = None,
-        comparer: Callable[[TKey, TKey], bool] | None = None,
+        comparer: Comparer[TKey] | None = None,
     ) -> "Queryable[TResult]": ...

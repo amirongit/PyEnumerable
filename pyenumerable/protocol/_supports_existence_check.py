@@ -1,6 +1,8 @@
 from collections.abc import Callable
 from typing import Protocol, overload
 
+from pyenumerable.typing_utility import Comparer
+
 
 class SupportsExistenceCheck[TSource](Protocol):
     @overload
@@ -16,7 +18,7 @@ class SupportsExistenceCheck[TSource](Protocol):
         item: TSource,
         /,
         *,
-        comparer: Callable[[TSource, TSource], bool],
+        comparer: Comparer[TSource],
     ) -> bool: ...
 
     def contains(
@@ -24,5 +26,5 @@ class SupportsExistenceCheck[TSource](Protocol):
         item: TSource,
         /,
         *,
-        comparer: Callable[[TSource, TSource], bool] | None = None,
+        comparer: Comparer[TSource] | None = None,
     ) -> bool: ...
