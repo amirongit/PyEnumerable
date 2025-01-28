@@ -12,6 +12,7 @@ from . import (
     Dividable,
     Fillable,
     Groupable,
+    GroupJoinable,
     Pickable,
     Subtractable,
 )
@@ -29,6 +30,7 @@ class Queryable[TSource: Hashable](
     Dividable[TSource],
     Fillable[TSource],
     Groupable[TSource],
+    GroupJoinable[TSource],
     Pickable[TSource],
     Subtractable[TSource],
 ): ...
