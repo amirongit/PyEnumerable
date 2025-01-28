@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from .queryable import Queryable
 
 
-class Groupable[TSource](Protocol):
+class SupportsGroup[TSource](Protocol):
     @overload
     def group_by[TKey, TElement, TResult](
         self,

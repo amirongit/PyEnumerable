@@ -4,7 +4,7 @@ if TYPE_CHECKING:
     from .queryable import Queryable
 
 
-class Castable[TSource](Protocol):
+class SupportsTransformation[TSource](Protocol):
     def cast[TResult](
         self,
         type_: type[TResult],

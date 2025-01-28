@@ -2,15 +2,15 @@ from collections.abc import Callable
 from typing import Protocol, overload
 
 
-class Pickable[TSource](Protocol):
+class SupportsCount[TSource](Protocol):
     @overload
-    def any(self, /) -> bool: ...
+    def count_(self, /) -> int: ...
 
     @overload
-    def any(self, predicate: Callable[[TSource], bool], /) -> bool: ...
+    def count_(self, predicate: Callable[[TSource], bool], /) -> int: ...
 
-    def any(
+    def count_(
         self,
         predicate: Callable[[TSource], bool] | None = None,
         /,
-    ) -> bool: ...
+    ) -> int: ...

@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import Protocol, overload
 
 
-class Averageable[TSource](Protocol):
+class SupportsAverage[TSource](Protocol):
     @overload
     def average[TAccumulate: int](
         self,

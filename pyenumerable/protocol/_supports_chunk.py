@@ -5,5 +5,5 @@ if TYPE_CHECKING:
     from .queryable import Queryable
 
 
-class Chunkable[TSource](Protocol):
+class SupportsChunk[TSource](Protocol):
     def chunk(self, size: int, /) -> Sequence["Queryable[TSource]"]: ...

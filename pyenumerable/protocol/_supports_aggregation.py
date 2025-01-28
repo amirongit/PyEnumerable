@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import Protocol, overload
 
 
-class Aggregable[TSource](Protocol):
+class SupportsAggregation[TSource](Protocol):
     @overload
     def aggregate[TAccumulate](
         self,

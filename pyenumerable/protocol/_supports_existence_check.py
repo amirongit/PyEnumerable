@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import Protocol, overload
 
 
-class Fillable[TSource](Protocol):
+class SupportsExistenceCheck[TSource](Protocol):
     @overload
     def contains(
         self,

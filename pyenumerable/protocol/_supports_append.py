@@ -4,5 +4,5 @@ if TYPE_CHECKING:
     from .queryable import Queryable
 
 
-class Appendable[TSource](Protocol):
+class SupportsAppend[TSource](Protocol):
     def append(self, item: TSource) -> "Queryable[TSource]": ...

@@ -5,43 +5,52 @@ if TYPE_CHECKING:
     from .queryable import Queryable
 
 
-class Dividable[TSource](Protocol):
+class SupportsSubtraction[TSource](Protocol):
     @overload
-    def distinct(self, /) -> "Queryable[TSource]": ...
+    def except_(
+        self,
+        other: "Queryable[TSource]",
+        /,
+    ) -> "Queryable[TSource]": ...
 
     @overload
-    def distinct(
+    def except_(
         self,
+        other: "Queryable[TSource]",
         /,
         *,
         comparer: Callable[[TSource, TSource], bool],
     ) -> "Queryable[TSource]": ...
 
-    def distinct(
+    def except_(
         self,
+        other: "Queryable[TSource]",
         /,
         *,
         comparer: Callable[[TSource, TSource], bool] | None = None,
     ) -> "Queryable[TSource]": ...
 
     @overload
-    def distinct_by[TKey](
+    def except_by[TKey](
         self,
+        other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
         /,
     ) -> "Queryable[TSource]": ...
 
     @overload
-    def distinct_by[TKey](
+    def except_by[TKey](
         self,
+        other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
         /,
         *,
         comparer: Callable[[TKey, TKey], bool],
     ) -> "Queryable[TSource]": ...
 
-    def distinct_by[TKey](
+    def except_by[TKey](
         self,
+        other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
         /,
         *,

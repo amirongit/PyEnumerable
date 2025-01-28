@@ -5,7 +5,7 @@ if TYPE_CHECKING:
     from .queryable import Queryable
 
 
-class Joinable[TSource](Protocol):
+class SupportsJoin[TSource](Protocol):
     @overload
     def join[TInner, TKey, TResult](
         self,
