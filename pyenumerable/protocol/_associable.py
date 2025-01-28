@@ -1,6 +1,6 @@
 from collections.abc import Hashable
 
-from .queryable import Queryable
+from ._queryable import Queryable
 
 
 class Associable[TKey: Hashable, TSource](Queryable[TSource]):

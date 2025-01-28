@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
 if TYPE_CHECKING:
-    from pyenumerable.protocol.queryable import Queryable
+    from ._queryable import Queryable
 
 
 class SupportsIntersection[TSource](Protocol):

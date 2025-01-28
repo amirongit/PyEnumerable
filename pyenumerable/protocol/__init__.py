@@ -1,3 +1,5 @@
+from ._associable import Associable
+from ._queryable import Queryable
 from ._supports_aggregation import SupportsAggregation
 from ._supports_append import SupportsAppend
 from ._supports_average import SupportsAverage
@@ -18,5 +20,3 @@ from ._supports_intersection import SupportsIntersection
 from ._supports_join import SupportsJoin
 from ._supports_subtraction import SupportsSubtraction
 from ._supports_transformation import SupportsTransformation
-from .associable import Associable
-from .queryable import Queryable

@@ -2,8 +2,8 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
 if TYPE_CHECKING:
-    from .associable import Associable
-    from .queryable import Queryable
+    from ._associable import Associable
+    from ._queryable import Queryable
 
 
 class SupportsGroup[TSource](Protocol):
