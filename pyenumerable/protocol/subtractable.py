@@ -5,7 +5,7 @@ if TYPE_CHECKING:
     from .queryable import Queryable
 
 
-class Differentiable[TSource](Protocol):
+class Subtractable[TSource](Protocol):
     @overload
     def except_(
         self,

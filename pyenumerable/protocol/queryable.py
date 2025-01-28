@@ -9,11 +9,11 @@ from . import (
     Chunkable,
     Concatable,
     Countable,
-    Differentiable,
     Dividable,
     Fillable,
     Groupable,
     Pickable,
+    Subtractable,
 )
 
 
@@ -26,9 +26,9 @@ class Queryable[TSource: Hashable](
     Chunkable[TSource],
     Concatable[TSource],
     Countable[TSource],
-    Differentiable[TSource],
     Dividable[TSource],
     Fillable[TSource],
-    Pickable[TSource],
     Groupable[TSource],
+    Pickable[TSource],
+    Subtractable[TSource],
 ): ...
