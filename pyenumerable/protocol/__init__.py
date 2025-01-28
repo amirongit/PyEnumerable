@@ -9,6 +9,7 @@ from .concatable import Concatable
 from .countable import Countable
 from .dividable import Dividable
 from .fillable import Fillable
+from .group_joinable import GroupJoinable
 from .groupable import Groupable
 from .pickable import Pickable
 from .queryable import Queryable
