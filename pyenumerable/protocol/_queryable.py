@@ -1,5 +1,3 @@
-from collections.abc import Hashable
-
 from . import (
     SupportsAggregation,
     SupportsAppend,
@@ -21,7 +19,7 @@ from . import (
 )
 
 
-class Queryable[TSource: Hashable](
+class Queryable[TSource](
     SupportsAggregation[TSource],
     SupportsAppend[TSource],
     SupportsAverage[TSource],
