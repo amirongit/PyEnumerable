@@ -15,6 +15,7 @@ from . import (
     SupportsIndivisualConditionCheck,
     SupportsIntersection,
     SupportsJoin,
+    SupportsMaximum,
     SupportsSubtraction,
     SupportsTransformation,
 )
@@ -35,6 +36,7 @@ class Queryable[TSource: Hashable](
     SupportsIndivisualConditionCheck[TSource],
     SupportsIntersection[TSource],
     SupportsJoin[TSource],
+    SupportsMaximum[TSource],
     SupportsSubtraction[TSource],
     SupportsTransformation[TSource],
 ): ...
