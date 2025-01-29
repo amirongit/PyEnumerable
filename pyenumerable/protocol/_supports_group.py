@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
-from pyenumerable.typing_utility import Comparer
+from pyenumerable.typing_utility import Comparable, Comparer
 
 if TYPE_CHECKING:
     from ._associable import Associable
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 class SupportsGroup[TSource](Protocol):
     @overload
-    def group_by[TKey, TElement, TResult](
+    def group_by[TKey: Comparable, TElement, TResult](
         self,
         key_selector: Callable[[TSource], TKey],
         /,
@@ -31,7 +31,7 @@ class SupportsGroup[TSource](Protocol):
     ) -> "Queryable[TResult]": ...
 
     @overload
-    def group_by[TKey, TElement](
+    def group_by[TKey: Comparable, TElement](
         self,
         key_selector: Callable[[TSource], TKey],
         /,
@@ -50,7 +50,7 @@ class SupportsGroup[TSource](Protocol):
     ) -> "Queryable[Associable[TKey, TElement]]": ...
 
     @overload
-    def group_by[TKey, TResult](
+    def group_by[TKey: Comparable, TResult](
         self,
         key_selector: Callable[[TSource], TKey],
         /,
@@ -69,7 +69,7 @@ class SupportsGroup[TSource](Protocol):
     ) -> "Queryable[TResult]": ...
 
     @overload
-    def group_by[TKey](
+    def group_by[TKey: Comparable](
         self,
         key_selector: Callable[[TSource], TKey],
         /,

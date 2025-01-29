@@ -19,7 +19,7 @@ class SupportsMaximum[TSource](Protocol):
     ) -> TResult: ...
 
     @overload
-    def max_[TResult: Comparable](
+    def max_[TResult](
         self,
         selector: Callable[[TSource], TResult],
         /,
@@ -27,7 +27,7 @@ class SupportsMaximum[TSource](Protocol):
         comparer: Comparer[TResult],
     ) -> TResult: ...
 
-    def max_[TResult: Comparable](
+    def max_[TResult](
         self,
         selector: Callable[[TSource], TResult] | None = None,
         /,
