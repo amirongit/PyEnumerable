@@ -1,9 +1,10 @@
 from collections.abc import Callable
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 type Comparer[T] = Callable[[T,T], bool]
 
 
+@runtime_checkable
 class Comparable(Protocol):
     def __eq__(self, other: object, /) -> bool: ...
 
