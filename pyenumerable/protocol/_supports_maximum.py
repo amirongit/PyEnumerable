@@ -34,3 +34,19 @@ class SupportsMaximum[TSource](Protocol):
         *,
         comparer: Comparer[TResult] | Comparer[TSource] | None = None,
     ) -> TResult | TSource: ...
+
+    @overload
+    def max_by[TKey: Comparable](
+        self,
+        key_selector: Callable[[TSource], TKey],
+        /,
+    ) -> TSource: ...
+
+    @overload
+    def max_by[TKey](
+        self,
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey],
+    ) -> TSource: ...
