@@ -26,6 +26,7 @@ from ._supports_prepend import SupportsPrepend
 from ._supports_reverse import SupportsReverse
 from ._supports_select import SupportsSelect
 from ._supports_single import SupportsSingle
+from ._supports_skip import SupportsSkip
 from ._supports_subtraction import SupportsSubtraction
 from ._supports_transformation import SupportsTransformation
 from ._supports_type_filter import SupportsTypeFilter
