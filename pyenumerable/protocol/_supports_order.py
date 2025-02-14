@@ -24,8 +24,9 @@ class SupportsOrder[TSource](Protocol):
     @overload
     def order_descending(
         self,
-        comprarer: Comparer[TSource],
         /,
+        *,
+        comprarer: Comparer[TSource],
     ) -> "Queryable[TSource]": ...
 
     @overload
