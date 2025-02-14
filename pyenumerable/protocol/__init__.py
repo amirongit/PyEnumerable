@@ -21,6 +21,9 @@ from ._supports_join import SupportsJoin
 from ._supports_maximum import SupportsMaximum
 from ._supports_minimum import SupportsMinimum
 from ._supports_order import SupportsOrder
+from ._supports_prepend import SupportsPrepend
+from ._supports_reverse import SupportsReverse
+from ._supports_select import SupportsSelect
 from ._supports_subtraction import SupportsSubtraction
 from ._supports_transformation import SupportsTransformation
 from ._supports_type_filter import SupportsTypeFilter
