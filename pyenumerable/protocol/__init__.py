@@ -7,6 +7,7 @@ from ._supports_chunk import SupportsChunk
 from ._supports_collective_condition_check import (
     SupportsCollectiveConditionCheck,
 )
+from ._supports_comparison import SupportsComparison
 from ._supports_concatenation import SupportsConcatenation
 from ._supports_count import SupportsCount
 from ._supports_distinction import SupportsDistinction
@@ -24,6 +25,7 @@ from ._supports_order import SupportsOrder
 from ._supports_prepend import SupportsPrepend
 from ._supports_reverse import SupportsReverse
 from ._supports_select import SupportsSelect
+from ._supports_single import SupportsSingle
 from ._supports_subtraction import SupportsSubtraction
 from ._supports_transformation import SupportsTransformation
 from ._supports_type_filter import SupportsTypeFilter

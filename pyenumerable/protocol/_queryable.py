@@ -6,6 +6,7 @@ from . import (
     SupportsAverage,
     SupportsChunk,
     SupportsCollectiveConditionCheck,
+    SupportsComparison,
     SupportsConcatenation,
     SupportsCount,
     SupportsDistinction,
@@ -21,6 +22,7 @@ from . import (
     SupportsPrepend,
     SupportsReverse,
     SupportsSelect,
+    SupportsSingle,
     SupportsSubtraction,
     SupportsTransformation,
     SupportsTypeFilter,
@@ -52,4 +54,6 @@ class Queryable[TSource](
     SupportsSubtraction[TSource],
     SupportsTransformation[TSource],
     SupportsTypeFilter[TSource],
+    SupportsComparison[TSource],
+    SupportsSingle[TSource],
 ): ...
