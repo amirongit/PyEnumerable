@@ -5,7 +5,7 @@ if TYPE_CHECKING:
 
 
 class SupportsTypeFilter[TSource](Protocol):
-    def type_of[TResult](
+    def of_type[TResult](
         self,
         type_: type[TResult],
         /,
