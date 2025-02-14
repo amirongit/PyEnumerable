@@ -8,9 +8,3 @@ class SupportsCount[TSource](Protocol):
 
     @overload
     def count_(self, predicate: Callable[[TSource], bool], /) -> int: ...
-
-    def count_(
-        self,
-        predicate: Callable[[TSource], bool] | None = None,
-        /,
-    ) -> int: ...

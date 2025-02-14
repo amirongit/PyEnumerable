@@ -83,16 +83,3 @@ class SupportsGroup[TSource](Protocol):
         *,
         comparer: Comparer[TKey],
     ) -> "Queryable[Associable[TKey, TSource]]": ...
-
-    def group_by[TKey, TElement, TResult](
-        self,
-        key_selector: Callable[[TSource], TKey] | None = None,
-        /,
-        *,
-        element_selector: Callable[[TSource], TElement] | None = None,
-        result_selector: Callable[
-            [TKey, "Queryable[TElement]"],
-            TResult,
-        ] | None = None,
-        comparer: Comparer[TKey] | None = None,
-    ) -> "Queryable[TResult]": ...

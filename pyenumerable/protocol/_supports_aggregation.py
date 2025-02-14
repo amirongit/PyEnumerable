@@ -18,17 +18,3 @@ class SupportsAggregation[TSource](Protocol):
         *,
         seed: TAccumulate,
     ) -> TAccumulate: ...
-
-    def aggregate[TAccumulate](
-        self,
-        func: Callable[
-            [TSource, TSource],
-            TAccumulate,
-        ] | Callable[
-            [TAccumulate, TSource],
-            TAccumulate,
-        ],
-        /,
-        *,
-        seed: TAccumulate | None = None,
-    ) -> TAccumulate: ...

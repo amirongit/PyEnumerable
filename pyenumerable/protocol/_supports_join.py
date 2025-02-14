@@ -29,14 +29,3 @@ class SupportsJoin[TSource](Protocol):
         *,
         comparer: Comparer[TKey],
     ) -> "Queryable[TResult]": ...
-
-    def join[TInner, TKey, TResult](
-        self,
-        inner: "Queryable[TInner]",
-        outer_key_selector: Callable[[TSource], TKey],
-        inner_key_selector: Callable[[TInner], TKey],
-        result_selector: Callable[[TSource, TInner], TResult],
-        /,
-        *,
-        comparer: Comparer[TKey] | None = None,
-    ) -> "Queryable[TResult]": ...

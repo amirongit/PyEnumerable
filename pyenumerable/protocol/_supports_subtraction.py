@@ -24,14 +24,6 @@ class SupportsSubtraction[TSource](Protocol):
         comparer: Comparer[TSource],
     ) -> "Queryable[TSource]": ...
 
-    def except_(
-        self,
-        other: "Queryable[TSource]",
-        /,
-        *,
-        comparer: Comparer[TSource] | None = None,
-    ) -> "Queryable[TSource]": ...
-
     @overload
     def except_by[TKey: Comparable](
         self,
@@ -48,13 +40,4 @@ class SupportsSubtraction[TSource](Protocol):
         /,
         *,
         comparer: Comparer[TKey],
-    ) -> "Queryable[TSource]": ...
-
-    def except_by[TKey](
-        self,
-        other: "Queryable[TSource]",
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        comparer: Comparer[TKey] | None = None,
     ) -> "Queryable[TSource]": ...

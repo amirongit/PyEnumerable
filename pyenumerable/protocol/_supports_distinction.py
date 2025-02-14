@@ -19,13 +19,6 @@ class SupportsDistinction[TSource](Protocol):
         comparer: Comparer[TSource],
     ) -> "Queryable[TSource]": ...
 
-    def distinct(
-        self,
-        /,
-        *,
-        comparer: Comparer[TSource] | None = None,
-    ) -> "Queryable[TSource]": ...
-
     @overload
     def distinct_by[TKey: Comparable](
         self,
@@ -40,12 +33,4 @@ class SupportsDistinction[TSource](Protocol):
         /,
         *,
         comparer: Comparer[TKey],
-    ) -> "Queryable[TSource]": ...
-
-    def distinct_by[TKey](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        comparer: Comparer[TKey] | None = None,
     ) -> "Queryable[TSource]": ...

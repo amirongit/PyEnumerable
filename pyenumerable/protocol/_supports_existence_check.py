@@ -20,11 +20,3 @@ class SupportsExistenceCheck[TSource](Protocol):
         *,
         comparer: Comparer[TSource],
     ) -> bool: ...
-
-    def contains(
-        self,
-        item: TSource,
-        /,
-        *,
-        comparer: Comparer[TSource] | None = None,
-    ) -> bool: ...

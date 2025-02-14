@@ -30,9 +30,3 @@ class SupportsAverage[TSource](Protocol):
         selector: Callable[[TSource], TAccumulate | None],
         /,
     ) -> TAccumulate: ...
-
-    def average[TAccumulate: (float, int)](
-        self,
-        selector: Callable[[TSource], TAccumulate | None],
-        /,
-    ) -> TAccumulate: ...
