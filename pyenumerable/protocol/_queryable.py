@@ -17,6 +17,7 @@ from . import (
     SupportsMinimum,
     SupportsSubtraction,
     SupportsTransformation,
+    SupportsTypeFilter,
 )
 
 
@@ -39,4 +40,5 @@ class Queryable[TSource](
     SupportsMinimum[TSource],
     SupportsSubtraction[TSource],
     SupportsTransformation[TSource],
+    SupportsTypeFilter[TSource],
 ): ...

@@ -22,3 +22,4 @@ from ._supports_maximum import SupportsMaximum
 from ._supports_minimum import SupportsMinimum
 from ._supports_subtraction import SupportsSubtraction
 from ._supports_transformation import SupportsTransformation
+from ._supports_type_filter import SupportsTypeFilter
