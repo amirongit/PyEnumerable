@@ -14,6 +14,7 @@ from . import (
     SupportsIntersection,
     SupportsJoin,
     SupportsMaximum,
+    SupportsMinimum,
     SupportsSubtraction,
     SupportsTransformation,
 )
@@ -35,6 +36,7 @@ class Queryable[TSource](
     SupportsIntersection[TSource],
     SupportsJoin[TSource],
     SupportsMaximum[TSource],
+    SupportsMinimum[TSource],
     SupportsSubtraction[TSource],
     SupportsTransformation[TSource],
 ): ...

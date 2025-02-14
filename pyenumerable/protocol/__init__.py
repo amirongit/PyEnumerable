@@ -19,5 +19,6 @@ from ._supports_indivisual_condition_check import (
 from ._supports_intersection import SupportsIntersection
 from ._supports_join import SupportsJoin
 from ._supports_maximum import SupportsMaximum
+from ._supports_minimum import SupportsMinimum
 from ._supports_subtraction import SupportsSubtraction
 from ._supports_transformation import SupportsTransformation
