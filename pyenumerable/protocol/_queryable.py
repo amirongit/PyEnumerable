@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+
 from . import (
     SupportsAggregation,
     SupportsAppend,
@@ -26,6 +28,7 @@ from . import (
 
 
 class Queryable[TSource](
+    Iterable[TSource],
     SupportsAggregation[TSource],
     SupportsAppend[TSource],
     SupportsAverage[TSource],
