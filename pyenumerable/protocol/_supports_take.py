@@ -5,16 +5,16 @@ if TYPE_CHECKING:
     from ._queryable import Queryable
 
 
-class SupportsSkip[TSource](Protocol):
+class SupportsTake[TSource](Protocol):
     @overload
-    def skip(self, count: int, /) -> "Queryable[TSource]": ...
+    def take(self, count: int, /) -> "Queryable[TSource]": ...
 
     @overload
-    def skip(self, start: int, end: int, /) -> "Queryable[TSource]": ...
+    def take(self, start: int, end: int, /) -> "Queryable[TSource]": ...
 
-    def skip_last(self, count: int, /) -> "Queryable[TSource]": ...
+    def take_last(self, count: int, /) -> "Queryable[TSource]": ...
 
-    def skip_while(
+    def take_while(
         self,
         predicate: Callable[[int, TSource], bool],
         /,
