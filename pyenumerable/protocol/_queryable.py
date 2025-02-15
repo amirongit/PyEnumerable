@@ -25,8 +25,11 @@ from . import (
     SupportsSingle,
     SupportsSkip,
     SupportsSubtraction,
+    SupportsSum,
+    SupportsTake,
     SupportsTransformation,
     SupportsTypeFilter,
+    SupportsUnion,
 )
 
 
@@ -56,6 +59,9 @@ class Queryable[TSource](
     SupportsSingle[TSource],
     SupportsSkip[TSource],
     SupportsSubtraction[TSource],
+    SupportsSum[TSource],
+    SupportsTake[TSource],
     SupportsTransformation[TSource],
     SupportsTypeFilter[TSource],
+    SupportsUnion[TSource],
 ): ...

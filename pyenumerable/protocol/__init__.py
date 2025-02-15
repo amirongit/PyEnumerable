@@ -28,5 +28,8 @@ from ._supports_select import SupportsSelect
 from ._supports_single import SupportsSingle
 from ._supports_skip import SupportsSkip
 from ._supports_subtraction import SupportsSubtraction
+from ._supports_sum import SupportsSum
+from ._supports_take import SupportsTake
 from ._supports_transformation import SupportsTransformation
 from ._supports_type_filter import SupportsTypeFilter
+from ._supports_union import SupportsUnion
