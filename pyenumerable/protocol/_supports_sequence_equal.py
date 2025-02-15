@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from ._queryable import Queryable
 
 
-class SupportsComparison[TSource](Protocol):
+class SupportsSequenceEqual[TSource](Protocol):
     @overload
     def sequence_equal(self, other: "Queryable[TSource]", /) -> bool: ...
 

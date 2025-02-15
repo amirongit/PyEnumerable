@@ -7,28 +7,35 @@ if TYPE_CHECKING:
     from ._queryable import Queryable
 
 
-class SupportsDistinction[TSource](Protocol):
+class SupportsExcept[TSource](Protocol):
     @overload
-    def distinct(self, /) -> "Queryable[TSource]": ...
+    def except_(
+        self,
+        other: "Queryable[TSource]",
+        /,
+    ) -> "Queryable[TSource]": ...
 
     @overload
-    def distinct(
+    def except_(
         self,
+        other: "Queryable[TSource]",
         /,
         *,
         comparer: Comparer[TSource],
     ) -> "Queryable[TSource]": ...
 
     @overload
-    def distinct_by[TKey: Comparable](
+    def except_by[TKey: Comparable](
         self,
+        other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
         /,
     ) -> "Queryable[TSource]": ...
 
     @overload
-    def distinct_by[TKey](
+    def except_by[TKey](
         self,
+        other: "Queryable[TSource]",
         key_selector: Callable[[TSource], TKey],
         /,
         *,

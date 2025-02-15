@@ -4,7 +4,7 @@ from typing import Protocol, overload
 from pyenumerable.typing_utility import Comparer
 
 
-class SupportsExistenceCheck[TSource](Protocol):
+class SupportsContains[TSource](Protocol):
     @overload
     def contains(
         self,

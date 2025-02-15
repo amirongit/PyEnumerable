@@ -4,7 +4,7 @@ from typing import Protocol, overload
 from pyenumerable.typing_utility import Comparable, Comparer
 
 
-class SupportsMinimum[TSource](Protocol):
+class SupportsMin[TSource](Protocol):
     @overload
     def min_(self, /) -> TSource: ...
 

@@ -7,37 +7,30 @@ if TYPE_CHECKING:
     from ._queryable import Queryable
 
 
-class SupportsIntersection[TSource](Protocol):
+class SupportsDistinct[TSource](Protocol):
     @overload
-    def intersect(
-        self,
-        second: "Queryable[TSource]",
-        /,
-    ) -> "Queryable[TSource]": ...
+    def distinct(self, /) -> "Queryable[TSource]": ...
 
     @overload
-    def intersect(
+    def distinct(
         self,
-        second: "Queryable[TSource]",
         /,
         *,
         comparer: Comparer[TSource],
     ) -> "Queryable[TSource]": ...
 
     @overload
-    def intersect_by[TKey](
+    def distinct_by[TKey: Comparable](
         self,
-        second: "Queryable[TKey]",
+        key_selector: Callable[[TSource], TKey],
+        /,
+    ) -> "Queryable[TSource]": ...
+
+    @overload
+    def distinct_by[TKey](
+        self,
         key_selector: Callable[[TSource], TKey],
         /,
         *,
         comparer: Comparer[TKey],
-    ) -> "Queryable[TSource]": ...
-
-    @overload
-    def intersect_by[TKey: Comparable](
-        self,
-        second: "Queryable[TKey]",
-        key_selector: Callable[[TSource], TKey],
-        /,
     ) -> "Queryable[TSource]": ...

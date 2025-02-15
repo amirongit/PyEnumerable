@@ -4,7 +4,7 @@ if TYPE_CHECKING:
     from ._queryable import Queryable
 
 
-class SupportsConcatenation[TSource](Protocol):
+class SupportsConcat[TSource](Protocol):
     def concat(
         self,
         other: "Queryable[TSource]",

@@ -7,37 +7,37 @@ if TYPE_CHECKING:
     from ._queryable import Queryable
 
 
-class SupportsSubtraction[TSource](Protocol):
+class SupportsIntersect[TSource](Protocol):
     @overload
-    def except_(
+    def intersect(
         self,
-        other: "Queryable[TSource]",
+        second: "Queryable[TSource]",
         /,
     ) -> "Queryable[TSource]": ...
 
     @overload
-    def except_(
+    def intersect(
         self,
-        other: "Queryable[TSource]",
+        second: "Queryable[TSource]",
         /,
         *,
         comparer: Comparer[TSource],
     ) -> "Queryable[TSource]": ...
 
     @overload
-    def except_by[TKey: Comparable](
+    def intersect_by[TKey](
         self,
-        other: "Queryable[TSource]",
-        key_selector: Callable[[TSource], TKey],
-        /,
-    ) -> "Queryable[TSource]": ...
-
-    @overload
-    def except_by[TKey](
-        self,
-        other: "Queryable[TSource]",
+        second: "Queryable[TKey]",
         key_selector: Callable[[TSource], TKey],
         /,
         *,
         comparer: Comparer[TKey],
+    ) -> "Queryable[TSource]": ...
+
+    @overload
+    def intersect_by[TKey: Comparable](
+        self,
+        second: "Queryable[TKey]",
+        key_selector: Callable[[TSource], TKey],
+        /,
     ) -> "Queryable[TSource]": ...

@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from ._queryable import Queryable
 
 
-class SupportsGroup[TSource](Protocol):
+class SupportsGroupBy[TSource](Protocol):
     @overload
     def group_by[TKey: Comparable, TElement, TResult](
         self,

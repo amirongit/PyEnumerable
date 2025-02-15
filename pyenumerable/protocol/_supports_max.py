@@ -4,7 +4,7 @@ from typing import Any, Protocol, overload
 from pyenumerable.typing_utility import Comparable, Comparer
 
 
-class SupportsMaximum[TSource](Protocol):
+class SupportsMax[TSource](Protocol):
     @overload
     def max_(self, /) -> TSource: ...
 
