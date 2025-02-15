@@ -31,6 +31,7 @@ from . import (
     SupportsTypeOf,
     SupportsUnion,
     SupportsWhere,
+    SupportsZip,
 )
 
 
@@ -66,4 +67,5 @@ class Enumerable[TSource](
     SupportsTypeOf[TSource],
     SupportsUnion[TSource],
     SupportsWhere[TSource],
+    SupportsZip[TSource],
 ): ...

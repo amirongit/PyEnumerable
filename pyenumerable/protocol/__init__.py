@@ -30,3 +30,4 @@ from ._supports_take import SupportsTake
 from ._supports_type_of import SupportsTypeOf
 from ._supports_union import SupportsUnion
 from ._supports_where import SupportsWhere
+from ._supports_zip import SupportsZip
