@@ -33,3 +33,4 @@ from ._supports_take import SupportsTake
 from ._supports_transformation import SupportsTransformation
 from ._supports_type_filter import SupportsTypeFilter
 from ._supports_union import SupportsUnion
+from ._supports_where import SupportsWhere

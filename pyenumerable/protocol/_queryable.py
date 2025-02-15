@@ -30,6 +30,7 @@ from . import (
     SupportsTransformation,
     SupportsTypeFilter,
     SupportsUnion,
+    SupportsWhere,
 )
 
 
@@ -64,4 +65,5 @@ class Queryable[TSource](
     SupportsTransformation[TSource],
     SupportsTypeFilter[TSource],
     SupportsUnion[TSource],
+    SupportsWhere[TSource],
 ): ...
