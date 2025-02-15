@@ -1,12 +1,12 @@
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from ._queryable import Queryable
+    from ._enumerable import Enumerable
 
 
 class SupportsConcat[TSource](Protocol):
     def concat(
         self,
-        other: "Queryable[TSource]",
+        other: "Enumerable[TSource]",
         /,
-    ) -> "Queryable[TSource]": ...
+    ) -> "Enumerable[TSource]": ...

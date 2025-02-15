@@ -5,7 +5,7 @@ from pyenumerable.typing_utility import Comparable, Comparer
 
 if TYPE_CHECKING:
     from ._associable import Associable
-    from ._queryable import Queryable
+    from ._enumerable import Enumerable
 
 
 class SupportsGroupBy[TSource](Protocol):
@@ -16,8 +16,8 @@ class SupportsGroupBy[TSource](Protocol):
         /,
         *,
         element_selector: Callable[[TSource], TElement],
-        result_selector: Callable[[TKey, "Queryable[TElement]"], TResult],
-    ) -> "Queryable[TResult]": ...
+        result_selector: Callable[[TKey, "Enumerable[TElement]"], TResult],
+    ) -> "Enumerable[TResult]": ...
 
     @overload
     def group_by[TKey, TElement, TResult](
@@ -26,9 +26,9 @@ class SupportsGroupBy[TSource](Protocol):
         /,
         *,
         element_selector: Callable[[TSource], TElement],
-        result_selector: Callable[[TKey, "Queryable[TElement]"], TResult],
+        result_selector: Callable[[TKey, "Enumerable[TElement]"], TResult],
         comparer: Comparer[TKey],
-    ) -> "Queryable[TResult]": ...
+    ) -> "Enumerable[TResult]": ...
 
     @overload
     def group_by[TKey: Comparable, TElement](
@@ -37,7 +37,7 @@ class SupportsGroupBy[TSource](Protocol):
         /,
         *,
         element_selector: Callable[[TSource], TElement],
-    ) -> "Queryable[Associable[TKey, TElement]]": ...
+    ) -> "Enumerable[Associable[TKey, TElement]]": ...
 
     @overload
     def group_by[TKey, TElement](
@@ -47,7 +47,7 @@ class SupportsGroupBy[TSource](Protocol):
         *,
         element_selector: Callable[[TSource], TElement],
         comparer: Comparer[TKey],
-    ) -> "Queryable[Associable[TKey, TElement]]": ...
+    ) -> "Enumerable[Associable[TKey, TElement]]": ...
 
     @overload
     def group_by[TKey: Comparable, TResult](
@@ -55,8 +55,8 @@ class SupportsGroupBy[TSource](Protocol):
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        result_selector: Callable[[TKey, "Queryable[TSource]"], TResult],
-    ) -> "Queryable[TResult]": ...
+        result_selector: Callable[[TKey, "Enumerable[TSource]"], TResult],
+    ) -> "Enumerable[TResult]": ...
 
     @overload
     def group_by[TKey, TResult](
@@ -64,16 +64,16 @@ class SupportsGroupBy[TSource](Protocol):
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        result_selector: Callable[[TKey, "Queryable[TSource]"], TResult],
+        result_selector: Callable[[TKey, "Enumerable[TSource]"], TResult],
         comparer: Comparer[TKey],
-    ) -> "Queryable[TResult]": ...
+    ) -> "Enumerable[TResult]": ...
 
     @overload
     def group_by[TKey: Comparable](
         self,
         key_selector: Callable[[TSource], TKey],
         /,
-    ) -> "Queryable[Associable[TKey, TSource]]": ...
+    ) -> "Enumerable[Associable[TKey, TSource]]": ...
 
     @overload
     def group_by[TKey](
@@ -82,4 +82,4 @@ class SupportsGroupBy[TSource](Protocol):
         /,
         *,
         comparer: Comparer[TKey],
-    ) -> "Queryable[Associable[TKey, TSource]]": ...
+    ) -> "Enumerable[Associable[TKey, TSource]]": ...

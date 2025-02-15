@@ -34,7 +34,7 @@ from . import (
 )
 
 
-class Queryable[TSource](
+class Enumerable[TSource](
     Iterable[TSource],
     SupportsAggregate[TSource],
     SupportsAll[TSource],

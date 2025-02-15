@@ -1,5 +1,5 @@
 from ._associable import Associable
-from ._queryable import Queryable
+from ._enumerable import Enumerable
 from ._supports_aggregate import SupportsAggregate
 from ._supports_all import SupportsAll
 from ._supports_any import SupportsAny

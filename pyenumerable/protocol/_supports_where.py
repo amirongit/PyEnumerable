@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from ._queryable import Queryable
+    from ._enumerable import Enumerable
 
 
 class SupportsWhere[TSource](Protocol):
@@ -10,4 +10,4 @@ class SupportsWhere[TSource](Protocol):
         self,
         predicate: Callable[[int, TSource], bool],
         /,
-    ) -> "Queryable[TSource]": ...
+    ) -> "Enumerable[TSource]": ...

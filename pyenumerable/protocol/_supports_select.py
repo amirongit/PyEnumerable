@@ -2,7 +2,7 @@ from collections.abc import Callable, Iterable
 from typing import TYPE_CHECKING, Protocol, overload
 
 if TYPE_CHECKING:
-    from ._queryable import Queryable
+    from ._enumerable import Enumerable
 
 
 class SupportsSelect[TSource](Protocol):
@@ -10,14 +10,14 @@ class SupportsSelect[TSource](Protocol):
         self,
         selector: Callable[[int, TSource], TResult],
         /,
-    ) -> "Queryable[TResult]": ...
+    ) -> "Enumerable[TResult]": ...
 
     @overload
     def select_many[TResult](
         self,
         selector: Callable[[int, TSource], Iterable[TResult]],
         /,
-    ) -> "Queryable[TResult]": ...
+    ) -> "Enumerable[TResult]": ...
 
     @overload
     def select_many[TResult, TCollectionItem](
@@ -28,4 +28,4 @@ class SupportsSelect[TSource](Protocol):
         ],
         result_selector: Callable[[TSource, TCollectionItem], TResult],
         /,
-    ) -> "Queryable[TResult]": ...
+    ) -> "Enumerable[TResult]": ...

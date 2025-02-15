@@ -4,40 +4,40 @@ from typing import TYPE_CHECKING, Protocol, overload
 from pyenumerable.typing_utility import Comparable, Comparer
 
 if TYPE_CHECKING:
-    from ._queryable import Queryable
+    from ._enumerable import Enumerable
 
 
 class SupportsExcept[TSource](Protocol):
     @overload
     def except_(
         self,
-        other: "Queryable[TSource]",
+        other: "Enumerable[TSource]",
         /,
-    ) -> "Queryable[TSource]": ...
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def except_(
         self,
-        other: "Queryable[TSource]",
+        other: "Enumerable[TSource]",
         /,
         *,
         comparer: Comparer[TSource],
-    ) -> "Queryable[TSource]": ...
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def except_by[TKey: Comparable](
         self,
-        other: "Queryable[TSource]",
+        other: "Enumerable[TSource]",
         key_selector: Callable[[TSource], TKey],
         /,
-    ) -> "Queryable[TSource]": ...
+    ) -> "Enumerable[TSource]": ...
 
     @overload
     def except_by[TKey](
         self,
-        other: "Queryable[TSource]",
+        other: "Enumerable[TSource]",
         key_selector: Callable[[TSource], TKey],
         /,
         *,
         comparer: Comparer[TKey],
-    ) -> "Queryable[TSource]": ...
+    ) -> "Enumerable[TSource]": ...

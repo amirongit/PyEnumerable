@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from ._queryable import Queryable
+    from ._enumerable import Enumerable
 
 
 class SupportsAppend[TSource](Protocol):
-    def append(self, item: TSource, /) -> "Queryable[TSource]": ...
+    def append(self, item: TSource, /) -> "Enumerable[TSource]": ...

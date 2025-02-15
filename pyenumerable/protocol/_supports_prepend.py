@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from ._queryable import Queryable
+    from ._enumerable import Enumerable
 
 
 class SupportsPrepend[TSource](Protocol):
-    def prepend(self, item: TSource, /) -> "Queryable[TSource]": ...
+    def prepend(self, item: TSource, /) -> "Enumerable[TSource]": ...
