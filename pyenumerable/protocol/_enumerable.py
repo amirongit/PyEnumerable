@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+from typing import Protocol
 
 from . import (
     SupportsAggregate,
@@ -36,7 +36,6 @@ from . import (
 
 
 class Enumerable[TSource](
-    Iterable[TSource],
     SupportsAggregate[TSource],
     SupportsAll[TSource],
     SupportsAny[TSource],
@@ -68,4 +67,5 @@ class Enumerable[TSource](
     SupportsUnion[TSource],
     SupportsWhere[TSource],
     SupportsZip[TSource],
+    Protocol,
 ): ...
