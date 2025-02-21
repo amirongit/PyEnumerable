@@ -4,5 +4,5 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 
 ## Issue tracker
 - [x] Design protocols for each operation set
-- [ ] Design & Implement `Enumerable` constructor(s) for PP implementation
+- [x] Design & Implement `Enumerable` constructor(s) for PP implementation
 - [ ] Implement `Enumerable` for PP Implementation
