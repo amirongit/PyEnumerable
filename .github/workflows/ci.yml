@@ -42,4 +42,4 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: uv sync
-      - run: uv run pytest -v --cov=pyenumerable --cov-report term-missing --cov-report term:skip-covered test
+      - run: uv run pytest -v --cov=pyenumerable.implementations --cov-report term-missing --cov-report term:skip-covered
