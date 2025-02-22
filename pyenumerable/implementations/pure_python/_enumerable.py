@@ -1,4 +1,6 @@
-from collections.abc import Iterable
+from __future__ import annotations
+
+from collections.abc import Callable, Iterable
 
 
 class Enumerable[TSource]:
@@ -16,3 +18,12 @@ class Enumerable[TSource]:
     @property
     def source(self) -> tuple[TSource, ...]:
         return self._source
+
+    def select[TResult](
+        self,
+        selector: Callable[[int, TSource], TResult],
+        /,
+    ) -> Enumerable[TResult]:
+        return Enumerable(
+            *tuple(selector(i, v) for i, v in enumerate(self.source)),
+        )
