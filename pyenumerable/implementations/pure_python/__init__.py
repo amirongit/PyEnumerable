@@ -1,1 +1,1 @@
-from ._enumerable import Enumerable
+from ._enumerable import PurePythonEnumerable
