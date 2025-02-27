@@ -13,12 +13,12 @@ class PurePythonEnumerable[TSource]:
     def __init__(
         self,
         *items: TSource,
-        from_iterables: Iterable[Iterable[TSource]] | None = None,
+        from_iterable: Iterable[Iterable[TSource]] | None = None,
     ) -> None:
         self._source: tuple[TSource, ...] = items
 
-        if from_iterables is not None:
-            self._source += tuple(chain(*from_iterables))
+        if from_iterable is not None:
+            self._source += tuple(chain.from_iterable(from_iterable))
 
     @property
     def source(self) -> tuple[TSource, ...]:
@@ -39,5 +39,12 @@ class PurePythonEnumerable[TSource]:
         /,
     ) -> PurePythonEnumerable[TResult]:
         return PurePythonEnumerable(
-            from_iterables=[selector(i, v) for i, v in enumerate(self.source)],
+            from_iterable=[selector(i, v) for i, v in enumerate(self.source)],
         )
+
+    def concat(
+        self,
+        other: PurePythonEnumerable[TSource],
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(from_iterable=(self.source, other.source))
