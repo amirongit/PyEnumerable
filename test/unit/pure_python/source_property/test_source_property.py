@@ -19,7 +19,7 @@ class TestEnumerableConstructor:
 
     def test_initialization_with_packed_items(self) -> None:
         obj = PurePythonEnumerable(
-            from_iterables=(
+            from_iterable=(
                 (
                     first := generate_random_args(
                         choice(range(10)),
@@ -43,7 +43,7 @@ class TestEnumerableConstructor:
                     range(-25, 25),
                 )
             ),
-            from_iterables=(
+            from_iterable=(
                 packed := generate_random_args(
                     choice(range(10)),
                     range(-25, 25),
