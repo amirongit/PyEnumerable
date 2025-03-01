@@ -61,7 +61,7 @@ class PurePythonEnumerable[TSource]:
                     max_ = item
         else:
             try:
-                max_: TSource = max(self.source) # type: ignore
+                max_ = max(self.source) # type: ignore
             except TypeError as te:
                 msg = (
                     "TSource does't implement "
