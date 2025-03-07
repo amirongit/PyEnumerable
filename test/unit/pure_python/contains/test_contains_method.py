@@ -1,6 +1,5 @@
-from dataclasses import dataclass
-
 from pyenumerable.implementations.pure_python import PurePythonEnumerable
+from test.unit.pure_python.test_utility import Person
 
 
 class TestContainsMethod:
@@ -51,9 +50,3 @@ class TestContainsMethod:
                 first.age == second.age
             ),
         ) is False
-
-
-@dataclass
-class Person:
-    name: str
-    age: int

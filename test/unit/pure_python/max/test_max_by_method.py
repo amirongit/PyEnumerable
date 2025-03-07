@@ -1,10 +1,7 @@
-from __future__ import annotations
-
-from dataclasses import dataclass
-
 import pytest
 
 from pyenumerable.implementations.pure_python import PurePythonEnumerable
+from test.unit.pure_python.test_utility import Person
 
 
 class TestMaxByMethod:
@@ -56,9 +53,3 @@ class TestMaxByMethod:
 
         assert res is maximum
 
-
-@dataclass
-class Person:
-    title: str
-    age: int
-    parent: Person | None = None
