@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterable
 from itertools import chain
-from typing import Protocol, cast
+from typing import Any, Protocol, cast
 
 from pyenumerable.typing_utility import Comparer
 
@@ -53,7 +53,7 @@ class PurePythonEnumerable[TSource]:
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> TSource:
-        self._assume_not_empty()
+        PurePythonEnumerable._assume_not_empty(self)
         if comparer is not None:
             max_ = self.source[0]
             for item in self.source[1:]:
@@ -78,7 +78,7 @@ class PurePythonEnumerable[TSource]:
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> TSource:
-        self._assume_not_empty()
+        PurePythonEnumerable._assume_not_empty(self)
         enumerated = enumerate(key_selector(i) for i in self.source)
         if comparer is not None:
             key_index_iterable = tuple(enumerated)
@@ -100,6 +100,12 @@ class PurePythonEnumerable[TSource]:
 
         return max_
 
+    @staticmethod
+    def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
+        if len(instance.source) == 0:
+            msg = "Enumerable (self) is empty"
+            raise ValueError(msg)
+
     def contains(
         self,
         item: TSource,
@@ -111,7 +117,3 @@ class PurePythonEnumerable[TSource]:
             any(comparer(item, i) for i in self.source)
         ) if comparer is not None else item in self.source
 
-    def _assume_not_empty(self) -> None:
-        if len(self.source) == 0:
-            msg = "Enumerable (self) is empty"
-            raise ValueError(msg)
