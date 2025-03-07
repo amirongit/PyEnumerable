@@ -117,3 +117,12 @@ class PurePythonEnumerable[TSource]:
             any(comparer(item, i) for i in self.source)
         ) if comparer is not None else item in self.source
 
+    def count_(
+        self,
+        predicate: Callable[[TSource], bool] | None = None,
+        /,
+    ) -> int:
+        return sum(
+                1 for i in self.source if predicate(i)
+        ) if predicate is not None else len(self.source)
+
