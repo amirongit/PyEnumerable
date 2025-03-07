@@ -100,6 +100,17 @@ class PurePythonEnumerable[TSource]:
 
         return max_
 
+    def contains(
+        self,
+        item: TSource,
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> bool:
+        return (
+            any(comparer(item, i) for i in self.source)
+        ) if comparer is not None else item in self.source
+
     def _assume_not_empty(self) -> None:
         if len(self.source) == 0:
             msg = "Enumerable (self) is empty"
