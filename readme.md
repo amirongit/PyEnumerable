@@ -10,14 +10,13 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Supports All
     - [ ] Supports Aggregate
     - [ ] Supports Chunk
-    - [ ] Supports Cast
     - [ ] Supports Average
     - [ ] Supports Append
     - [ ] Supports Except
     - [ ] Supports Distinct
     - [x] Supports Count
-    - [ ] Supports Contains
-    - [ ] Supports Concat
+    - [x] Supports Contains
+    - [x] Supports Concat
     - [ ] Supports Join
     - [ ] Supports Intersect
     - [ ] Supports Group join
