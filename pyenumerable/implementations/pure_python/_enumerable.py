@@ -81,11 +81,10 @@ class PurePythonEnumerable[TSource]:
         PurePythonEnumerable._assume_not_empty(self)
         enumerated = enumerate(key_selector(i) for i in self.source)
         if comparer is not None:
-            key_index_iterable = tuple(enumerated)
-            max_key = key_index_iterable[0]
-            for ki in key_index_iterable:
-                if comparer(ki[1], max_key[1]):
-                    max_key = ki
+            max_key = next(iterable := iter(enumerated))
+            for index, key in iterable:
+                if comparer(key, max_key[1]):
+                    max_key = (index, key)
             max_ = self.source[max_key[0]]
         else:
             try:
@@ -99,6 +98,58 @@ class PurePythonEnumerable[TSource]:
                 raise TypeError(msg) from te
 
         return max_
+
+    def min_(
+        self,
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> TSource:
+        PurePythonEnumerable._assume_not_empty(self)
+        if comparer is not None:
+            min_ = self.source[0]
+            for item in self.source[1:]:
+                if comparer(item, min_):
+                    min_ = item
+        else:
+            try:
+                min_ = min(self.source) # type: ignore
+            except TypeError as te:
+                msg = (
+                    "TSource does't implement "
+                    "pyenumerable.typing_utility.Comparable"
+                )
+                raise TypeError(msg) from te
+
+        return cast(TSource, min_)
+
+    def min_by[TKey](
+        self,
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> TSource:
+        PurePythonEnumerable._assume_not_empty(self)
+        enumerated = enumerate(key_selector(i) for i in self.source)
+        if comparer is not None:
+            min_key = next(iterable := iter(enumerated))
+            for index, key in iterable:
+                if comparer(key, min_key[1]):
+                    min_key = (index, key)
+            min_ = self.source[min_key[0]]
+        else:
+            try:
+                index_of_min = min(enumerated, key=lambda e: e[1])[0] # type: ignore
+                min_ = self.source[cast(int, index_of_min)]
+            except TypeError as te:
+                msg = (
+                    "TKey doesn't implement "
+                    "pyenumerable.typing_utility.Comparable"
+                )
+                raise TypeError(msg) from te
+
+        return min_
 
     @staticmethod
     def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
@@ -123,6 +174,5 @@ class PurePythonEnumerable[TSource]:
         /,
     ) -> int:
         return sum(
-                1 for i in self.source if predicate(i)
+            1 for i in self.source if predicate(i)
         ) if predicate is not None else len(self.source)
-
