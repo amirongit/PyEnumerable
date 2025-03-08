@@ -1,12 +1,10 @@
-from random import randint
-
 from pyenumerable.implementations.pure_python import PurePythonEnumerable
 from test.unit.pure_python.test_utility import Person
 
 
 class TestCountMethod:
     def test_without_predicate(self) -> None:
-        obj = PurePythonEnumerable(*(items := range(randint(25, 50))))
+        obj = PurePythonEnumerable(*(items := range(25)))
 
         assert obj.count_() == len(items)
 

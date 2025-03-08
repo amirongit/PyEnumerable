@@ -1,19 +1,12 @@
 from itertools import chain
-from random import choice
 
 from pyenumerable.implementations.pure_python import PurePythonEnumerable
-from test.unit.pure_python.test_utility import generate_random_args
 
 
 class TestSelectManyMethod:
     def test_functionality(self) -> None:
         obj = PurePythonEnumerable(
-            *(
-                items := generate_random_args(
-                    choice(range(100)),
-                    range(-25, 25),
-                )
-            ),
+            *(items := (3, -2, 1, -4, -7, -8, -10, 6, -9)),
         )
 
         res = obj.select_many(TestSelectManyMethod.combine_index_and_value)
