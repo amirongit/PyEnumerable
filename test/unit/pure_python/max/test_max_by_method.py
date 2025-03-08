@@ -5,7 +5,7 @@ from test.unit.pure_python.test_utility import Person
 
 
 class TestMaxByMethod:
-    def test_exc_rais_when_empty(self) -> None:
+    def test_exc_raise_when_empty(self) -> None:
         obj: PurePythonEnumerable[Person] = PurePythonEnumerable()
 
         with pytest.raises(ValueError):  # noqa: PT011
@@ -33,16 +33,6 @@ class TestMaxByMethod:
 
         assert maximum is res
 
-    @staticmethod
-    def age_comparer(
-        first: Person | None,
-        second: Person | None,
-    ) -> bool:
-        if first is None or second is None:
-            raise ValueError
-
-        return first.age > second.age
-
     def test_without_comparer(self) -> None:
         obj = PurePythonEnumerable(
             maximum := Person("jane", 12, Person("james", 34)),
@@ -53,3 +43,12 @@ class TestMaxByMethod:
 
         assert res is maximum
 
+    @staticmethod
+    def age_comparer(
+        first: Person | None,
+        second: Person | None,
+    ) -> bool:
+        if first is None or second is None:
+            raise ValueError
+
+        return first.age > second.age

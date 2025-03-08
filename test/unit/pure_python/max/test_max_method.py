@@ -1,12 +1,11 @@
-from dataclasses import dataclass
-
 import pytest
 
 from pyenumerable.implementations.pure_python import PurePythonEnumerable
+from test.unit.pure_python.test_utility import Point
 
 
 class TestMaxMethod:
-    def test_exc_rais_when_empty(self) -> None:
+    def test_exc_raise_when_empty(self) -> None:
         obj: PurePythonEnumerable[Point] = PurePythonEnumerable()
 
         with pytest.raises(ValueError):  # noqa: PT011
@@ -32,9 +31,3 @@ class TestMaxMethod:
         res = obj.max_()
 
         assert res == maximum
-
-
-@dataclass
-class Point:
-    x: int
-    y: int

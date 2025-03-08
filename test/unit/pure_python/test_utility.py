@@ -14,3 +14,8 @@ class Person:
     age: int
     parent: Person | None = None
 
+
+@dataclass
+class Point:
+    x: int
+    y: int
