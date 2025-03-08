@@ -18,7 +18,7 @@ class TestMinMethod:
             obj.min_()
 
     def test_with_comparer(self) -> None:
-        obj = PurePythonEnumerable(minimum := Point(4, 5), Point(6, 3))
+        obj = PurePythonEnumerable(Point(6, 3), minimum := Point(4, 5))
 
         res = obj.min_(comparer=lambda first, second: first.x < second.x)
 

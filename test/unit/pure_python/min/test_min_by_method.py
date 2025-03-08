@@ -22,8 +22,8 @@ class TestMinByMethod:
 
     def test_with_comparer(self) -> None:
         obj = PurePythonEnumerable(
-            minimum := Person("jane", 12, Person("james", 34)),
             Person("john", 4, Person("jessie", 40)),
+            minimum := Person("jane", 12, Person("james", 34)),
         )
 
         res = obj.min_by(
