@@ -23,9 +23,9 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Supports Group by
     - [ ] Supports Prepend
     - [ ] Supports Order
-    - [ ] Supports Min
+    - [x] Supports Min
     - [ ] Supports Skip
-    - [ ] Supports Single
+    - [x] Supports Single
     - [ ] Supports Sequence equal
     - [ ] Supports Reverse
     - [ ] Supports Union

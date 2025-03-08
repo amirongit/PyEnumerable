@@ -1,27 +1,14 @@
-from random import choice
-
 from pyenumerable.implementations.pure_python import PurePythonEnumerable
-from test.unit.pure_python.test_utility import generate_random_args
 
 
 class TestConcatMethod:
     def test_functionality(self) -> None:
         first = PurePythonEnumerable(
-            *(
-                first_items := generate_random_args(
-                    choice(range(100)),
-                    range(-25, 25),
-                )
-            ),
+            *(first_items := (-5, 5, -2, 8, 3, -9, 8, 5, -4)),
         )
 
         second = PurePythonEnumerable(
-            *(
-                second_items := generate_random_args(
-                    choice(range(100)),
-                    range(-25, 25),
-                )
-            ),
+            *(second_items := (-9, -3, -8, -1, 8, -9)),
         )
 
         final = first.concat(second)

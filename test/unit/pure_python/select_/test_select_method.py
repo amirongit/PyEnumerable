@@ -1,19 +1,12 @@
 from collections.abc import Callable
-from random import choice
 
 from pyenumerable.implementations.pure_python import PurePythonEnumerable
-from test.unit.pure_python.test_utility import generate_random_args
 
 
 class TestSelectMethod:
     def test_functionality(self) -> None:
         obj = PurePythonEnumerable(
-            *(
-                items := generate_random_args(
-                    choice(range(100)),
-                    range(-25, 25),
-                )
-            ),
+            *(items := (-4, -2, 4, -9, -3, -4, -4, -10, 7)),
         )
 
         res = obj.select(TestSelectMethod.combine_index_and_value)
