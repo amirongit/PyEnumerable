@@ -55,21 +55,20 @@ class PurePythonEnumerable[TSource]:
     ) -> TSource:
         PurePythonEnumerable._assume_not_empty(self)
         if comparer is not None:
-            max_ = self.source[0]
+            out = self.source[0]
             for item in self.source[1:]:
-                if comparer(item, max_):
-                    max_ = item
-        else:
-            try:
-                max_ = max(self.source) # type: ignore
-            except TypeError as te:
-                msg = (
-                    "TSource does't implement "
-                    "pyenumerable.typing_utility.Comparable"
-                )
-                raise TypeError(msg) from te
+                if comparer(item, out):
+                    out = item
+            return out
 
-        return cast(TSource, max_)
+        try:
+            return max(self.source) # type: ignore
+        except TypeError as te:
+            msg = (
+                "TSource doesn't implement "
+                "pyenumerable.typing_utility.Comparable"
+            )
+            raise TypeError(msg) from te
 
     def max_by[TKey](
         self,
@@ -85,19 +84,18 @@ class PurePythonEnumerable[TSource]:
             for index, key in iterable:
                 if comparer(key, max_key[1]):
                     max_key = (index, key)
-            max_ = self.source[max_key[0]]
-        else:
-            try:
-                index_of_max = max(enumerated, key=lambda e: e[1])[0] # type: ignore
-                max_ = self.source[cast(int, index_of_max)]
-            except TypeError as te:
-                msg = (
-                    "TKey doesn't implement "
-                    "pyenumerable.typing_utility.Comparable"
-                )
-                raise TypeError(msg) from te
+            return self.source[max_key[0]]
 
-        return max_
+        try:
+            return self.source[
+                cast(int, max(enumerated, key=lambda e: e[1])[0]) # type: ignore
+            ]
+        except TypeError as te:
+            msg = (
+                "TKey doesn't implement "
+                "pyenumerable.typing_utility.Comparable"
+            )
+            raise TypeError(msg) from te
 
     def min_(
         self,
@@ -107,21 +105,20 @@ class PurePythonEnumerable[TSource]:
     ) -> TSource:
         PurePythonEnumerable._assume_not_empty(self)
         if comparer is not None:
-            min_ = self.source[0]
+            out = self.source[0]
             for item in self.source[1:]:
-                if comparer(item, min_):
-                    min_ = item
-        else:
-            try:
-                min_ = min(self.source) # type: ignore
-            except TypeError as te:
-                msg = (
-                    "TSource does't implement "
-                    "pyenumerable.typing_utility.Comparable"
-                )
-                raise TypeError(msg) from te
+                if comparer(item, out):
+                    out = item
+            return out
 
-        return cast(TSource, min_)
+        try:
+            return min(self.source) # type: ignore
+        except TypeError as te:
+            msg = (
+                "TSource doesn't implement "
+                "pyenumerable.typing_utility.Comparable"
+            )
+            raise TypeError(msg) from te
 
     def min_by[TKey](
         self,
@@ -137,19 +134,18 @@ class PurePythonEnumerable[TSource]:
             for index, key in iterable:
                 if comparer(key, min_key[1]):
                     min_key = (index, key)
-            min_ = self.source[min_key[0]]
-        else:
-            try:
-                index_of_min = min(enumerated, key=lambda e: e[1])[0] # type: ignore
-                min_ = self.source[cast(int, index_of_min)]
-            except TypeError as te:
-                msg = (
+            return self.source[min_key[0]]
+
+        try:
+            return self.source[
+                cast(int, min(enumerated, key=lambda e: e[1])[0]) # type: ignore
+            ]
+        except TypeError as te:
+            msg = (
                     "TKey doesn't implement "
                     "pyenumerable.typing_utility.Comparable"
-                )
-                raise TypeError(msg) from te
-
-        return min_
+                    )
+            raise TypeError(msg) from te
 
     @staticmethod
     def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
@@ -176,3 +172,57 @@ class PurePythonEnumerable[TSource]:
         return sum(
             1 for i in self.source if predicate(i)
         ) if predicate is not None else len(self.source)
+
+    def single(
+        self,
+        predicate: Callable[[TSource], bool] | None = None,
+        /,
+    ) -> TSource:
+        if predicate is None and len(self.source) != 1:
+            msg = (
+                "There is zero or more than exactly one item in "
+                "Enumerable (self) and predicate isn't given"
+            )
+            raise ValueError(msg)
+
+        if predicate is not None:
+            if len(result := tuple(filter(predicate, self.source))) != 1:
+                msg = (
+                    "Zero or more than one items satisfy the given predicate"
+                )
+                raise ValueError(msg)
+            return result[0]
+
+        return self.source[0]
+
+    def single_or_deafult(
+        self,
+        default: TSource,
+        predicate: Callable[[TSource], bool] | None = None,
+        /,
+    ) -> TSource:
+        if predicate is None and len(self.source) > 1:
+            msg = (
+                "There is more than one item in Enumerable (self) and "
+                "predicate isn't given"
+            )
+            raise ValueError(msg)
+
+        if predicate is not None:
+            if (
+                length := len(
+                    filtered := tuple(filter(predicate, self.source)),
+                )
+            ) > 1:
+                msg = (
+                    "Zero or more than one items satisfy the given predicate"
+                )
+                raise ValueError(msg)
+
+            return filtered[0] if length == 1 else default
+
+        try:
+            # https://github.com/microsoft/pyright/issues/10051
+            return self.source[0] # type: ignore
+        except IndexError:
+            return default
