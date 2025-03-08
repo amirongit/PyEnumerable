@@ -174,5 +174,5 @@ class PurePythonEnumerable[TSource]:
         /,
     ) -> int:
         return sum(
-                1 for i in self.source if predicate(i)
+            1 for i in self.source if predicate(i)
         ) if predicate is not None else len(self.source)
