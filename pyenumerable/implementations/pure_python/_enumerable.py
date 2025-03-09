@@ -210,3 +210,38 @@ class PurePythonEnumerable[TSource]:
             )
             raise ValueError(msg)
         return items[0] if length == 1 else default
+
+    def skip(
+        self,
+        start_or_count: int,
+        end: int | None = None,
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        try:
+            return PurePythonEnumerable(
+                *(
+                    self.source[:start_or_count] + self.source[end:] if (
+                        end is not None
+                    ) else self.source[start_or_count:]
+                ),
+            )
+        except IndexError as e:
+            msg = "Given indices are out of range"
+            raise IndexError(msg) from e
+
+    def skip_last(self, count: int, /) -> PurePythonEnumerable[TSource]:
+        try:
+            return PurePythonEnumerable(*self.source[:-count])
+        except IndexError as e:
+            msg = "Given indices are out of range"
+            raise IndexError(msg) from e
+
+    def skip_while(
+        self,
+        predicate: Callable[[int, TSource], bool],
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        for index, item in enumerate(self.source):
+            if not predicate(index, item):
+                return PurePythonEnumerable(*self.source[index:])
+        return PurePythonEnumerable()
