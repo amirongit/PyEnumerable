@@ -24,7 +24,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Supports Prepend
     - [ ] Supports Order
     - [x] Supports Min
-    - [ ] Supports Skip
+    - [x] Supports Skip
     - [x] Supports Single
     - [ ] Supports Sequence equal
     - [ ] Supports Reverse
@@ -36,3 +36,4 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Supports Where
     - [x] Supports Select
     - [x] Supports Max
+- [ ] Implement runtime validations for PP Implementation

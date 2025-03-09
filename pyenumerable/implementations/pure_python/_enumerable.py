@@ -178,22 +178,17 @@ class PurePythonEnumerable[TSource]:
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> TSource:
-        if predicate is None and len(self.source) != 1:
+        if len(
+            items := tuple(
+                filter(predicate, self.source),
+            ) if predicate is not None else self.source,
+        ) != 1:
             msg = (
-                "There is zero or more than exactly one item in "
-                "Enumerable (self) and predicate isn't given"
+                "There are zero or more than exactly one item to return; If "
+                "predicate is given, make sure it filters exactly one item"
             )
             raise ValueError(msg)
-
-        if predicate is not None:
-            if len(result := tuple(filter(predicate, self.source))) != 1:
-                msg = (
-                    "Zero or more than one items satisfy the given predicate"
-                )
-                raise ValueError(msg)
-            return result[0]
-
-        return self.source[0]
+        return items[0]
 
     def single_or_deafult(
         self,
@@ -201,28 +196,48 @@ class PurePythonEnumerable[TSource]:
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> TSource:
-        if predicate is None and len(self.source) > 1:
+        if (
+            length := len(
+                items := self.source if predicate is None else tuple(
+                    filter(predicate, self.source),
+                ),
+            )
+        ) > 1:
             msg = (
-                "There is more than one item in Enumerable (self) and "
-                "predicate isn't given"
+                "There are more than one item to return or fall back to "
+                "default; If predicate is given, make sure it filters one or "
+                "zero item"
             )
             raise ValueError(msg)
+        return items[0] if length == 1 else default
 
-        if predicate is not None:
-            if (
-                length := len(
-                    filtered := tuple(filter(predicate, self.source)),
-                )
-            ) > 1:
-                msg = (
-                    "Zero or more than one items satisfy the given predicate"
-                )
-                raise ValueError(msg)
+    def skip(
+        self,
+        start_or_count: int,
+        end: int | None = None,
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(
+            *(
+                self.source[:start_or_count] + self.source[end:] if (
+                    end is not None
+                ) else self.source[start_or_count:]
+            ),
+        )
 
-            return filtered[0] if length == 1 else default
+    def skip_last(self, count: int, /) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(*self.source[:-count])
 
-        try:
-            # https://github.com/microsoft/pyright/issues/10051
-            return self.source[0] # type: ignore
-        except IndexError:
-            return default
+    def skip_while(
+        self,
+        predicate: Callable[[int, TSource], bool],
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        start = 0
+        for index, item in enumerate(self.source):
+            start = index
+            if not predicate(index, item):
+                break
+        else:
+            start += 1
+        return PurePythonEnumerable(*self.source[start:])
