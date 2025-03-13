@@ -241,3 +241,34 @@ class PurePythonEnumerable[TSource]:
         else:
             start += 1
         return PurePythonEnumerable(*self.source[start:])
+
+    def take(
+        self,
+        start_or_count: int,
+        end: int | None = None,
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(
+            *(
+                self.source[start_or_count:end] if (
+                    end is not None
+                ) else self.source[:start_or_count]
+            ),
+        )
+
+    def take_last(self, count: int, /) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(*self.source[-count:])
+
+    def take_while(
+        self,
+        predicate: Callable[[int, TSource], bool],
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        stop = 0
+        for index, item in enumerate(self.source):
+            stop = index
+            if not predicate(index, item):
+                break
+        else:
+            stop += 1
+        return PurePythonEnumerable(*self.source[:stop])
