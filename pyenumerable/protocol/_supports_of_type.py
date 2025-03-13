@@ -4,7 +4,7 @@ if TYPE_CHECKING:
     from ._enumerable import Enumerable
 
 
-class SupportsTypeOf[TSource](Protocol):
+class SupportsOfType[TSource](Protocol):
     def of_type[TResult](
         self,
         type_: type[TResult],
