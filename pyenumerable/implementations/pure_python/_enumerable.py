@@ -272,3 +272,12 @@ class PurePythonEnumerable[TSource]:
         else:
             stop += 1
         return PurePythonEnumerable(*self.source[:stop])
+
+    def of_type[TResult](
+        self,
+        type_: type[TResult],
+        /,
+    ) -> PurePythonEnumerable[TResult]:
+        return PurePythonEnumerable( # type: ignore
+            *filter(lambda i: isinstance(i, type_), self.source),
+        )
