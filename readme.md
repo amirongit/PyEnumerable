@@ -29,8 +29,8 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Supports Sequence equal
     - [ ] Supports Reverse
     - [ ] Supports Union
-    - [ ] Supports Type of
-    - [ ] Supports Take
+    - [x] Supports Of type
+    - [x] Supports Take
     - [ ] Supports Sum
     - [ ] Supports Zip
     - [ ] Supports Where
