@@ -310,3 +310,17 @@ class PurePythonEnumerable[TSource]:
         except TypeError as te:
             msg = "TSource can't be passed to bultins.sum"
             raise TypeError(msg) from te
+
+    def where(
+        self,
+        predicate: Callable[[int, TSource], bool],
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(
+            *(
+                en[1] for en in filter(
+                    lambda i: predicate(i[0], i[1]),
+                    enumerate(self.source),
+                )
+            ),
+        )
