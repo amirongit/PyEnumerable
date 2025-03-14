@@ -303,3 +303,10 @@ class PurePythonEnumerable[TSource]:
                 predicate is not None
             ) else self.source,
         )
+
+    def sum(self, /) -> TSource:
+        try:
+            return sum(self.source) # type: ignore
+        except TypeError as te:
+            msg = "TSource can't be passed to bultins.sum"
+            raise TypeError(msg) from te
