@@ -33,7 +33,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Supports Take
     - [x] Supports Sum
     - [ ] Supports Zip
-    - [ ] Supports Where
+    - [x] Supports Where
     - [x] Supports Select
     - [x] Supports Max
 - [ ] Implement runtime validations for PP Implementation
