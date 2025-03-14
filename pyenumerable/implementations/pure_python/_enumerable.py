@@ -281,3 +281,6 @@ class PurePythonEnumerable[TSource]:
         return PurePythonEnumerable( # type: ignore
             *filter(lambda i: isinstance(i, type_), self.source),
         )
+
+    def all(self, predicate: Callable[[TSource], bool], /) -> bool:
+        return all(predicate(i) for i in self.source)
