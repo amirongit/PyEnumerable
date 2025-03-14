@@ -282,5 +282,24 @@ class PurePythonEnumerable[TSource]:
             *filter(lambda i: isinstance(i, type_), self.source),
         )
 
-    def all(self, predicate: Callable[[TSource], bool], /) -> bool:
-        return all(predicate(i) for i in self.source)
+    def all(
+        self,
+        predicate: Callable[[TSource], bool] | None = None,
+        /,
+    ) -> bool:
+        return all(
+            (predicate(i) for i in self.source) if (
+                predicate is not None
+            ) else self.source,
+        )
+
+    def any(
+        self,
+        predicate: Callable[[TSource], bool] | None = None,
+        /,
+    ) -> bool:
+        return any(
+            (predicate(i) for i in self.source) if (
+                predicate is not None
+            ) else self.source,
+        )
