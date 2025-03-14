@@ -6,7 +6,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 - [x] Design protocols for each operation set
 - [x] Design & Implement `Enumerable` constructor(s) for PP implementation
 - [ ] Implement `Enumerable` for PP Implementation
-    - [ ] Supports Any
+    - [x] Supports Any
     - [x] Supports All
     - [ ] Supports Aggregate
     - [ ] Supports Chunk
