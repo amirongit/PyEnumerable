@@ -17,6 +17,7 @@ from ._supports_intersect import SupportsIntersect
 from ._supports_join import SupportsJoin
 from ._supports_max import SupportsMax
 from ._supports_min import SupportsMin
+from ._supports_of_type import SupportsOfType
 from ._supports_order import SupportsOrder
 from ._supports_prepend import SupportsPrepend
 from ._supports_reverse import SupportsReverse
@@ -26,7 +27,6 @@ from ._supports_single import SupportsSingle
 from ._supports_skip import SupportsSkip
 from ._supports_sum import SupportsSum
 from ._supports_take import SupportsTake
-from ._supports_type_of import SupportsTypeOf
 from ._supports_union import SupportsUnion
 from ._supports_where import SupportsWhere
 from ._supports_zip import SupportsZip
