@@ -2,7 +2,7 @@ from pyenumerable.implementations.pure_python import PurePythonEnumerable
 
 
 class TestConcatMethod:
-    def test_functionality(self) -> None:
+    def test_concat(self) -> None:
         first = PurePythonEnumerable(
             *(first_items := (-5, 5, -2, 8, 3, -9, 8, 5, -4)),
         )

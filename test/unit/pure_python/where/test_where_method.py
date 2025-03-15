@@ -2,7 +2,7 @@ from pyenumerable.implementations.pure_python import PurePythonEnumerable
 
 
 class TestWhereMethod:
-    def test_functionality(self) -> None:
+    def test_where(self) -> None:
         obj = PurePythonEnumerable(*(items := range(700)))
 
         res = obj.where(predicate := lambda _, v: v % 5 == 0)

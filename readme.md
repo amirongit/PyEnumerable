@@ -6,34 +6,34 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 - [x] Design protocols for each operation set
 - [x] Design & Implement `Enumerable` constructor(s) for PP implementation
 - [ ] Implement `Enumerable` for PP Implementation
-    - [x] Supports Any
-    - [x] Supports All
-    - [ ] Supports Aggregate
-    - [ ] Supports Chunk
-    - [ ] Supports Average
-    - [ ] Supports Append
-    - [ ] Supports Except
-    - [ ] Supports Distinct
-    - [x] Supports Count
-    - [x] Supports Contains
-    - [x] Supports Concat
-    - [ ] Supports Join
-    - [ ] Supports Intersect
-    - [ ] Supports Group join
-    - [ ] Supports Group by
-    - [ ] Supports Prepend
-    - [ ] Supports Order
-    - [x] Supports Min
-    - [x] Supports Skip
-    - [x] Supports Single
-    - [ ] Supports Sequence equal
-    - [ ] Supports Reverse
-    - [ ] Supports Union
-    - [x] Supports Of type
-    - [x] Supports Take
-    - [x] Supports Sum
-    - [ ] Supports Zip
-    - [x] Supports Where
-    - [x] Supports Select
-    - [x] Supports Max
+    - [x] Any
+    - [x] All
+    - [ ] Aggregate
+    - [ ] Chunk
+    - [ ] Average
+    - [ ] Append
+    - [ ] Except
+    - [ ] Distinct
+    - [x] Count
+    - [x] Contains
+    - [x] Concat
+    - [ ] Join
+    - [ ] Intersect
+    - [ ] Group join
+    - [ ] Group by
+    - [x] Prepend
+    - [ ] Order
+    - [x] Min
+    - [x] Skip
+    - [x] Single
+    - [ ] Sequence equal
+    - [ ] Reverse
+    - [ ] Union
+    - [x] Of type
+    - [x] Take
+    - [x] Sum
+    - [ ] Zip
+    - [x] Where
+    - [x] Select
+    - [x] Max
 - [ ] Implement runtime validations for PP Implementation
