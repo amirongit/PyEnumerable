@@ -11,7 +11,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Aggregate
     - [ ] Chunk
     - [ ] Average
-    - [ ] Append
+    - [x] Append
     - [ ] Except
     - [ ] Distinct
     - [x] Count
