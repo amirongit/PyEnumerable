@@ -21,8 +21,9 @@ class TestCountMethod:
         age_of_consent = 21
         number_of_fuckable_people = 3
 
-        assert obj.count_(
-            lambda p: p.age >= age_of_consent,
-        ) == number_of_fuckable_people
-
-
+        assert (
+            obj.count_(
+                lambda p: p.age >= age_of_consent,
+            )
+            == number_of_fuckable_people
+        )

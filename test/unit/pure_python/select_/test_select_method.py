@@ -12,8 +12,8 @@ class TestSelectMethod:
         res = obj.select(TestSelectMethod.combine_index_and_value)
 
         assert res.source == tuple(
-            TestSelectMethod.combine_index_and_value(i, v) for i,
-            v in enumerate(items)
+            TestSelectMethod.combine_index_and_value(i, v)
+            for i, v in enumerate(items)
         )
 
     @staticmethod
