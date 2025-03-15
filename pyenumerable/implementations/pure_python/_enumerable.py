@@ -358,15 +358,18 @@ class PurePythonEnumerable[TSource]:
             out: list[TSource] = []
             for item in self.source:
                 for captured in out:
-                    if not comparer(item, captured):
-                        out.append(item)  # noqa: PERF401
+                    if comparer(item, captured):
+                        break
+                else:
+                    out.append(item)
             return PurePythonEnumerable(*out)
 
-        if not isinstance(self.source[0], Hashable):
+        try:
+            return PurePythonEnumerable(*dict.fromkeys(self.source).keys())
+        except TypeError as te:
             msg = "TSource doesn't implement __hash__; Comparer isn't given"
-            raise TypeError(msg)
+            raise TypeError(msg) from te
 
-        return PurePythonEnumerable(*dict.fromkeys(self.source).keys())
 
     def distinct_by[TKey](
         self,
@@ -379,19 +382,22 @@ class PurePythonEnumerable[TSource]:
             return PurePythonEnumerable()
 
         if comparer is not None:
-            out: list[TSource] = []
+            captured_list: list[TSource] = []
             for item in self.source:
-                for captured in out:
-                    if not comparer(
-                        key_selector(item),
-                        key_selector(captured),
-                    ):
-                        out.append(item)  # noqa: PERF401
+                for captured in captured_list:
+                    if comparer(key_selector(item), key_selector(captured)):
+                        break
+                else:
+                    captured_list.append(item)
+            return PurePythonEnumerable(*captured_list)
 
-        if not isinstance(key_selector(self.source[0]), Hashable):
+        try:
+            captured_dict: dict[TKey, TSource] = {}
+            for item in self.source:
+                if (k := key_selector(item)) not in captured_dict:
+                    captured_dict[k] = item
+
+            return PurePythonEnumerable(*captured_dict.values())
+        except TypeError as te:
             msg = "TKey doesn't implement __hash__; Comparer isn't given"
-            raise TypeError(msg)
-
-        return PurePythonEnumerable(
-            *{key_selector(i): i for i in self.source}.values(),
-        )
+            raise TypeError(msg) from te
