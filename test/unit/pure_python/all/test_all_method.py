@@ -40,10 +40,10 @@ class TestAllMethod:
 
     def test_fail_with_predicate(self) -> None:
         obj = PurePythonEnumerable(
-            Person("john", 14, Person("marry", 36)),
-            Person("junior", 14, Person("james", 36)),
-            Person("larry", 6),
-            Person("jane", 6, Person("harry", 28)),
+            Person("john doe", 14, Person("marry doe", 36)),
+            Person("junior doe", 14, Person("james doe", 36)),
+            Person("larry doe", 6),
+            Person("jane doe", 6, Person("harry doe", 28)),
         )
 
         res = obj.all(lambda person: person.parent is not None)

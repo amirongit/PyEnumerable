@@ -15,13 +15,13 @@ class TestContainsMethod:
 
     def test_positive_with_comparer(self) -> None:
         obj = PurePythonEnumerable(
-            Person("john", 14),
-            Person("jane", 12),
+            Person("john doe", 14),
+            Person("jane doe", 12),
         )
 
         assert (
             obj.contains(
-                Person("john", 14),
+                Person("john doe", 14),
                 comparer=lambda first, second: (first.name == second.name)
                 and (first.age == second.age),
             )
@@ -38,13 +38,13 @@ class TestContainsMethod:
 
     def test_negative_with_comparer(self) -> None:
         obj = PurePythonEnumerable(
-            Person("john", 14),
-            Person("jane", 12),
+            Person("john doe", 14),
+            Person("jane doe", 12),
         )
 
         assert (
             obj.contains(
-                Person("john", 23),
+                Person("john doe", 23),
                 comparer=lambda first, second: (first.name == second.name)
                 and (first.age == second.age),
             )

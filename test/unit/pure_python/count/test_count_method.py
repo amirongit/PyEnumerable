@@ -10,12 +10,12 @@ class TestCountMethod:
 
     def test_with_predicate(self) -> None:
         obj = PurePythonEnumerable(
-            Person("john", 21),
-            Person("jane", 13),
-            Person("james", 7),
-            Person("marry", 34),
-            Person("harry", 17),
-            Person("larry", 28),
+            Person("john doe", 21),
+            Person("jane doe", 13),
+            Person("james doe", 7),
+            Person("marry doe", 34),
+            Person("harry doe", 17),
+            Person("larry doe", 28),
         )
 
         age_of_consent = 21
@@ -23,7 +23,7 @@ class TestCountMethod:
 
         assert (
             obj.count_(
-                lambda p: p.age >= age_of_consent,
+                lambda person: person.age >= age_of_consent,
             )
             == number_of_fuckable_people
         )
