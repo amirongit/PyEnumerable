@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Hashable, Iterable
 from itertools import chain
 from typing import Any, Protocol, cast
 
@@ -29,7 +29,7 @@ class PurePythonEnumerable[TSource]:
     ) -> PurePythonEnumerable[TResult]:
         return PurePythonEnumerable(
             *tuple(selector(i, v) for i, v in enumerate(self.source)),
-       )
+        )
 
     def select_many[TResult](
         self,
@@ -62,7 +62,7 @@ class PurePythonEnumerable[TSource]:
             return out
 
         try:
-            return max(self.source) # type: ignore
+            return max(self.source)  # type: ignore
         except TypeError as te:
             msg = (
                 "TSource doesn't implement "
@@ -88,12 +88,11 @@ class PurePythonEnumerable[TSource]:
 
         try:
             return self.source[
-                cast(int, max(enumerated, key=lambda e: e[1])[0]) # type: ignore
+                cast(int, max(enumerated, key=lambda e: e[1])[0])  # type: ignore
             ]
         except TypeError as te:
             msg = (
-                "TKey doesn't implement "
-                "pyenumerable.typing_utility.Comparable"
+                "TKey doesn't implement pyenumerable.typing_utility.Comparable"
             )
             raise TypeError(msg) from te
 
@@ -112,7 +111,7 @@ class PurePythonEnumerable[TSource]:
             return out
 
         try:
-            return min(self.source) # type: ignore
+            return min(self.source)  # type: ignore
         except TypeError as te:
             msg = (
                 "TSource doesn't implement "
@@ -138,13 +137,12 @@ class PurePythonEnumerable[TSource]:
 
         try:
             return self.source[
-                cast(int, min(enumerated, key=lambda e: e[1])[0]) # type: ignore
+                cast(int, min(enumerated, key=lambda e: e[1])[0])  # type: ignore
             ]
         except TypeError as te:
             msg = (
-                    "TKey doesn't implement "
-                    "pyenumerable.typing_utility.Comparable"
-                    )
+                "TKey doesn't implement pyenumerable.typing_utility.Comparable"
+            )
             raise TypeError(msg) from te
 
     @staticmethod
@@ -161,28 +159,37 @@ class PurePythonEnumerable[TSource]:
         comparer: Comparer[TSource] | None = None,
     ) -> bool:
         return (
-            any(comparer(item, i) for i in self.source)
-        ) if comparer is not None else item in self.source
+            (any(comparer(item, i) for i in self.source))
+            if comparer is not None
+            else item in self.source
+        )
 
     def count_(
         self,
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> int:
-        return sum(
-            1 for i in self.source if predicate(i)
-        ) if predicate is not None else len(self.source)
+        return (
+            sum(1 for i in self.source if predicate(i))
+            if predicate is not None
+            else len(self.source)
+        )
 
     def single(
         self,
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> TSource:
-        if len(
-            items := tuple(
-                filter(predicate, self.source),
-            ) if predicate is not None else self.source,
-        ) != 1:
+        if (
+            len(
+                items := tuple(
+                    filter(predicate, self.source),
+                )
+                if predicate is not None
+                else self.source,
+            )
+            != 1
+        ):
             msg = (
                 "There are zero or more than exactly one item to return; If "
                 "predicate is given, make sure it filters exactly one item"
@@ -198,7 +205,9 @@ class PurePythonEnumerable[TSource]:
     ) -> TSource:
         if (
             length := len(
-                items := self.source if predicate is None else tuple(
+                items := self.source
+                if predicate is None
+                else tuple(
                     filter(predicate, self.source),
                 ),
             )
@@ -219,9 +228,9 @@ class PurePythonEnumerable[TSource]:
     ) -> PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(
             *(
-                self.source[:start_or_count] + self.source[end:] if (
-                    end is not None
-                ) else self.source[start_or_count:]
+                self.source[:start_or_count] + self.source[end:]
+                if (end is not None)
+                else self.source[start_or_count:]
             ),
         )
 
@@ -250,9 +259,9 @@ class PurePythonEnumerable[TSource]:
     ) -> PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(
             *(
-                self.source[start_or_count:end] if (
-                    end is not None
-                ) else self.source[:start_or_count]
+                self.source[start_or_count:end]
+                if (end is not None)
+                else self.source[:start_or_count]
             ),
         )
 
@@ -278,7 +287,7 @@ class PurePythonEnumerable[TSource]:
         type_: type[TResult],
         /,
     ) -> PurePythonEnumerable[TResult]:
-        return PurePythonEnumerable( # type: ignore
+        return PurePythonEnumerable(  # type: ignore
             *filter(lambda i: isinstance(i, type_), self.source),
         )
 
@@ -288,9 +297,9 @@ class PurePythonEnumerable[TSource]:
         /,
     ) -> bool:
         return all(
-            (predicate(i) for i in self.source) if (
-                predicate is not None
-            ) else self.source,
+            (predicate(i) for i in self.source)
+            if (predicate is not None)
+            else self.source,
         )
 
     def any(
@@ -299,14 +308,14 @@ class PurePythonEnumerable[TSource]:
         /,
     ) -> bool:
         return any(
-            (predicate(i) for i in self.source) if (
-                predicate is not None
-            ) else self.source,
+            (predicate(i) for i in self.source)
+            if (predicate is not None)
+            else self.source,
         )
 
     def sum(self, /) -> TSource:
         try:
-            return sum(self.source) # type: ignore
+            return sum(self.source)  # type: ignore
         except TypeError as te:
             msg = "TSource can't be passed to bultins.sum"
             raise TypeError(msg) from te
@@ -318,7 +327,8 @@ class PurePythonEnumerable[TSource]:
     ) -> PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(
             *(
-                en[1] for en in filter(
+                en[1]
+                for en in filter(
                     lambda i: predicate(i[0], i[1]),
                     enumerate(self.source),
                 )
@@ -334,3 +344,54 @@ class PurePythonEnumerable[TSource]:
 
     def append(self, element: TSource, /) -> PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(*self.source, element)
+
+    def distinct(
+        self,
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0:
+            return PurePythonEnumerable()
+
+        if comparer is not None:
+            out: list[TSource] = []
+            for item in self.source:
+                for captured in out:
+                    if not comparer(item, captured):
+                        out.append(item)  # noqa: PERF401
+            return PurePythonEnumerable(*out)
+
+        if not isinstance(self.source[0], Hashable):
+            msg = "TSource doesn't implement __hash__; Comparer isn't given"
+            raise TypeError(msg)
+
+        return PurePythonEnumerable(*dict.fromkeys(self.source).keys())
+
+    def distinct_by[TKey](
+        self,
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0:
+            return PurePythonEnumerable()
+
+        if comparer is not None:
+            out: list[TSource] = []
+            for item in self.source:
+                for captured in out:
+                    if not comparer(
+                        key_selector(item),
+                        key_selector(captured),
+                    ):
+                        out.append(item)  # noqa: PERF401
+
+        if not isinstance(key_selector(self.source[0]), Hashable):
+            msg = "TKey doesn't implement __hash__; Comparer isn't given"
+            raise TypeError(msg)
+
+        return PurePythonEnumerable(
+            *{key_selector(i): i for i in self.source}.values(),
+        )
