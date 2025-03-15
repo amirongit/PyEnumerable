@@ -331,3 +331,6 @@ class PurePythonEnumerable[TSource]:
         /,
     ) -> PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(element, *self.source)
+
+    def append(self, element: TSource, /) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(*self.source, element)
