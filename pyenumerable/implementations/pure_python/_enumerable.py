@@ -324,3 +324,10 @@ class PurePythonEnumerable[TSource]:
                 )
             ),
         )
+
+    def prepend(
+        self,
+        element: TSource,
+        /,
+    ) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(element, *self.source)
