@@ -43,8 +43,8 @@ class TestDistinctMethod:
         )
 
         res = obj.distinct(
-            comparer=lambda first_point, second_point:
-            first_point.y == second_point.y,
+            comparer=lambda first_point, second_point: first_point.y
+            == second_point.y,
         )
 
         assert res.source == (first, second, third, fourth)

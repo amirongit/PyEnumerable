@@ -8,7 +8,7 @@ class TestDistinctByMethod:
     def test_when_empty(self) -> None:
         obj: PurePythonEnumerable[int] = PurePythonEnumerable()
 
-        res = obj.distinct_by(lambda x: x ** 2)
+        res = obj.distinct_by(lambda x: x**2)
 
         assert res.source == ()
 
@@ -27,7 +27,7 @@ class TestDistinctByMethod:
             from_iterable=(items := tuple(range(7)), [-i for i in items]),
         )
 
-        res = obj.distinct_by(lambda i: i ** 2)
+        res = obj.distinct_by(lambda i: i**2)
 
         assert res.source == items
 
@@ -45,8 +45,7 @@ class TestDistinctByMethod:
 
         res = obj.distinct_by(
             lambda point: point.y,
-            comparer=lambda first_y, second_y:
-            first_y ** 2 == second_y ** 2
+            comparer=lambda first_y, second_y: first_y**2 == second_y**2,
         )
 
         assert res.source == (first, second, third, fourth)

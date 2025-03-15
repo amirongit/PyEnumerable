@@ -370,7 +370,6 @@ class PurePythonEnumerable[TSource]:
             msg = "TSource doesn't implement __hash__; Comparer isn't given"
             raise TypeError(msg) from te
 
-
     def distinct_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
