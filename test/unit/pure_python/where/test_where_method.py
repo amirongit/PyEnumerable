@@ -8,7 +8,8 @@ class TestWhereMethod:
         res = obj.where(predicate := lambda _, v: v % 5 == 0)
 
         assert res.source == tuple(
-            en[1] for en in filter(
+            en[1]
+            for en in filter(
                 lambda i: predicate(i[0], i[1]),
                 enumerate(items),
             )

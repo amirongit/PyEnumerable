@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Protocol
 
-type Comparer[T] = Callable[[T,T], bool]
+type Comparer[T] = Callable[[T, T], bool]
 
 
 class Comparable(Protocol):

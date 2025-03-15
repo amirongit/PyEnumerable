@@ -24,7 +24,6 @@ class TestMaxMethod:
 
         assert res is maximum
 
-
     def test_without_comparer(self) -> None:
         obj = PurePythonEnumerable(6, 8, maximum := 10, 9, 7)
 

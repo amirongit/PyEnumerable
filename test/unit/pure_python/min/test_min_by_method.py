@@ -13,8 +13,8 @@ class TestMinByMethod:
 
     def test_exc_raise_when_uncomparable(self) -> None:
         obj = PurePythonEnumerable(
-            Person("jane", 4, Person("james", 34)),
-            Person("john", 3),
+            Person("jane doe", 4, Person("james doe", 34)),
+            Person("john doe", 3),
         )
 
         with pytest.raises(TypeError):
@@ -22,8 +22,8 @@ class TestMinByMethod:
 
     def test_with_comparer(self) -> None:
         obj = PurePythonEnumerable(
-            Person("john", 4, Person("jessie", 40)),
-            minimum := Person("jane", 12, Person("james", 34)),
+            Person("john doe", 4, Person("jessie doe", 40)),
+            minimum := Person("jane doe", 12, Person("james doe", 34)),
         )
 
         res = obj.min_by(
@@ -35,8 +35,8 @@ class TestMinByMethod:
 
     def test_without_comparer(self) -> None:
         obj = PurePythonEnumerable(
-            Person("jane", 12, Person("james", 34)),
-            minimum := Person("john", 4, Person("jessie", 40)),
+            Person("jane doe", 12, Person("james doe", 34)),
+            minimum := Person("john doe", 4, Person("jessie doe", 40)),
         )
 
         res = obj.min_by(lambda person: person.age)

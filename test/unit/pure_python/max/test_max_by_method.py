@@ -13,8 +13,8 @@ class TestMaxByMethod:
 
     def test_exc_raise_when_uncomparable(self) -> None:
         obj = PurePythonEnumerable(
-            Person("jane", 4, Person("james", 34)),
-            Person("john", 3),
+            Person("jane doe", 4, Person("james doe", 34)),
+            Person("john doe", 3),
         )
 
         with pytest.raises(TypeError):
@@ -22,8 +22,8 @@ class TestMaxByMethod:
 
     def test_with_comparer(self) -> None:
         obj = PurePythonEnumerable(
-            Person("jane", 12, Person("james", 34)),
-            maximum := Person("john", 4, Person("jessie", 40)),
+            Person("jane doe", 12, Person("james doe", 34)),
+            maximum := Person("john doe", 4, Person("jessie doe", 40)),
         )
 
         res = obj.max_by(
@@ -35,8 +35,8 @@ class TestMaxByMethod:
 
     def test_without_comparer(self) -> None:
         obj = PurePythonEnumerable(
-            maximum := Person("jane", 12, Person("james", 34)),
-            Person("john", 4, Person("jessie", 40)),
+            maximum := Person("jane doe", 12, Person("james doe", 34)),
+            Person("john doe", 4, Person("jessie doe", 40)),
         )
 
         res = obj.max_by(lambda person: person.age)
