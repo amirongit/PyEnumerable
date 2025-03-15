@@ -13,7 +13,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Average
     - [x] Append
     - [ ] Except
-    - [ ] Distinct
+    - [x] Distinct
     - [x] Count
     - [x] Contains
     - [x] Concat
