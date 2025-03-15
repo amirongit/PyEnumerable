@@ -4,7 +4,7 @@ from pyenumerable.implementations.pure_python import PurePythonEnumerable
 
 
 class TestSelectMethod:
-    def test_functionality(self) -> None:
+    def test_select(self) -> None:
         obj = PurePythonEnumerable(
             *(items := (-4, -2, 4, -9, -3, -4, -4, -10, 7)),
         )

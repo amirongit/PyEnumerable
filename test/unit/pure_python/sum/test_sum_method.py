@@ -10,7 +10,7 @@ class TestSumMethod:
         with pytest.raises(TypeError):
             obj.sum()
 
-    def test_functionality(self) -> None:
+    def test_sum(self) -> None:
         obj = PurePythonEnumerable(*(items := tuple(range(7))))
 
         res = obj.sum()
