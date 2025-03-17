@@ -407,11 +407,23 @@ class PurePythonEnumerable[TSource]:
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> PurePythonEnumerable[TSource]:
-        if (length := len(self.source)) == 0:
+        if len(self.source) == 0:
             return PurePythonEnumerable()
 
         if comparer is not None:
-            pass
+            rank_table: dict[int, list[TSource]] = {}
+            for item in self.source:
+                rank = 0
+                for compared in self.source:
+                    if comparer(compared, item):
+                        rank += 1
+                rank_table.setdefault(rank, []).append(item)
+
+            return PurePythonEnumerable(
+                from_iterable=[
+                    rank_table[key] for key in sorted(rank_table.keys())
+                ]
+            )
 
         try:
             return PurePythonEnumerable(*sorted(self.source))  # type: ignore
