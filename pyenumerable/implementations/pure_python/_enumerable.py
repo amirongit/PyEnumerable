@@ -536,3 +536,10 @@ class PurePythonEnumerable[TSource]:
                 "pyenumerable.typing_utility.Comparable"
             )
             raise TypeError(msg) from te
+
+    def zip[TSecond](
+        self,
+        second: PurePythonEnumerable[TSecond],
+        /,
+    ) -> PurePythonEnumerable[tuple[TSource, TSecond]]:
+        return PurePythonEnumerable(*zip(self.source, second.source))
