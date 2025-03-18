@@ -543,3 +543,6 @@ class PurePythonEnumerable[TSource]:
         /,
     ) -> PurePythonEnumerable[tuple[TSource, TSecond]]:
         return PurePythonEnumerable(*zip(self.source, second.source))
+
+    def reverse(self, /) -> PurePythonEnumerable[TSource]:
+        return PurePythonEnumerable(*reversed(self.source))

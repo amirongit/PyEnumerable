@@ -27,7 +27,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Skip
     - [x] Single
     - [ ] Sequence equal
-    - [ ] Reverse
+    - [x] Reverse
     - [ ] Union
     - [x] Of type
     - [x] Take
