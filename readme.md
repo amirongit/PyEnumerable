@@ -32,9 +32,9 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Of type
     - [x] Take
     - [x] Sum
-    - [ ] Zip
+    - [x] Zip
     - [x] Where
     - [x] Select
     - [x] Max
 - [ ] Implement runtime validations for PP Implementation
-- [ ] Make coherent use of `behaviour` across methods
+- [ ] Make coherent use of `comparer` across methods
