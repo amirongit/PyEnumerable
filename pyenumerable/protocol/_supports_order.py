@@ -14,8 +14,9 @@ class SupportsOrder[TSource](Protocol):
     @overload
     def order(
         self,
-        comprarer: Comparer[TSource],
         /,
+        *,
+        comparer: Comparer[TSource],
     ) -> "Enumerable[TSource]": ...
 
     @overload
@@ -26,7 +27,7 @@ class SupportsOrder[TSource](Protocol):
         self,
         /,
         *,
-        comprarer: Comparer[TSource],
+        comparer: Comparer[TSource],
     ) -> "Enumerable[TSource]": ...
 
     @overload

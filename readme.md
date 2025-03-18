@@ -22,7 +22,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Group join
     - [ ] Group by
     - [x] Prepend
-    - [ ] Order
+    - [x] Order
     - [x] Min
     - [x] Skip
     - [x] Single
@@ -37,3 +37,4 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Select
     - [x] Max
 - [ ] Implement runtime validations for PP Implementation
+- [ ] Make coherent use of `behaviour` across methods

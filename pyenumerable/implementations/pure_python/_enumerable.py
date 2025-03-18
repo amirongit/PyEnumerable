@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from collections.abc import Callable, Hashable, Iterable
 from itertools import chain
-from typing import Any, Protocol, cast
+from typing import Any, Protocol
 
-from pyenumerable.typing_utility import Comparer
+from pyenumerable.typing_utility import Comparable, Comparer
 
 
 class PurePythonEnumerable[TSource]:
@@ -87,9 +87,7 @@ class PurePythonEnumerable[TSource]:
             return self.source[max_key[0]]
 
         try:
-            return self.source[
-                cast(int, max(enumerated, key=lambda e: e[1])[0])  # type: ignore
-            ]
+            return self.source[max(enumerated, key=lambda e: e[1])[0]]  # type: ignore
         except TypeError as te:
             msg = (
                 "TKey doesn't implement pyenumerable.typing_utility.Comparable"
@@ -136,9 +134,7 @@ class PurePythonEnumerable[TSource]:
             return self.source[min_key[0]]
 
         try:
-            return self.source[
-                cast(int, min(enumerated, key=lambda e: e[1])[0])  # type: ignore
-            ]
+            return self.source[min(enumerated, key=lambda e: e[1])[0]]  # type: ignore
         except TypeError as te:
             msg = (
                 "TKey doesn't implement pyenumerable.typing_utility.Comparable"
@@ -399,4 +395,144 @@ class PurePythonEnumerable[TSource]:
             return PurePythonEnumerable(*captured_dict.values())
         except TypeError as te:
             msg = "TKey doesn't implement __hash__; Comparer isn't given"
+            raise TypeError(msg) from te
+
+    def order(
+        self,
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0:
+            return PurePythonEnumerable()
+
+        if comparer is not None:
+            rank_table: dict[int, list[TSource]] = {}
+            for item in self.source:
+                rank = 0
+                for compared in self.source:
+                    if comparer(compared, item):
+                        rank += 1
+                rank_table.setdefault(rank, []).append(item)
+
+            return PurePythonEnumerable(
+                from_iterable=[
+                    rank_table[key] for key in sorted(rank_table.keys())
+                ]
+            )
+
+        try:
+            return PurePythonEnumerable(*sorted(self.source))  # type: ignore
+        except TypeError as te:
+            msg = (
+                "TSource doesn't implement "
+                "pyenumerable.typing_utility.Comparable"
+            )
+            raise TypeError(msg) from te
+
+    def order_descending(
+        self,
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0:
+            return PurePythonEnumerable()
+
+        if comparer is not None:
+            rank_table: dict[int, list[TSource]] = {}
+            for item in self.source:
+                rank = 0
+                for compared in self.source:
+                    if not comparer(compared, item):
+                        rank += 1
+                rank_table.setdefault(rank, []).append(item)
+
+            return PurePythonEnumerable(
+                from_iterable=[
+                    rank_table[key] for key in sorted(rank_table.keys())
+                ]
+            )
+
+        try:
+            return PurePythonEnumerable(*sorted(self.source, reverse=True))  # type: ignore
+        except TypeError as te:
+            msg = (
+                "TSource doesn't implement "
+                "pyenumerable.typing_utility.Comparable"
+            )
+            raise TypeError(msg) from te
+
+    def order_by[TKey](
+        self,
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0:
+            return PurePythonEnumerable()
+
+        if comparer is not None:
+            rank_table: dict[int, list[TSource]] = {}
+            for item in self.source:
+                rank = 0
+                item_key = key_selector(item)
+                for compared in self.source:
+                    if comparer(key_selector(compared), item_key):
+                        rank += 1
+                rank_table.setdefault(rank, []).append(item)
+
+            return PurePythonEnumerable(
+                from_iterable=[
+                    rank_table[key] for key in sorted(rank_table.keys())
+                ]
+            )
+
+        try:
+            return PurePythonEnumerable(
+                *sorted(self.source, key=key_selector)  # type: ignore
+            )
+        except TypeError as te:
+            msg = (
+                "TSource doesn't implement "
+                "pyenumerable.typing_utility.Comparable"
+            )
+            raise TypeError(msg) from te
+
+    def order_by_descending[TKey](
+        self,
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0:
+            return PurePythonEnumerable()
+
+        if comparer is not None:
+            rank_table: dict[int, list[TSource]] = {}
+            for item in self.source:
+                rank = 0
+                item_key = key_selector(item)
+                for compared in self.source:
+                    if not comparer(key_selector(compared), item_key):
+                        rank += 1
+                rank_table.setdefault(rank, []).append(item)
+
+            return PurePythonEnumerable(
+                from_iterable=[
+                    rank_table[key] for key in sorted(rank_table.keys())
+                ]
+            )
+
+        try:
+            return PurePythonEnumerable(
+                *sorted(self.source, key=key_selector, reverse=True)  # type: ignore
+            )
+        except TypeError as te:
+            msg = (
+                "TSource doesn't implement "
+                "pyenumerable.typing_utility.Comparable"
+            )
             raise TypeError(msg) from te
