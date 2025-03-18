@@ -34,12 +34,12 @@ class TestOrderMethod:
             second := Point(0, 2),
             fourth := Point(0, 4),
             first := Point(0, 1),
-            third := Point(0, 3)
+            third := Point(0, 3),
         )
 
         res = obj.order(
-            comparer=lambda first_point,
-            second_point: first_point.y < second_point.y
+            comparer=lambda first_point, second_point: first_point.y
+            < second_point.y
         )
 
         assert res.source == (first, second, third, fourth, fifth)

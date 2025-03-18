@@ -27,7 +27,7 @@ class TestOrderByDescendingMethod:
             second := Point(0, 2),
             fourth := Point(0, 4),
             first := Point(0, 1),
-            third := Point(0, 3)
+            third := Point(0, 3),
         )
 
         res = obj.order_by_descending(lambda point: point.y)
@@ -40,20 +40,19 @@ class TestOrderByDescendingMethod:
             Person("jane doe", 31),
             second := Person("james doe", 28, Person("harry doe", 36)),
             third := Person("jade doe", 24, Person("larry doe", 42)),
-            first := Person("jacob doe", 14, Person("marry doe", 28))
+            first := Person("jacob doe", 14, Person("marry doe", 28)),
         )
 
         res = obj.order_by_descending(
             lambda person: person.parent,
-            comparer=TestOrderByDescendingMethod.parent_age_comparer
+            comparer=TestOrderByDescendingMethod.parent_age_comparer,
         )
 
         assert res.source[2:] == (third, second, first)
 
     @staticmethod
     def parent_age_comparer(
-        first_person: Person | None,
-        second_person: Person | None
+        first_person: Person | None, second_person: Person | None
     ) -> bool:
         if first_person is not None:
             if second_person is not None:
