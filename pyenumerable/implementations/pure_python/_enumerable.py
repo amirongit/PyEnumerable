@@ -657,3 +657,14 @@ class PurePythonEnumerable[TSource]:
         except TypeError as te:
             msg = "Average can't be executed on TSource"
             raise TypeError(msg) from te
+
+    def chunk(self, size: int, /) -> tuple[PurePythonEnumerable[TSource], ...]:
+        return tuple(
+            PurePythonEnumerable(*c) for c in (
+                self.source[i:i + size] for i in range(
+                    0,
+                    len(self.source),
+                    size
+                )
+            )
+        )
