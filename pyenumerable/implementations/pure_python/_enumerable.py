@@ -392,7 +392,6 @@ class PurePythonEnumerable[TSource]:
             for item in self.source:
                 if (k := key_selector(item)) not in captured_dict:
                     captured_dict[k] = item
-
             return PurePythonEnumerable(*captured_dict.values())
         except TypeError as te:
             msg = "TKey doesn't implement __hash__; Comparer isn't given"
@@ -427,7 +426,7 @@ class PurePythonEnumerable[TSource]:
         except TypeError as te:
             msg = (
                 "TSource doesn't implement "
-                "pyenumerable.typing_utility.Comparable"
+                "pyenumerable.typing_utility.Comparable; Comparer isn't given"
             )
             raise TypeError(msg) from te
 
@@ -460,7 +459,7 @@ class PurePythonEnumerable[TSource]:
         except TypeError as te:
             msg = (
                 "TSource doesn't implement "
-                "pyenumerable.typing_utility.Comparable"
+                "pyenumerable.typing_utility.Comparable; Comparer isn't given"
             )
             raise TypeError(msg) from te
 
@@ -497,7 +496,7 @@ class PurePythonEnumerable[TSource]:
         except TypeError as te:
             msg = (
                 "TSource doesn't implement "
-                "pyenumerable.typing_utility.Comparable"
+                "pyenumerable.typing_utility.Comparable; Comparer isn't given"
             )
             raise TypeError(msg) from te
 
@@ -534,7 +533,7 @@ class PurePythonEnumerable[TSource]:
         except TypeError as te:
             msg = (
                 "TSource doesn't implement "
-                "pyenumerable.typing_utility.Comparable"
+                "pyenumerable.typing_utility.Comparable; Comparer isn't given"
             )
             raise TypeError(msg) from te
 
@@ -593,3 +592,21 @@ class PurePythonEnumerable[TSource]:
                     else:
                         out.append(inner)
         return PurePythonEnumerable(*out)
+
+    def sequence_equal(
+        self,
+        other: PurePythonEnumerable[TSource],
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> bool:
+        if len(self.source) != len(other.source):
+            return False
+
+        comparer_: Comparer[TSource] = (
+            comparer if comparer is not None else lambda i, o: i == o
+        )
+        return all(
+            comparer_(inner, outer)
+            for inner, outer in zip(self.source, other.source)
+        )
