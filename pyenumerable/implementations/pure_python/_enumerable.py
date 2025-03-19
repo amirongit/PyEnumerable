@@ -660,11 +660,9 @@ class PurePythonEnumerable[TSource]:
 
     def chunk(self, size: int, /) -> tuple[PurePythonEnumerable[TSource], ...]:
         return tuple(
-            PurePythonEnumerable(*c) for c in (
-                self.source[i:i + size] for i in range(
-                    0,
-                    len(self.source),
-                    size
-                )
+            PurePythonEnumerable(*c)
+            for c in (
+                self.source[i : i + size]
+                for i in range(0, len(self.source), size)
             )
         )
