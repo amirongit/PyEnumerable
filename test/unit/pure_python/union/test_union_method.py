@@ -4,16 +4,17 @@ from test.unit.pure_python.test_utility import Point
 
 class TestUnionMethod:
     def test_without_comparer(self) -> None:
-        first_object = PurePythonEnumerable(*range(7))
-        second_object = PurePythonEnumerable(*range(3, 9))
+        first_object = PurePythonEnumerable(*range(end := 7))
+        second_object = PurePythonEnumerable(*range(start := 3, 9))
 
         res = first_object.union(second_object)
 
-        assert res.source == tuple(range(3, 7))
+        assert res.source == tuple(range(start, end))
 
     def test_with_comparer(self) -> None:
         first_object = PurePythonEnumerable(
             first := Point(0, 1),
+            Point(3, 1),
             Point(0, 3),
             Point(0, 4),
             second := Point(0, 7),
