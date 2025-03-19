@@ -12,7 +12,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Chunk
     - [ ] Average
     - [x] Append
-    - [ ] Except
+    - [x] Except
     - [x] Distinct
     - [x] Count
     - [x] Contains
@@ -38,3 +38,5 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Max
 - [ ] Implement runtime validations for PP Implementation
 - [ ] Make coherent use of `comparer` across methods
+- [ ] Improve test code quality
+- [ ] Improve efficiency
