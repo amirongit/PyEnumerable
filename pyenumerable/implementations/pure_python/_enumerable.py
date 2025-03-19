@@ -610,3 +610,43 @@ class PurePythonEnumerable[TSource]:
             comparer_(inner, outer)
             for inner, outer in zip(self.source, other.source)
         )
+
+    def except_(
+        self,
+        other: PurePythonEnumerable[TSource],
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        comparer_: Comparer[TSource] = (
+            comparer if comparer is not None else lambda i, o: i == o
+        )
+        out: list[TSource] = []
+        for inner in self.source:
+            for outer in other.source:
+                if comparer_(inner, outer):
+                    break
+            else:
+                out.append(inner)
+        return PurePythonEnumerable(*out)
+
+    def except_by[TKey](
+        self,
+        other: PurePythonEnumerable[TSource],
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        comparer_: Comparer[TKey] = (
+            comparer if comparer is not None else lambda i, o: i == o
+        )
+        out: list[TSource] = []
+        for inner in self.source:
+            inner_key = key_selector(inner)
+            for outer in other.source:
+                if comparer_(inner_key, key_selector(outer)):
+                    break
+            else:
+                out.append(inner)
+        return PurePythonEnumerable(*out)
