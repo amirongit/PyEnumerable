@@ -14,21 +14,18 @@ class TestExceptMethod:
     def test_with_comparer(self) -> None:
         first_object = PurePythonEnumerable(
             Point(0, 1),
-            first := Point(1 ,3),
+            first := Point(1, 3),
             Point(3, 5),
-            second := Point(8, 12)
+            second := Point(8, 12),
         )
         second_object = PurePythonEnumerable(
-            Point(4, 18),
-            Point(3, 1),
-            Point(0, 0),
-            Point(1, 5)
+            Point(4, 18), Point(3, 1), Point(0, 0), Point(1, 5)
         )
 
         res = first_object.except_(
             second_object,
-            comparer=lambda first_point,
-            second_point: first_point.y == second_point.y
+            comparer=lambda first_point, second_point: first_point.y
+            == second_point.y,
         )
 
         assert res.source == (first, second)

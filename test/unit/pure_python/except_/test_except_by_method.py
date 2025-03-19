@@ -8,13 +8,10 @@ class TestExceptByMethod:
             Point(0, 1),
             first := Point(3, 2),
             Point(4, 5),
-            second := Point(7, 6)
+            second := Point(7, 6),
         )
         second_object = PurePythonEnumerable(
-            Point(3, 5),
-            Point(8, 9),
-            Point(-1, 1),
-            Point(4, 7)
+            Point(3, 5), Point(8, 9), Point(-1, 1), Point(4, 7)
         )
 
         res = first_object.except_by(second_object, lambda point: point.y)
@@ -26,20 +23,16 @@ class TestExceptByMethod:
             first := Point(0, 2),
             Point(9, 7),
             second := Point(3, 1),
-            Point(4, -4)
+            Point(4, -4),
         )
         second_object = PurePythonEnumerable(
-            Point(5, 4),
-            Point(8, 9),
-            Point(-1, 3),
-            Point(4, -7)
+            Point(5, 4), Point(8, 9), Point(-1, 3), Point(4, -7)
         )
 
         res = first_object.except_by(
             second_object,
             lambda point: point.y,
-            comparer=lambda first_y,
-            second_y: abs(first_y) == abs(second_y)
+            comparer=lambda first_y, second_y: abs(first_y) == abs(second_y),
         )
 
         assert res.source == (first, second)
