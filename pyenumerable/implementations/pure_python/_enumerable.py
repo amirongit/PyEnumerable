@@ -650,3 +650,10 @@ class PurePythonEnumerable[TSource]:
             else:
                 out.append(inner)
         return PurePythonEnumerable(*out)
+
+    def average(self, /) -> float:
+        try:
+            return sum(self.source) / len(self.source)  # type: ignore
+        except TypeError as te:
+            msg = "Average can't be executed on TSource"
+            raise TypeError(msg) from te
