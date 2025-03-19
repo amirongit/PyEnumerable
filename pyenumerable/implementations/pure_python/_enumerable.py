@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Hashable, Iterable
+from contextlib import suppress
 from itertools import chain
 from typing import Any, Protocol
 
@@ -546,3 +547,49 @@ class PurePythonEnumerable[TSource]:
 
     def reverse(self, /) -> PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(*reversed(self.source))
+
+    def union(
+        self,
+        second: PurePythonEnumerable[TSource],
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        comparer_: Comparer[TSource] = (
+            comparer if comparer is not None else lambda i, o: i == o
+        )
+        out: list[TSource] = []
+        for inner in self.source:
+            for outer in second.source:
+                if comparer_(inner, outer):
+                    for captured in out:
+                        if comparer_(inner, captured):
+                            break
+                    else:
+                        out.append(inner)
+        return PurePythonEnumerable(*out)
+
+    def union_by[TKey](
+        self,
+        second: PurePythonEnumerable[TSource],
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        comparer_: Comparer[TKey] = (
+            comparer if comparer is not None else lambda i, o: i == o
+        )
+        out: list[TSource] = []
+        for inner in self.source:
+            inner_key = key_selector(inner)
+            for outer in second.source:
+                outer_key = key_selector(outer)
+                if comparer_(inner_key, outer_key):
+                    for captured in out:
+                        captured_key = key_selector(captured)
+                        if comparer_(inner_key, captured_key):
+                            break
+                    else:
+                        out.append(inner)
+        return PurePythonEnumerable(*out)
