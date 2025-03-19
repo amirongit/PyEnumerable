@@ -28,7 +28,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Single
     - [ ] Sequence equal
     - [x] Reverse
-    - [ ] Union
+    - [x] Union
     - [x] Of type
     - [x] Take
     - [x] Sum
