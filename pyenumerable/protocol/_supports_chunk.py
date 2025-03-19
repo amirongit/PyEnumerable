@@ -1,4 +1,3 @@
-from collections.abc import Sequence
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
@@ -6,4 +5,4 @@ if TYPE_CHECKING:
 
 
 class SupportsChunk[TSource](Protocol):
-    def chunk(self, size: int, /) -> Sequence["Enumerable[TSource]"]: ...
+    def chunk(self, size: int, /) -> tuple["Enumerable[TSource]", ...]: ...

@@ -9,7 +9,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Any
     - [x] All
     - [ ] Aggregate
-    - [ ] Chunk
+    - [x] Chunk
     - [x] Average
     - [x] Append
     - [x] Except
