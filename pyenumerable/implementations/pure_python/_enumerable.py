@@ -700,9 +700,9 @@ class PurePythonEnumerable[TSource]:
                     out.append(outer)
             return PurePythonEnumerable(*out)
         try:
-            return PurePythonEnumerable(*dict.fromkeys(
-                (*self.source, *second.source)
-            ).keys())
+            return PurePythonEnumerable(
+                *dict.fromkeys((*self.source, *second.source)).keys()
+            )
         except TypeError as te:
             msg = "TSource doesn't implement __hash__; Comparer isn't given"
             raise TypeError(msg) from te
