@@ -9,7 +9,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 - [ ] Implement `Enumerable` for PP Implementation
     - [x] Any
     - [x] All
-    - [ ] Aggregate
+    - [x] Aggregate
     - [x] Chunk
     - [x] Average
     - [x] Append
@@ -19,7 +19,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Contains
     - [x] Concat
     - [ ] Join
-    - [ ] Intersect
+    - [x] Intersect
     - [ ] Group join
     - [ ] Group by
     - [x] Prepend
