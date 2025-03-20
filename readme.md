@@ -38,7 +38,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Select
     - [x] Max
 - [ ] Make coherent use of `comparer` across methods
-- [ ] Add github job to publish on pypi
+- [ ] Publish on pypi
 ### 1.1.0
 - [ ] Implement runtime validations for PP Implementation
 - [ ] Improve test code quality
