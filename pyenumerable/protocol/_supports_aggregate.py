@@ -12,9 +12,5 @@ class SupportsAggregate[TSource](Protocol):
 
     @overload
     def aggregate(
-        self,
-        func: Callable[[TSource, TSource], TSource],
-        /,
-        *,
-        seed: TSource
+        self, func: Callable[[TSource, TSource], TSource], /, *, seed: TSource
     ) -> TSource: ...

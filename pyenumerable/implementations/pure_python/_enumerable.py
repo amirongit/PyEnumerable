@@ -666,7 +666,7 @@ class PurePythonEnumerable[TSource]:
         func: Callable[[TSource, TSource], TSource],
         /,
         *,
-        seed: TSource | None = None
+        seed: TSource | None = None,
     ) -> TSource:
         PurePythonEnumerable._assume_not_empty(self)
         curr, start = (seed, 0) if seed is not None else (self.source[0], 1)
