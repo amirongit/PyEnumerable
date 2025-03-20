@@ -4,17 +4,17 @@ from typing import Protocol, overload
 
 class SupportsAggregate[TSource](Protocol):
     @overload
-    def aggregate[TAccumulate](
+    def aggregate(
         self,
-        func: Callable[[TSource, TSource], TAccumulate],
+        func: Callable[[TSource, TSource], TSource],
         /,
-    ) -> TAccumulate: ...
+    ) -> TSource: ...
 
     @overload
-    def aggregate[TAccumulate](
+    def aggregate(
         self,
-        func: Callable[[TAccumulate, TSource], TAccumulate],
+        func: Callable[[TSource, TSource], TSource],
         /,
         *,
-        seed: TAccumulate,
-    ) -> TAccumulate: ...
+        seed: TSource
+    ) -> TSource: ...
