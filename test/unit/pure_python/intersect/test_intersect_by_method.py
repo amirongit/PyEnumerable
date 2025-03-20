@@ -46,9 +46,27 @@ class TestIntersectByMethod:
     def test_with_comparer(self) -> None:
         first_object = PurePythonEnumerable(
             first := Point(5, 1),
-            Point(6, 1),
             Point(3, 3),
             Point(4, 5),
+            second := Point(2, 7),
+            third := Point(3, 9),
+        )
+        second_object = PurePythonEnumerable(
+            Point(4, -1), Point(3, 2), Point(1, -7), Point(2, -9), Point(5, -8)
+        )
+
+        res = first_object.intersect_by(
+            second_object,
+            lambda point: point.y,
+            comparer=lambda first_y, second_y: abs(first_y) == abs(second_y),
+        )
+
+        assert res.source == (first, second, third)
+
+    def test_overlap_remove(self) -> None:
+        first_object = PurePythonEnumerable(
+            first := Point(5, 1),
+            Point(6, 1),
             second := Point(2, 7),
             third := Point(3, 9),
         )
