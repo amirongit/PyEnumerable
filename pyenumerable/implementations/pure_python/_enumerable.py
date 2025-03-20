@@ -677,6 +677,64 @@ class PurePythonEnumerable[TSource]:
             curr = func(curr, item)
         return curr
 
+    def union(
+        self,
+        second: PurePythonEnumerable[TSource],
+        /,
+        *,
+        comparer: Comparer[TSource] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        if comparer is not None:
+            out: list[TSource] = []
+            for inner in self.source:
+                for captured in out:
+                    if comparer(inner, captured):
+                        break
+                else:
+                    out.append(inner)
+            for outer in second.source:
+                for captured in out:
+                    if comparer(outer, captured):
+                        break
+                else:
+                    out.append(outer)
+            return PurePythonEnumerable(*out)
+        try:
+            return PurePythonEnumerable(*dict.fromkeys(
+                (*self.source, *second.source)
+            ).keys())
+        except TypeError as te:
+            msg = "TSource doesn't implement __hash__; Comparer isn't given"
+            raise TypeError(msg) from te
+
+    def union_by[TKey](
+        self,
+        second: PurePythonEnumerable[TSource],
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[TSource]:
+        comparer_: Comparer[TKey] = (
+            comparer if comparer is not None else lambda i, o: i == o
+        )
+        out: list[TSource] = []
+        for inner in self.source:
+            inner_key = key_selector(inner)
+            for captured in out:
+                if comparer_(inner_key, key_selector(captured)):
+                    break
+            else:
+                out.append(inner)
+        for outer in second.source:
+            outer_key = key_selector(outer)
+            for captured in out:
+                if comparer_(outer_key, key_selector(captured)):
+                    break
+            else:
+                out.append(outer)
+        return PurePythonEnumerable(*out)
+
     @staticmethod
     def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
         if len(instance.source) == 0:
