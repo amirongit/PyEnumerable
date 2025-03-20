@@ -541,13 +541,15 @@ class PurePythonEnumerable[TSource]:
     def reverse(self, /) -> PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(*reversed(self.source))
 
-    def union(
+    def intersect(
         self,
         second: PurePythonEnumerable[TSource],
         /,
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0 or len(second.source) == 0:
+            return PurePythonEnumerable()
         comparer_: Comparer[TSource] = (
             comparer if comparer is not None else lambda i, o: i == o
         )
@@ -562,7 +564,7 @@ class PurePythonEnumerable[TSource]:
                         out.append(inner)
         return PurePythonEnumerable(*out)
 
-    def union_by[TKey](
+    def intersect_by[TKey](
         self,
         second: PurePythonEnumerable[TSource],
         key_selector: Callable[[TSource], TKey],
@@ -570,6 +572,8 @@ class PurePythonEnumerable[TSource]:
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> PurePythonEnumerable[TSource]:
+        if len(self.source) == 0 or len(second.source) == 0:
+            return PurePythonEnumerable()
         comparer_: Comparer[TKey] = (
             comparer if comparer is not None else lambda i, o: i == o
         )
@@ -596,7 +600,6 @@ class PurePythonEnumerable[TSource]:
     ) -> bool:
         if len(self.source) != len(other.source):
             return False
-
         comparer_: Comparer[TSource] = (
             comparer if comparer is not None else lambda i, o: i == o
         )

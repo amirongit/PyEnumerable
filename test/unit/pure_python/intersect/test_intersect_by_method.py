@@ -2,7 +2,23 @@ from pyenumerable.implementations.pure_python import PurePythonEnumerable
 from test.unit.pure_python.test_utility import Person, Point
 
 
-class TestUnionByMethod:
+class TestIntersectByMethod:
+    def test_when_self_empty(self) -> None:
+        first_object = PurePythonEnumerable(Point(0, 1), Point(1, 0))
+        second_object: PurePythonEnumerable[Point] = PurePythonEnumerable()
+
+        res = first_object.intersect_by(second_object, lambda point: point.y)
+
+        assert res.source == ()
+
+    def test_when_second_empty(self) -> None:
+        first_object: PurePythonEnumerable[Point] = PurePythonEnumerable()
+        second_object = PurePythonEnumerable(Point(0, 1), Point(1, 0))
+
+        res = first_object.intersect_by(second_object, lambda point: point.y)
+
+        assert res.source == ()
+
     def test_without_comparer(self) -> None:
         first_object = PurePythonEnumerable(
             first := Person("john doe", 12, Person("marray doe", 27)),
@@ -18,7 +34,7 @@ class TestUnionByMethod:
             Person(" doe", 14, Person("jerry doe", 34)),
         )
 
-        res = first_object.union_by(
+        res = first_object.intersect_by(
             second_object,
             lambda person: None
             if person.parent is None
@@ -40,7 +56,7 @@ class TestUnionByMethod:
             Point(4, -1), Point(3, 2), Point(1, -7), Point(2, -9), Point(5, -8)
         )
 
-        res = first_object.union_by(
+        res = first_object.intersect_by(
             second_object,
             lambda point: point.y,
             comparer=lambda first_y, second_y: abs(first_y) == abs(second_y),
