@@ -142,12 +142,6 @@ class PurePythonEnumerable[TSource]:
             )
             raise TypeError(msg) from te
 
-    @staticmethod
-    def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
-        if len(instance.source) == 0:
-            msg = "Enumerable (self) is empty"
-            raise ValueError(msg)
-
     def contains(
         self,
         item: TSource,
@@ -666,3 +660,22 @@ class PurePythonEnumerable[TSource]:
                 for i in range(0, len(self.source), size)
             )
         )
+
+    def aggregate(
+        self,
+        func: Callable[[TSource, TSource], TSource],
+        /,
+        *,
+        seed: TSource | None = None
+    ) -> TSource:
+        PurePythonEnumerable._assume_not_empty(self)
+        curr, start = (seed, 0) if seed is not None else (self.source[0], 1)
+        for item in self.source[start:]:
+            curr = func(curr, item)
+        return curr
+
+    @staticmethod
+    def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
+        if len(instance.source) == 0:
+            msg = "Enumerable (self) is empty"
+            raise ValueError(msg)
