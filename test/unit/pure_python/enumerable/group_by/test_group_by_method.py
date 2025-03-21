@@ -22,19 +22,19 @@ class TestGroupByMethod:
 
         first_group_index, second_group_index = 0, 1
         assert len(res.source) == number_of_groups
-        assert len(
-            res.source[first_group_index].source
-        ) == number_of_first_group_members
-        assert len(
-            res.source[second_group_index].source
-        ) == number_of_second_group_members
-        assert all(
-            p.y == first_group_key for p in res.source[
-                first_group_index
-            ].source
+        assert (
+            len(res.source[first_group_index].source)
+            == number_of_first_group_members
+        )
+        assert (
+            len(res.source[second_group_index].source)
+            == number_of_second_group_members
         )
         assert all(
-            p.y == second_group_key for p in res.source[
-                second_group_index
-            ].source
+            p.y == first_group_key
+            for p in res.source[first_group_index].source
+        )
+        assert all(
+            p.y == second_group_key
+            for p in res.source[second_group_index].source
         )
