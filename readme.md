@@ -21,7 +21,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [ ] Join
     - [x] Intersect
     - [ ] Group join
-    - [ ] Group by
+    - [x] Group by
     - [x] Prepend
     - [x] Order
     - [x] Min

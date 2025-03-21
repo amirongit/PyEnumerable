@@ -60,3 +60,7 @@ lint.fixable = ["ALL"]
 typeCheckingMode = "strict"
 reportUnusedImport = false
 reportUnusedVariable = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["test/unit"]

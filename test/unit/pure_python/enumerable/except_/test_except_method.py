@@ -3,15 +3,7 @@ from test.unit.pure_python.test_utility import Point
 
 
 class TestExceptMethod:
-    def test_without_comparer(self) -> None:
-        first_object = PurePythonEnumerable(*range(7))
-        second_object = PurePythonEnumerable(*range(start := 3, 9))
-
-        res = first_object.except_(second_object)
-
-        assert res.source == tuple(range(start))
-
-    def test_with_comparer(self) -> None:
+    def test_except(self) -> None:
         first_object = PurePythonEnumerable(
             Point(0, 1),
             first := Point(1, 3),

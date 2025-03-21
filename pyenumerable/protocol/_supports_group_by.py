@@ -10,65 +10,6 @@ if TYPE_CHECKING:
 
 class SupportsGroupBy[TSource](Protocol):
     @overload
-    def group_by[TKey: Comparable, TElement, TResult](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        element_selector: Callable[[TSource], TElement],
-        result_selector: Callable[[TKey, "Enumerable[TElement]"], TResult],
-    ) -> "Enumerable[TResult]": ...
-
-    @overload
-    def group_by[TKey, TElement, TResult](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        element_selector: Callable[[TSource], TElement],
-        result_selector: Callable[[TKey, "Enumerable[TElement]"], TResult],
-        comparer: Comparer[TKey],
-    ) -> "Enumerable[TResult]": ...
-
-    @overload
-    def group_by[TKey: Comparable, TElement](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        element_selector: Callable[[TSource], TElement],
-    ) -> "Enumerable[Associable[TKey, TElement]]": ...
-
-    @overload
-    def group_by[TKey, TElement](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        element_selector: Callable[[TSource], TElement],
-        comparer: Comparer[TKey],
-    ) -> "Enumerable[Associable[TKey, TElement]]": ...
-
-    @overload
-    def group_by[TKey: Comparable, TResult](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        result_selector: Callable[[TKey, "Enumerable[TSource]"], TResult],
-    ) -> "Enumerable[TResult]": ...
-
-    @overload
-    def group_by[TKey, TResult](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        result_selector: Callable[[TKey, "Enumerable[TSource]"], TResult],
-        comparer: Comparer[TKey],
-    ) -> "Enumerable[TResult]": ...
-
-    @overload
     def group_by[TKey: Comparable](
         self,
         key_selector: Callable[[TSource], TKey],
