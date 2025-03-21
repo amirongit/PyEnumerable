@@ -63,4 +63,4 @@ reportUnusedVariable = false
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
-testpaths = ["test"]
+testpaths = ["test/unit"]
