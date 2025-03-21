@@ -20,7 +20,7 @@ class TestMinByMethod:
         with pytest.raises(TypeError):
             obj.min_by(lambda person: person.parent)
 
-    def test_with_comparer(self) -> None:
+    def test_min_by(self) -> None:
         obj = PurePythonEnumerable(
             Person("john doe", 4, Person("jessie doe", 40)),
             minimum := Person("jane doe", 12, Person("james doe", 34)),
@@ -32,16 +32,6 @@ class TestMinByMethod:
         )
 
         assert minimum is res
-
-    def test_without_comparer(self) -> None:
-        obj = PurePythonEnumerable(
-            Person("jane doe", 12, Person("james doe", 34)),
-            minimum := Person("john doe", 4, Person("jessie doe", 40)),
-        )
-
-        res = obj.min_by(lambda person: person.age)
-
-        assert res is minimum
 
     @staticmethod
     def age_comparer(

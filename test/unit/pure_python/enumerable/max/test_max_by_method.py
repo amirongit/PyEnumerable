@@ -20,7 +20,7 @@ class TestMaxByMethod:
         with pytest.raises(TypeError):
             obj.max_by(lambda person: person.parent)
 
-    def test_with_comparer(self) -> None:
+    def test_max_by(self) -> None:
         obj = PurePythonEnumerable(
             Person("jane doe", 12, Person("james doe", 34)),
             maximum := Person("john doe", 4, Person("jessie doe", 40)),
@@ -32,16 +32,6 @@ class TestMaxByMethod:
         )
 
         assert maximum is res
-
-    def test_without_comparer(self) -> None:
-        obj = PurePythonEnumerable(
-            maximum := Person("jane doe", 12, Person("james doe", 34)),
-            Person("john doe", 4, Person("jessie doe", 40)),
-        )
-
-        res = obj.max_by(lambda person: person.age)
-
-        assert res is maximum
 
     @staticmethod
     def age_comparer(

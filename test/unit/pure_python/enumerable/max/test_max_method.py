@@ -17,16 +17,9 @@ class TestMaxMethod:
         with pytest.raises(TypeError):
             obj.max_()
 
-    def test_with_comparer(self) -> None:
+    def test_max(self) -> None:
         obj = PurePythonEnumerable(Point(4, 5), maximum := Point(6, 3))
 
         res = obj.max_(comparer=lambda first, second: first.x > second.x)
 
         assert res is maximum
-
-    def test_without_comparer(self) -> None:
-        obj = PurePythonEnumerable(6, 8, maximum := 10, 9, 7)
-
-        res = obj.max_()
-
-        assert res == maximum

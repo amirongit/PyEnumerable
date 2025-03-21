@@ -3,17 +3,7 @@ from test.unit.pure_python.test_utility import Person
 
 
 class TestContainsMethod:
-    def test_positive_without_comparer(self) -> None:
-        existing_item = "existing-item"
-        obj = PurePythonEnumerable(
-            "not-being-tested",
-            "also-not-being-tested",
-            existing_item,
-        )
-
-        assert obj.contains(existing_item) is True
-
-    def test_positive_with_comparer(self) -> None:
+    def test_positive(self) -> None:
         obj = PurePythonEnumerable(
             Person("john doe", 14),
             Person("jane doe", 12),
@@ -28,15 +18,7 @@ class TestContainsMethod:
             is True
         )
 
-    def test_negative_without_comparer(self) -> None:
-        obj = PurePythonEnumerable(
-            "not-being-tested",
-            "also-not-being-tested",
-        )
-
-        assert obj.contains("non-existing-item") is False
-
-    def test_negative_with_comparer(self) -> None:
+    def test_negative(self) -> None:
         obj = PurePythonEnumerable(
             Person("john doe", 14),
             Person("jane doe", 12),

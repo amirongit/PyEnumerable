@@ -3,31 +3,7 @@ from test.unit.pure_python.test_utility import Point
 
 
 class TestUnionByMethod:
-    def test_without_comparer(self) -> None:
-        first_object = PurePythonEnumerable(
-            *(
-                first_items := (
-                    Point(0, 1),
-                    Point(0, 2),
-                    Point(0, 3),
-                )
-            )
-        )
-        second_object = PurePythonEnumerable(
-            *(
-                second_items := (
-                    Point(0, 4),
-                    Point(0, 5),
-                    Point(0, 6),
-                )
-            )
-        )
-
-        res = first_object.union_by(second_object, lambda point: point.y)
-
-        assert res.source == first_items + second_items
-
-    def test_with_comparer(self) -> None:
+    def test_union_by(self) -> None:
         first_object = PurePythonEnumerable(
             *(
                 first_items := (

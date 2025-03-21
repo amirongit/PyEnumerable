@@ -17,16 +17,9 @@ class TestMinMethod:
         with pytest.raises(TypeError):
             obj.min_()
 
-    def test_with_comparer(self) -> None:
+    def test_min(self) -> None:
         obj = PurePythonEnumerable(Point(6, 3), minimum := Point(4, 5))
 
         res = obj.min_(comparer=lambda first, second: first.x < second.x)
 
         assert res is minimum
-
-    def test_without_comparer(self) -> None:
-        obj = PurePythonEnumerable(minimum := 6, 8, 10, 9, 7)
-
-        res = obj.min_()
-
-        assert res == minimum

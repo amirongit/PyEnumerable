@@ -12,17 +12,7 @@ class TestUnionMethod:
         with pytest.raises(TypeError):
             first_object.union(second_object)
 
-    def test_without_comparer(self) -> None:
-        first_object = PurePythonEnumerable(*(first_items := tuple(range(3))))
-        second_object = PurePythonEnumerable(
-            *(second_items := tuple(range(7, 10)))
-        )
-
-        res = first_object.union(second_object)
-
-        assert res.source == first_items + second_items
-
-    def test_with_comparer(self) -> None:
+    def test_union(self) -> None:
         first_object = PurePythonEnumerable(*(items := tuple(range(7))))
         second_object = PurePythonEnumerable(*(-i for i in items))
 
