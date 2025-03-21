@@ -735,8 +735,48 @@ class PurePythonEnumerable[TSource]:
                 out.append(outer)
         return PurePythonEnumerable(*out)
 
+    def group_by[TKey](
+        self,
+        key_selector: Callable[[TSource], TKey],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[PurePythonAssociable[TKey, TSource]]:
+        comparer_: Comparer[TKey] = (
+            comparer if comparer is not None else lambda i, o: i == o
+        )
+        keys: list[TKey] = []
+        values: dict[int, list[TSource]] = {}
+        for item in self.source:
+            item_key = key_selector(item)
+            for index, k in enumerate(keys):
+                if comparer_(k, item_key):
+                    values[index].append(item)
+                    break
+            else:
+                keys.append(item_key)
+                values[len(keys) - 1] = [item]
+        return PurePythonEnumerable(
+            *(PurePythonAssociable(keys[kid], *v) for kid, v in values.items())
+        )
+
     @staticmethod
     def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
         if len(instance.source) == 0:
             msg = "Enumerable (self) is empty"
             raise ValueError(msg)
+
+
+class PurePythonAssociable[TKey, TSource](PurePythonEnumerable[TSource]):
+    def __init__(
+        self,
+        key: TKey,
+        *items: TSource,
+        from_iterable: Iterable[Iterable[TSource]] | None = None,
+    ) -> None:
+        self._key = key
+        super().__init__(*items, from_iterable=from_iterable)
+
+    @property
+    def key(self) -> TKey:
+        return self._key
