@@ -10,25 +10,6 @@ if TYPE_CHECKING:
 
 class SupportsGroupBy[TSource](Protocol):
     @overload
-    def group_by[TKey: Comparable, TElement](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        element_selector: Callable[[TSource], TElement],
-    ) -> "Enumerable[Associable[TKey, TElement]]": ...
-
-    @overload
-    def group_by[TKey, TElement](
-        self,
-        key_selector: Callable[[TSource], TKey],
-        /,
-        *,
-        element_selector: Callable[[TSource], TElement],
-        comparer: Comparer[TKey],
-    ) -> "Enumerable[Associable[TKey, TElement]]": ...
-
-    @overload
     def group_by[TKey: Comparable](
         self,
         key_selector: Callable[[TSource], TKey],
