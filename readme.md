@@ -6,7 +6,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 ### 1.0.0
 - [x] Design protocols for each operation set
 - [x] Design & Implement `Enumerable` constructor(s) for PP implementation
-- [ ] Implement `Enumerable` for PP Implementation
+- [ ] Add pure python implementation of `Enumerable` (assuming inputs aren't guaranteed to be `Hashable`)
     - [x] Any
     - [x] All
     - [x] Aggregate
@@ -18,7 +18,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Count
     - [x] Contains
     - [x] Concat
-    - [ ] Join
+    - [x] Join
     - [x] Intersect
     - [ ] Group join
     - [x] Group by
@@ -42,4 +42,4 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 ### 1.1.0
 - [ ] Implement runtime validations for PP Implementation
 - [ ] Improve test code quality
-- [ ] Improve efficiency
+- [ ] Add hashed pure python implementation of `Enumerable` (assuming inputs are guaranteed to be `Hashable`)
