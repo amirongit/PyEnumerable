@@ -7,6 +7,8 @@ from typing import Any, Protocol
 
 from pyenumerable.typing_utility import Comparable, Comparer
 
+__all__ = ["PurePythonEnumerable"]
+
 
 class PurePythonEnumerable[TSource]:
     def __init__(
@@ -759,6 +761,27 @@ class PurePythonEnumerable[TSource]:
         return PurePythonEnumerable(
             *(PurePythonAssociable(keys[kid], *v) for kid, v in values.items())
         )
+
+    def join[TInner, TKey, TResult](
+        self,
+        inner: PurePythonEnumerable[TInner],
+        outer_key_selector: Callable[[TSource], TKey],
+        inner_key_selector: Callable[[TInner], TKey],
+        result_selector: Callable[[TSource, TInner], TResult],
+        /,
+        *,
+        comparer: Comparer[TKey] | None = None,
+    ) -> PurePythonEnumerable[TResult]:
+        comparer_: Comparer[TKey] = (
+            comparer if comparer is not None else lambda o, i: o == i
+        )
+        out: list[TResult] = []
+        for outer_item in self.source:
+            outer_key = outer_key_selector(outer_item)
+            for inner_item in inner.source:
+                if comparer_(outer_key, inner_key_selector(inner_item)):
+                    out.append(result_selector(outer_item, inner_item))  # noqa: PERF401
+        return PurePythonEnumerable(*out)
 
     @staticmethod
     def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
