@@ -37,9 +37,9 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Where
     - [x] Select
     - [x] Max
+- [ ] Implement runtime validations for PP Implementation
 - [ ] Make coherent use of `comparer` across methods
 - [ ] Publish on pypi
 ### 1.1.0
-- [ ] Implement runtime validations for PP Implementation
 - [ ] Improve test code quality
 - [ ] Add hashed pure python implementation of `Enumerable` (assuming inputs are guaranteed to be `Hashable` & not maintaining order)
