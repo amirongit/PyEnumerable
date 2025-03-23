@@ -1,6 +1,4 @@
-from ._associable import Associable
-from ._enumerable import Enumerable
-from ._supports_aggregate import SupportsAggregate
+from ._supports_aggregate import SupportsAggregate  # noqa: I001
 from ._supports_all import SupportsAll
 from ._supports_any import SupportsAny
 from ._supports_append import SupportsAppend
@@ -30,3 +28,5 @@ from ._supports_take import SupportsTake
 from ._supports_union import SupportsUnion
 from ._supports_where import SupportsWhere
 from ._supports_zip import SupportsZip
+from ._associable import Associable
+from ._enumerable import Enumerable

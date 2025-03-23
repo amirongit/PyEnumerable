@@ -1,3 +1,4 @@
+from collections.abc import Collection
 from typing import Protocol
 
 from . import (
@@ -66,4 +67,6 @@ class Enumerable[TSource](
     SupportsWhere[TSource],
     SupportsZip[TSource],
     Protocol,
-): ...
+):
+    @property
+    def source(self) -> Collection[TSource]: ...
