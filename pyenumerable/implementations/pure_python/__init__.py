@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Hashable, Iterable
+from collections.abc import Callable, Collection, Hashable, Iterable
 from contextlib import suppress
 from itertools import chain
 from typing import Any, Protocol
@@ -21,7 +21,7 @@ class PurePythonEnumerable[TSource](Enumerable[TSource]):
             self._source += tuple(chain.from_iterable(from_iterable))
 
     @property
-    def source(self) -> tuple[TSource, ...]:
+    def source(self) -> Collection[TSource]:
         return self._source
 
     def select[TResult](
@@ -766,8 +766,29 @@ class PurePythonEnumerable[TSource](Enumerable[TSource]):
         result_selector: Callable[[TSource, Enumerable[TInner]], TResult],
         /,
         *,
-        comparer: Comparer[TKey] | None = None,
-    ) -> Enumerable[TResult]: ...
+        comparer: Comparer[TKey] = lambda out, in_: out == in_,
+    ) -> Enumerable[TResult]:
+        keys: list[tuple[TKey, TSource]] = []
+        values: dict[int, list[TInner]] = {}
+        for outer_item in self.source:
+            outer_key = outer_key_selector(outer_item)
+            for index, kpair in enumerate(keys):
+                if comparer(outer_key, kpair[0]):
+                    break
+            else:
+                keys.append((outer_key, outer_item))
+                values[len(keys) - 1] = []
+        for inner_item in inner.source:
+            inner_key = inner_key_selector(inner_item)
+            for index, kpair in enumerate(keys):
+                if comparer(kpair[0], inner_key):
+                    values[index].append(inner_item)
+        return PurePythonEnumerable(
+            *[
+                result_selector(kpair[1], PurePythonEnumerable(*values[index]))
+                for index, kpair in enumerate(keys)
+            ]
+        )
 
     @staticmethod
     def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
@@ -776,7 +797,6 @@ class PurePythonEnumerable[TSource](Enumerable[TSource]):
             raise ValueError(msg)
 
 
-# https://github.com/microsoft/pyright/discussions/10151
 class PurePythonAssociable[TKey, TSource](  # type: ignore
     PurePythonEnumerable[TSource],
     Associable[TKey, TSource],
