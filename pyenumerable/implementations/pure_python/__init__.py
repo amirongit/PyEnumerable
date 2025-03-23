@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Collection, Hashable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 from contextlib import suppress
 from itertools import chain
 from typing import Any, Protocol
@@ -21,7 +21,7 @@ class PurePythonEnumerable[TSource](Enumerable[TSource]):
             self._source += tuple(chain.from_iterable(from_iterable))
 
     @property
-    def source(self) -> Collection[TSource]:
+    def source(self) -> tuple[TSource, ...]:
         return self._source
 
     def select[TResult](

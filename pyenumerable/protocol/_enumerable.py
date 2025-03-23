@@ -1,4 +1,3 @@
-from collections.abc import Collection
 from typing import Protocol
 
 from . import (
@@ -69,4 +68,4 @@ class Enumerable[TSource](
     Protocol,
 ):
     @property
-    def source(self) -> Collection[TSource]: ...
+    def source(self) -> tuple[TSource, ...]: ...
