@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Any, Protocol, overload
 
-from pyenumerable.typing_utility import Comparable, Comparer
+from pyenumerable.typing_utility import Comparer
 
 
 class SupportsMax[TSource](Protocol):
@@ -12,7 +12,7 @@ class SupportsMax[TSource](Protocol):
     def max_(self, /, *, comparer: Comparer[TSource]) -> TSource: ...
 
     @overload
-    def max_by[TKey: Comparable](
+    def max_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
         /,

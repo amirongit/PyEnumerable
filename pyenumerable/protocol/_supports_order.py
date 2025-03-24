@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
-from pyenumerable.typing_utility import Comparable, Comparer
+from pyenumerable.typing_utility import Comparer
 
 if TYPE_CHECKING:
     from ._enumerable import Enumerable
@@ -31,7 +31,7 @@ class SupportsOrder[TSource](Protocol):
     ) -> "Enumerable[TSource]": ...
 
     @overload
-    def order_by[TKey: Comparable](
+    def order_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
         /,
@@ -47,7 +47,7 @@ class SupportsOrder[TSource](Protocol):
     ) -> "Enumerable[TSource]": ...
 
     @overload
-    def order_by_descending[TKey: Comparable](
+    def order_by_descending[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
         /,
