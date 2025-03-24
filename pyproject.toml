@@ -10,8 +10,8 @@ requires-python = ">=3.13"
 dependencies = []
 
 [project.urls]
-Homepage = 'https://github.com/pydantic/pydantic'
-Source = 'https://github.com/pydantic/pydantic'
+Homepage = 'https://github.com/amirongit/PyEnumerable/'
+Source = 'https://github.com/amirongit/PyEnumerable/'
 
 [dependency-groups]
 dev = [
