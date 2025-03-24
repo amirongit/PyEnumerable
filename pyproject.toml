@@ -1,6 +1,6 @@
 [project]
 name = "pyenumerable"
-version = "0.0.0"
+version = "1.0.0"
 description = "Implementation of .net's IEnumerable interface in python W/ support for generics."
 readme = "readme.md"
 authors = [
