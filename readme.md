@@ -38,8 +38,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Select
     - [x] Max
 - [x] remove `Comparable` bind from type variables
-- [ ] Make coherent use of `comparer` across methods
-- [ ] Publish on pypi
+- [x] Publish on pypi
 ### 1.1.0
 - [ ] Improve test code quality
 - [ ] Add hashed pure python implementation of `Enumerable` (assuming inputs are guaranteed to be `Hashable` & immutable & not maintaining order)
