@@ -37,6 +37,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Where
     - [x] Select
     - [x] Max
+- [x] remove `Comparable` bind from type variables
 - [ ] Make coherent use of `comparer` across methods
 - [ ] Publish on pypi
 ### 1.1.0
