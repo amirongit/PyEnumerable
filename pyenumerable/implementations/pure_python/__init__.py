@@ -562,7 +562,7 @@ class PurePythonEnumerable[TSource](Enumerable[TSource]):
                         out.append(inner)
         return PurePythonEnumerable(*out)
 
-    def intersect_by[TKey](  # type: ignore
+    def intersect_by[TKey](
         self,
         second: Enumerable[TKey],
         key_selector: Callable[[TSource], TKey],
