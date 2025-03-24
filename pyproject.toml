@@ -9,6 +9,10 @@ authors = [
 requires-python = ">=3.13"
 dependencies = []
 
+[project.urls]
+Homepage = 'https://github.com/pydantic/pydantic'
+Source = 'https://github.com/pydantic/pydantic'
+
 [dependency-groups]
 dev = [
     "pyright>=1.1.392.post0",
@@ -64,3 +68,4 @@ reportUnusedVariable = false
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["test/unit"]
+
