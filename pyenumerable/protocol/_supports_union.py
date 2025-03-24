@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
-from pyenumerable.typing_utility import Comparable, Comparer
+from pyenumerable.typing_utility import Comparer
 
 if TYPE_CHECKING:
     from ._enumerable import Enumerable
@@ -25,7 +25,7 @@ class SupportsUnion[TSource](Protocol):
     ) -> "Enumerable[TSource]": ...
 
     @overload
-    def union_by[TKey: Comparable](
+    def union_by[TKey](
         self,
         second: "Enumerable[TSource]",
         key_selector: Callable[[TSource], TKey],

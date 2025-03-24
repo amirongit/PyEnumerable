@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
-from pyenumerable.typing_utility import Comparable, Comparer
+from pyenumerable.typing_utility import Comparer
 
 if TYPE_CHECKING:
     from ._enumerable import Enumerable
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class SupportsJoin[TSource](Protocol):
     @overload
-    def join[TInner, TKey: Comparable, TResult](
+    def join[TInner, TKey, TResult](
         self,
         inner: "Enumerable[TInner]",
         outer_key_selector: Callable[[TSource], TKey],

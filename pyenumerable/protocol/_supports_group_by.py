@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Protocol, overload
 
-from pyenumerable.typing_utility import Comparable, Comparer
+from pyenumerable.typing_utility import Comparer
 
 if TYPE_CHECKING:
     from ._associable import Associable
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 class SupportsGroupBy[TSource](Protocol):
     @overload
-    def group_by[TKey: Comparable](
+    def group_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
         /,

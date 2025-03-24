@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Protocol, overload
 
-from pyenumerable.typing_utility import Comparable, Comparer
+from pyenumerable.typing_utility import Comparer
 
 
 class SupportsMin[TSource](Protocol):
@@ -12,7 +12,7 @@ class SupportsMin[TSource](Protocol):
     def min_(self, /, *, comparer: Comparer[TSource]) -> TSource: ...
 
     @overload
-    def min_by[TKey: Comparable](
+    def min_by[TKey](
         self,
         key_selector: Callable[[TSource], TKey],
         /,

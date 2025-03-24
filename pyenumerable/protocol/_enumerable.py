@@ -66,4 +66,6 @@ class Enumerable[TSource](
     SupportsWhere[TSource],
     SupportsZip[TSource],
     Protocol,
-): ...
+):
+    @property
+    def source(self) -> tuple[TSource, ...]: ...

@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Hashable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 from contextlib import suppress
 from itertools import chain
 from typing import Any, Protocol
 
-from pyenumerable.typing_utility import Comparable, Comparer
+from pyenumerable.protocol import Associable, Enumerable
+from pyenumerable.typing_utility import Comparer
 
-__all__ = ["PurePythonEnumerable"]
 
-
-class PurePythonEnumerable[TSource]:
+class PurePythonEnumerable[TSource](Enumerable[TSource]):
     def __init__(
         self,
         *items: TSource,
@@ -29,7 +28,7 @@ class PurePythonEnumerable[TSource]:
         self,
         selector: Callable[[int, TSource], TResult],
         /,
-    ) -> PurePythonEnumerable[TResult]:
+    ) -> Enumerable[TResult]:
         return PurePythonEnumerable(
             *tuple(selector(i, v) for i, v in enumerate(self.source)),
         )
@@ -38,16 +37,16 @@ class PurePythonEnumerable[TSource]:
         self,
         selector: Callable[[int, TSource], Iterable[TResult]],
         /,
-    ) -> PurePythonEnumerable[TResult]:
+    ) -> Enumerable[TResult]:
         return PurePythonEnumerable(
             from_iterable=[selector(i, v) for i, v in enumerate(self.source)],
         )
 
     def concat(
         self,
-        other: PurePythonEnumerable[TSource],
+        other: Enumerable[TSource],
         /,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         return PurePythonEnumerable(from_iterable=(self.source, other.source))
 
     def max_(
@@ -218,7 +217,7 @@ class PurePythonEnumerable[TSource]:
         start_or_count: int,
         end: int | None = None,
         /,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         return PurePythonEnumerable(
             *(
                 self.source[:start_or_count] + self.source[end:]
@@ -227,14 +226,14 @@ class PurePythonEnumerable[TSource]:
             ),
         )
 
-    def skip_last(self, count: int, /) -> PurePythonEnumerable[TSource]:
+    def skip_last(self, count: int, /) -> Enumerable[TSource]:
         return PurePythonEnumerable(*self.source[:-count])
 
     def skip_while(
         self,
         predicate: Callable[[int, TSource], bool],
         /,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         start = 0
         for index, item in enumerate(self.source):
             start = index
@@ -249,7 +248,7 @@ class PurePythonEnumerable[TSource]:
         start_or_count: int,
         end: int | None = None,
         /,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         return PurePythonEnumerable(
             *(
                 self.source[start_or_count:end]
@@ -258,14 +257,14 @@ class PurePythonEnumerable[TSource]:
             ),
         )
 
-    def take_last(self, count: int, /) -> PurePythonEnumerable[TSource]:
+    def take_last(self, count: int, /) -> Enumerable[TSource]:
         return PurePythonEnumerable(*self.source[-count:])
 
     def take_while(
         self,
         predicate: Callable[[int, TSource], bool],
         /,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         stop = 0
         for index, item in enumerate(self.source):
             stop = index
@@ -279,7 +278,7 @@ class PurePythonEnumerable[TSource]:
         self,
         type_: type[TResult],
         /,
-    ) -> PurePythonEnumerable[TResult]:
+    ) -> Enumerable[TResult]:
         return PurePythonEnumerable(  # type: ignore
             *filter(lambda i: isinstance(i, type_), self.source),
         )
@@ -317,7 +316,7 @@ class PurePythonEnumerable[TSource]:
         self,
         predicate: Callable[[int, TSource], bool],
         /,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         return PurePythonEnumerable(
             *(
                 en[1]
@@ -332,10 +331,10 @@ class PurePythonEnumerable[TSource]:
         self,
         element: TSource,
         /,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         return PurePythonEnumerable(element, *self.source)
 
-    def append(self, element: TSource, /) -> PurePythonEnumerable[TSource]:
+    def append(self, element: TSource, /) -> Enumerable[TSource]:
         return PurePythonEnumerable(*self.source, element)
 
     def distinct(
@@ -343,7 +342,7 @@ class PurePythonEnumerable[TSource]:
         /,
         *,
         comparer: Comparer[TSource] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0:
             return PurePythonEnumerable()
 
@@ -369,7 +368,7 @@ class PurePythonEnumerable[TSource]:
         /,
         *,
         comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0:
             return PurePythonEnumerable()
 
@@ -398,7 +397,7 @@ class PurePythonEnumerable[TSource]:
         /,
         *,
         comparer: Comparer[TSource] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0:
             return PurePythonEnumerable()
 
@@ -431,7 +430,7 @@ class PurePythonEnumerable[TSource]:
         /,
         *,
         comparer: Comparer[TSource] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0:
             return PurePythonEnumerable()
 
@@ -465,7 +464,7 @@ class PurePythonEnumerable[TSource]:
         /,
         *,
         comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0:
             return PurePythonEnumerable()
 
@@ -502,7 +501,7 @@ class PurePythonEnumerable[TSource]:
         /,
         *,
         comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0:
             return PurePythonEnumerable()
 
@@ -535,32 +534,29 @@ class PurePythonEnumerable[TSource]:
 
     def zip[TSecond](
         self,
-        second: PurePythonEnumerable[TSecond],
+        second: Enumerable[TSecond],
         /,
-    ) -> PurePythonEnumerable[tuple[TSource, TSecond]]:
+    ) -> Enumerable[tuple[TSource, TSecond]]:
         return PurePythonEnumerable(*zip(self.source, second.source))
 
-    def reverse(self, /) -> PurePythonEnumerable[TSource]:
+    def reverse(self, /) -> Enumerable[TSource]:
         return PurePythonEnumerable(*reversed(self.source))
 
     def intersect(
         self,
-        second: PurePythonEnumerable[TSource],
+        second: Enumerable[TSource],
         /,
         *,
-        comparer: Comparer[TSource] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+        comparer: Comparer[TSource] = lambda in_, out: in_ == out,
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0 or len(second.source) == 0:
             return PurePythonEnumerable()
-        comparer_: Comparer[TSource] = (
-            comparer if comparer is not None else lambda i, o: i == o
-        )
         out: list[TSource] = []
         for inner in self.source:
             for outer in second.source:
-                if comparer_(inner, outer):
+                if comparer(inner, outer):
                     for captured in out:
-                        if comparer_(inner, captured):
+                        if comparer(inner, captured):
                             break
                     else:
                         out.append(inner)
@@ -568,26 +564,22 @@ class PurePythonEnumerable[TSource]:
 
     def intersect_by[TKey](
         self,
-        second: PurePythonEnumerable[TSource],
+        second: Enumerable[TKey],
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+        comparer: Comparer[TKey] = lambda in_, out: in_ == out,
+    ) -> Enumerable[TSource]:
         if len(self.source) == 0 or len(second.source) == 0:
             return PurePythonEnumerable()
-        comparer_: Comparer[TKey] = (
-            comparer if comparer is not None else lambda i, o: i == o
-        )
         out: list[TSource] = []
         for inner in self.source:
             inner_key = key_selector(inner)
-            for outer in second.source:
-                outer_key = key_selector(outer)
-                if comparer_(inner_key, outer_key):
+            for outer_key in second.source:
+                if comparer(inner_key, outer_key):
                     for captured in out:
                         captured_key = key_selector(captured)
-                        if comparer_(inner_key, captured_key):
+                        if comparer(inner_key, captured_key):
                             break
                     else:
                         out.append(inner)
@@ -595,35 +587,29 @@ class PurePythonEnumerable[TSource]:
 
     def sequence_equal(
         self,
-        other: PurePythonEnumerable[TSource],
+        other: Enumerable[TSource],
         /,
         *,
-        comparer: Comparer[TSource] | None = None,
+        comparer: Comparer[TSource] = lambda in_, out: in_ == out,
     ) -> bool:
         if len(self.source) != len(other.source):
             return False
-        comparer_: Comparer[TSource] = (
-            comparer if comparer is not None else lambda i, o: i == o
-        )
         return all(
-            comparer_(inner, outer)
+            comparer(inner, outer)
             for inner, outer in zip(self.source, other.source)
         )
 
     def except_(
         self,
-        other: PurePythonEnumerable[TSource],
+        other: Enumerable[TSource],
         /,
         *,
-        comparer: Comparer[TSource] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
-        comparer_: Comparer[TSource] = (
-            comparer if comparer is not None else lambda i, o: i == o
-        )
+        comparer: Comparer[TSource] = lambda in_, out: in_ == out,
+    ) -> Enumerable[TSource]:
         out: list[TSource] = []
         for inner in self.source:
             for outer in other.source:
-                if comparer_(inner, outer):
+                if comparer(inner, outer):
                     break
             else:
                 out.append(inner)
@@ -631,20 +617,17 @@ class PurePythonEnumerable[TSource]:
 
     def except_by[TKey](
         self,
-        other: PurePythonEnumerable[TSource],
+        other: Enumerable[TSource],
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
-        comparer_: Comparer[TKey] = (
-            comparer if comparer is not None else lambda i, o: i == o
-        )
+        comparer: Comparer[TKey] = lambda in_, out: in_ == out,
+    ) -> Enumerable[TSource]:
         out: list[TSource] = []
         for inner in self.source:
             inner_key = key_selector(inner)
             for outer in other.source:
-                if comparer_(inner_key, key_selector(outer)):
+                if comparer(inner_key, key_selector(outer)):
                     break
             else:
                 out.append(inner)
@@ -681,11 +664,11 @@ class PurePythonEnumerable[TSource]:
 
     def union(
         self,
-        second: PurePythonEnumerable[TSource],
+        second: Enumerable[TSource],
         /,
         *,
         comparer: Comparer[TSource] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
+    ) -> Enumerable[TSource]:
         if comparer is not None:
             out: list[TSource] = []
             for inner in self.source:
@@ -711,27 +694,24 @@ class PurePythonEnumerable[TSource]:
 
     def union_by[TKey](
         self,
-        second: PurePythonEnumerable[TSource],
+        second: Enumerable[TSource],
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[TSource]:
-        comparer_: Comparer[TKey] = (
-            comparer if comparer is not None else lambda i, o: i == o
-        )
+        comparer: Comparer[TKey] = lambda in_, out: in_ == out,
+    ) -> Enumerable[TSource]:
         out: list[TSource] = []
         for inner in self.source:
             inner_key = key_selector(inner)
             for captured in out:
-                if comparer_(inner_key, key_selector(captured)):
+                if comparer(inner_key, key_selector(captured)):
                     break
             else:
                 out.append(inner)
         for outer in second.source:
             outer_key = key_selector(outer)
             for captured in out:
-                if comparer_(outer_key, key_selector(captured)):
+                if comparer(outer_key, key_selector(captured)):
                     break
             else:
                 out.append(outer)
@@ -742,17 +722,14 @@ class PurePythonEnumerable[TSource]:
         key_selector: Callable[[TSource], TKey],
         /,
         *,
-        comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[PurePythonAssociable[TKey, TSource]]:
-        comparer_: Comparer[TKey] = (
-            comparer if comparer is not None else lambda i, o: i == o
-        )
+        comparer: Comparer[TKey] = lambda in_, out: in_ == out,
+    ) -> Enumerable[Associable[TKey, TSource]]:
         keys: list[TKey] = []
         values: dict[int, list[TSource]] = {}
         for item in self.source:
             item_key = key_selector(item)
             for index, k in enumerate(keys):
-                if comparer_(k, item_key):
+                if comparer(k, item_key):
                     values[index].append(item)
                     break
             else:
@@ -764,24 +741,53 @@ class PurePythonEnumerable[TSource]:
 
     def join[TInner, TKey, TResult](
         self,
-        inner: PurePythonEnumerable[TInner],
+        inner: Enumerable[TInner],
         outer_key_selector: Callable[[TSource], TKey],
         inner_key_selector: Callable[[TInner], TKey],
         result_selector: Callable[[TSource, TInner], TResult],
         /,
         *,
-        comparer: Comparer[TKey] | None = None,
-    ) -> PurePythonEnumerable[TResult]:
-        comparer_: Comparer[TKey] = (
-            comparer if comparer is not None else lambda o, i: o == i
-        )
+        comparer: Comparer[TKey] = lambda out, in_: out == in_,
+    ) -> Enumerable[TResult]:
         out: list[TResult] = []
         for outer_item in self.source:
             outer_key = outer_key_selector(outer_item)
             for inner_item in inner.source:
-                if comparer_(outer_key, inner_key_selector(inner_item)):
+                if comparer(outer_key, inner_key_selector(inner_item)):
                     out.append(result_selector(outer_item, inner_item))  # noqa: PERF401
         return PurePythonEnumerable(*out)
+
+    def group_join[TInner, TKey, TResult](
+        self,
+        inner: Enumerable[TInner],
+        outer_key_selector: Callable[[TSource], TKey],
+        inner_key_selector: Callable[[TInner], TKey],
+        result_selector: Callable[[TSource, Enumerable[TInner]], TResult],
+        /,
+        *,
+        comparer: Comparer[TKey] = lambda out, in_: out == in_,
+    ) -> Enumerable[TResult]:
+        keys: list[tuple[TKey, TSource]] = []
+        values: dict[int, list[TInner]] = {}
+        for outer_item in self.source:
+            outer_key = outer_key_selector(outer_item)
+            for index, kpair in enumerate(keys):
+                if comparer(outer_key, kpair[0]):
+                    break
+            else:
+                keys.append((outer_key, outer_item))
+                values[len(keys) - 1] = []
+        for inner_item in inner.source:
+            inner_key = inner_key_selector(inner_item)
+            for index, kpair in enumerate(keys):
+                if comparer(kpair[0], inner_key):
+                    values[index].append(inner_item)
+        return PurePythonEnumerable(
+            *[
+                result_selector(kpair[1], PurePythonEnumerable(*values[index]))
+                for index, kpair in enumerate(keys)
+            ]
+        )
 
     @staticmethod
     def _assume_not_empty(instance: PurePythonEnumerable[Any]) -> None:
@@ -790,7 +796,10 @@ class PurePythonEnumerable[TSource]:
             raise ValueError(msg)
 
 
-class PurePythonAssociable[TKey, TSource](PurePythonEnumerable[TSource]):
+class PurePythonAssociable[TKey, TSource](
+    Associable[TKey, TSource],
+    PurePythonEnumerable[TSource],
+):
     def __init__(
         self,
         key: TKey,
