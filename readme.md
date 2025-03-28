@@ -3,7 +3,7 @@
 Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1?view=net-9.0) interface in python W/ support for generics.
 
 ## Issue tracker
-### 1.0.0
+### v1.0.x
 - [x] Design protocols for each operation set
 - [x] Design & Implement `Enumerable` constructor(s) for PP implementation
 - [x] Add pure python implementation of `Enumerable` (assuming inputs aren't guaranteed to be `Hashable` or immutable & maintaining order)
@@ -39,8 +39,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Max
 - [x] remove `Comparable` bind from type variables
 - [x] Publish on pypi
-### 1.0.1
-- [x] Add project links to `pyproject.toml`
-### 1.1.0
+- [ ] Add external wrapper constructor
+### v1.1.x
 - [ ] Improve test code quality
 - [ ] Add hashed pure python implementation of `Enumerable` (assuming inputs are guaranteed to be `Hashable` & immutable & not maintaining order)
