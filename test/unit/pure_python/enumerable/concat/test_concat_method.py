@@ -11,6 +11,6 @@ class TestConcatMethod:
             *(second_items := (-9, -3, -8, -1, 8, -9)),
         )
 
-        final = first.concat(second)
+        res = first.concat(second)
 
-        assert final.source == first_items + second_items
+        assert res.source == first_items + second_items

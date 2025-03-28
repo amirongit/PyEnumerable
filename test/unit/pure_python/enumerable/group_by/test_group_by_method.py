@@ -38,3 +38,5 @@ class TestGroupByMethod:
             p.y == second_group_key
             for p in res.source[second_group_index].source
         )
+        assert res.source[first_group_index].key == first_group_key
+        assert res.source[second_group_index].key == second_group_key
