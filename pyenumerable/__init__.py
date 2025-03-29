@@ -9,6 +9,6 @@ from pyenumerable.protocol import Enumerable
 __all__ = ["Enumerable", "PurePythonEnumerable", "pp_enumerable"]
 __author__ = "AmirHossein Ahmadi"
 __license__ = "WTFPL"
-__version__ = "1.0.2"
+__version__ = "1.1.0"
 __maintainer__ = "AmirHossein Ahmadi"
 __email__ = "amirthehossein@gmail.com"
