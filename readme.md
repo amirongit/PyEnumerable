@@ -41,7 +41,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 - [x] Publish on pypi
 - [x] Add external constructor wrapper
 - [x] Add technical documentation pure python implementation
-- [x] Implement `__str__` & `__repr__` for 
+- [x] Implement `__str__` & `__repr__` for pp
 ### v1.1.x
 - [ ] Improve test code quality
 - [ ] Add hashed pure python implementation of `Enumerable` (assuming inputs are guaranteed to be `Hashable` & immutable; not preserving order)
