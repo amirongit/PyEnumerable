@@ -27,7 +27,7 @@ class TestDistinctByMethod:
             from_iterable=(items := tuple(range(7)), [-i for i in items]),
         )
 
-        res = obj.distinct_by(lambda i: i**2)
+        res = obj.distinct_by(lambda i: abs(i))
 
         assert res.source == items
 

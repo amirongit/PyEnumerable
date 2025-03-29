@@ -18,16 +18,16 @@ class TestGroupJoinMethod:
 
         res = first_object.group_join(
             second_object,
-            lambda parent: parent.age,
-            lambda child: child.parent.age
+            lambda parent: parent.name,
+            lambda child: child.parent.name
             if child.parent is not None
             else None,
-            lambda parent, children: (parent.age, children.source),
+            lambda parent, children: (parent, children.source),
         )
 
         assert res.source == (
-            (first_parent.age, (first_child, second_child)),
-            (second_parent.age, (third_child, fourth_child, fifth_child)),
+            (first_parent, (first_child, second_child)),
+            (second_parent, (third_child, fourth_child, fifth_child)),
         )
 
     def test_overlap_remove(self) -> None:
