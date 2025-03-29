@@ -13,7 +13,7 @@ Extension methods defined by `IEnumerable` interface are grouped by their functi
 
 ##### `TSource`
 
-Type of the items inside an instance of a particular implementation of `Enumerable`.
+Type of items of `self`.
 
 #### Common Arguments Among Methods
 
@@ -157,6 +157,46 @@ assert one.source == (1, 2, -1, -2, -3, 4, -5)
 assert one.distinct_by(lambda x: abs(x)).res == (1, 2, -3, 4, -5)
 ```
 
+type parameters:
+- `TKey`: Type of key to distinguish items by.
+
+#### `SupportsExcept`
+
+##### `except_`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert two.source == (1, 2, 3)
+assert one.except_(two).source == (4, 5)
+```
+
+##### `except_by`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (
+    Point(1, 1),
+    Point(1, 2),
+    Point(1, 3),
+    Point(1, 4),
+    Point(1, 5)
+)
+assert two.source == (
+    Point(2, 1),
+    Point(2, 2),
+    Point(2, 3),
+)
+assert one.except_by(two, lambda point: point.y).source == (
+    Point(1, 4),
+    Point(1, 5)
+)
+```
+type parameters:
+- `TKey`: Type of key to identify items by.
+
 #### `SupportsGroupBy`
 
 ##### `group_by`
@@ -178,3 +218,487 @@ assert two.source == (Point(1, 1), Point(2, 1))
 assert three.key == 2
 assert three.source == (Point(3, 2), Point(4, 2), Point(5, 2))
 ```
+
+type parameters:
+- `TKey`: Type of key returned by `key_selector`; Will be used to group items by.
+
+#### `SupportsGroupJoin`
+
+##### `group_join`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (1, 2)
+assert two.source == (
+    Point(1, 1),
+    Point(2, 1),
+    Point(3, 2),
+    Point(4, 2),
+    Point(5, 2),
+)
+assert one.group_join(
+    two,
+    lambda x: x,
+    lambda point: point.y,
+    lambda x,
+    points: (x, points.source)
+).source == (
+    (1, Point(1, 1), Point(2, 1)),
+    (2, Point(3, 2), Point(4, 2), Point(5, 2))
+)
+```
+
+type parameters:
+- `TKey`: Type of keys to group & join items by.
+- `TInner`: Type of items of the second enumerable.
+- `TResult`: Type of result items.
+
+#### `SupportsIntersect`
+
+##### `intersect`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert two.source == (1, 2, 3)
+assert one.intersect(two) == (1, 2, 3)
+```
+
+##### `intersect_by`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (
+    Point(1, 1),
+    Point(1, 2),
+    Point(1, 3),
+    Point(1, 4),
+    Point(1, 5)
+)
+assert two.source == (1, 2, 3)
+assert one.intersect_by(two, lambda point: point.y).source == (
+    Point(1, 1),
+    Point(1, 2),
+    Point(1, 3)
+)
+```
+
+type parameters:
+- `TKey`: Type of key to identify items by.
+
+#### `SupportsJoin`
+
+##### `join`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (
+    Point(0, 1),
+    Point(0, 2),
+    Point(1, 2),
+    Point(0, 3),
+    Point(1, 1),
+)
+assert two.source == (
+    Point(1, 0),
+    Point(1, 1),
+    Point(4, 0),
+    Point(4, 1),
+    Point(3, 0),
+)
+assert one.join(
+    two,
+    lambda point: point.y,
+    lambda point: point.x,
+    lambda outer_point,
+    inner_point: (outer_point, inner_point),
+).source == (
+    (Point(0, 1), Point(1, 0)),
+    (Point(0, 1), Point(1, 1)),
+    (Point(0, 3), Point(3, 0)),
+    (Point(1, 3), Point(3, 0)),
+)
+```
+
+type parameters:
+- `TKey`: Type of keys to join items by.
+- `TInner`: Type of items of the second enumerable.
+- `TResult`: Type of result items.
+
+#### `SupportsMax`
+
+##### `max_`
+
+usage:
+```py
+assert one.source == (2, 4, 5, 3, 1)
+assert one.max_() == 5
+```
+
+##### `max_by`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (
+    Point(2, 1),
+    Point(4, 1),
+    Point(5, 1),
+    Point(3, 1),
+    Point(1, 1),
+)
+assert one.max_by(lambda point: point.x) == Point(5, 1)
+```
+
+type parameters:
+- `TKey`: Type of key to compare items by.
+
+#### `SupportsMin`
+
+##### `min_`
+
+usage:
+```py
+assert one.source == (5, 3, 1, 2, 4)
+assert one.min_() == 1
+```
+
+##### `min_by`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (
+    Point(5, 1),
+    Point(3, 1),
+    Point(1, 1),
+    Point(2, 1),
+    Point(4, 1),
+)
+assert one.min_by(lambda point: point.x) == Point(1, 1)
+```
+
+type parameters:
+- `TKey`: Type of key to compare items by.
+
+#### `SupportsOfType`
+
+##### `of_type`
+
+usage:
+```py
+assert one.source == (0, None, "one", 2, 3)
+assert one.of_type(int) == (0, 2, 3)
+```
+
+type parameters:
+- `TResult`: Type of result items to filter items of enumerable on.
+
+#### `SupportsOrder`
+
+##### `order`
+usage:
+```py
+assert one.source == (1, 2, 5, 4, 3)
+assert one.order().source == (1, 2, 3, 4, 5)
+```
+
+##### `order_by`
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (Point(1, 2), Point(1, 3), Point(1, 1))
+assert one.order_by(lambda point: point.y).source == (Point(1, 1), Point(1, 2), Point(1, 3))
+```
+
+type parameters:
+- `TKey`: Type of key to compare items by.
+
+##### `order_descending`
+usage:
+```py
+assert one.source == (1, 2, 5, 4, 3)
+assert one.order().source == (5, 4, 3, 2, 1)
+```
+
+##### `order_by_descending`
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (Point(1, 2), Point(1, 3), Point(1, 1))
+assert one.order_by(lambda point: point.y).source == (Point(1, 3), Point(1, 2), Point(1, 1))
+```
+
+type parameters:
+- `TKey`: Type of key to compare items by.
+
+#### `SupportsPrepend`
+
+##### `prepend`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.prepend(0).source == (0, 1, 2, 3, 4, 5)
+```
+
+#### `SupportsReverse`
+
+##### `reverse`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.reverse().source == (5, 4, 3, 2, 1)
+```
+
+#### `SupportsSelect`
+
+type parameters:
+- `TResult`: Type of result items.
+
+##### `select`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (
+    Point(0, 1),
+    Point(0, 2),
+    Point(0, 3),
+    Point(0, 4),
+    Point(0, 5)
+)
+assert one.select(lambda idx, point: (idx, point.y)).source == (
+    (0, 1),
+    (1, 2),
+    (2, 3),
+    (3, 4),
+    (4, 5),
+)
+```
+
+##### `select_many`
+
+usage:
+```py
+assert one.source == (
+    Point(0, 1),
+    Point(0, 2),
+    Point(0, 3),
+    Point(0, 4),
+    Point(0, 5)
+)
+assert one.select_many(lambda _, point: (point.x, point.y)).source == (
+    0,
+    1,
+    0,
+    2,
+    0,
+    3,
+    0,
+    4,
+    0,
+    5
+)
+```
+
+#### `SupportsSequenceEqual`
+
+##### `sequence_equal`
+
+usage:
+```py
+assert one.source == (1, 2, 3)
+assert two.source == (3, 2, 1)
+assert one.sequence_equal(two) is False
+assert three.source == (1, 2, 3, 4)
+assert one.sequence_equal(three) is False
+assert four.source == (1, 2, 3)
+assert one.sequence_equal(four) is True
+```
+
+#### `SupportsSingle`
+
+##### `single`
+
+usage:
+```py
+assert one.source == (7)
+assert one.single() == 7
+assert two.source == (1, 2, 3, 4, 5)
+assert two.single(lambda x: x % 3 == 0) == 3
+```
+
+##### `single_or_default`
+
+usage:
+```py
+assert one.source == (7)
+assert one.single_or_default(5) == 7
+assert two.source == (,)
+assert two.single_or_default(5) == 5
+assert three.source == (1, 2, 3, 4, 5)
+assert three.single_or_default(0, lambda x: x % 7 == 0, ) == 0
+assert four.source == (1, 2, 3, 4, 5)
+assert four.single_or_default(0, lambda x: x % 2 == 0, ) == 0
+assert five.source == (1, 2, 3, 4, 5)
+assert five.single_or_default(0, lambda x: x % 5 == 0, ) == 5
+```
+
+#### `SupportsSkip`
+
+##### `skip`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.skip(2).source == (3, 4, 5)
+assert two.source == (1, 2, 3, 4, 5)
+assert two.skip(2, 4).source == (1, 2, 5)
+```
+
+##### `skip_last`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.skip_last(2).source == (1, 2, 3)
+```
+
+##### `skip_while`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.skip_while(lambda idx, _: idx <= 3).source == (5,)
+assert two.source == (1, 2, 3, 4, 5)
+assert two.skip_while(lambda _, x: x <= 3).source == (4, 5)
+```
+
+#### `SupportsSum`
+
+##### `sum`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.sum() == 15
+```
+
+#### `SupportsTake`
+
+##### `take`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.take(2).source == (1, 2)
+assert two.source == (1, 2, 3, 4, 5)
+assert two.take(2, 4).source == (3, 4)
+```
+
+##### `take_last`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.take_last(2).source == (4, 5)
+```
+
+##### `take_while`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert one.take_while(lambda idx, _: idx <= 3).source == (1, 2, 3, 4)
+assert two.source == (1, 2, 3, 4, 5)
+assert two.take_while(lambda _, x: x <= 3).source == (1, 2, 3)
+```
+
+#### `SupportsUnion`
+
+##### `union`
+
+usage:
+```py
+assert one.source == (1, 2, 2, 3, 5)
+assert two.source == (1, 3, 3, 4, 5)
+assert one.union(two).source == (1, 2, 3, 5, 4)
+```
+
+##### `union_by`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (Point(0, 1), Point(0, 2), Point(0, 3))
+assert two.source == (Point(1, 3), Point(1, 4), Point(1, 5))
+assert one.union_by(two, lambda point: point.y).source == (
+    Point(0, 1),
+    Point(0, 2),
+    Point(0, 3),
+    Point(1, 4),
+    Point(1, 4),
+)
+```
+
+type parameters:
+- `TKey`: Type of key to identify items by.
+
+#### `SupportsWhere`
+
+##### `where`
+
+usage:
+```py
+Point = namedtuple('Point', ('x', 'y'))
+
+assert one.source == (
+    Point(0, 1),
+    Point(2, 3),
+    Point(4, 5),
+    Point(6, 7),
+)
+assert one.where(lambda _, point: point.y <= 3).source == (
+    Point(0, 1),
+    Point(2, 3),
+)
+assert two.source == (
+    Point(0, 1),
+    Point(2, 3),
+    Point(4, 5),
+    Point(6, 7),
+)
+assert two.where(lambda idx, _: idx <= 2).source == (
+    Point(0, 1),
+    Point(2, 3),
+    Point(4, 5),
+)
+```
+
+#### `SupportsZip`
+
+##### `zip`
+
+usage:
+```py
+assert one.source == (1, 2, 3, 4, 5)
+assert two.source == ("five", "four", "three")
+assert one.zip(two).source == ((1, "five"), (2, "four"), (3, "three"))
+```
+
+type parameters:
+- `TSecond`: Type of items of the second enumerable.
