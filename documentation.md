@@ -19,7 +19,7 @@ Type of items of `self`.
 
 ##### `comparer`
 
-A callable which accepts two arguments of type `Tsource` & returns a `bool` value; The meaning of the returned value is dependant on the context of its method; usually defaults to `lambda i, o: i == o`.
+A callable which accepts two arguments of type `TSource` & returns a `bool` value; The meaning of the returned value is dependant on the context of its method; usually defaults to `lambda i, o: i == o`.
 
 #### `Enumerable`
 
@@ -702,3 +702,19 @@ assert one.zip(two).source == ((1, "five"), (2, "four"), (3, "three"))
 
 type parameters:
 - `TSecond`: Type of items of the second enumerable.
+
+### Implementations
+
+#### `PurePythonEnumerable`
+
+A basic implementation of Enumerable; Written without the assumption of `TSource` conforming to `collections.abc.Hashable` or being immutable; preserves order.
+
+usage:
+```py
+from pyenumerable import pp_enumerable
+my_enumerable = pp_enumerable(*items, from_iterable=from_iterable)
+```
+
+arguments:
+- `items`: Directly used items
+- `from_iterable`: An iterable of iterables which hold items
