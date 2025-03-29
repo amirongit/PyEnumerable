@@ -39,9 +39,9 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
     - [x] Max
 - [x] remove `Comparable` bind from type variables
 - [x] Publish on pypi
-- [x] Add external wrapper constructor
+- [x] Add external constructor wrapper
 - [x] Add technical documentation pure python implementation
-- [ ] Implement `__str__` & `__repr__` for 
+- [x] Implement `__str__` & `__repr__` for 
 ### v1.1.x
 - [ ] Improve test code quality
 - [ ] Add hashed pure python implementation of `Enumerable` (assuming inputs are guaranteed to be `Hashable` & immutable; not preserving order)

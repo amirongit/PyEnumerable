@@ -67,3 +67,9 @@ class Enumerable[TSource](
 ):
     @property
     def source(self) -> tuple[TSource, ...]: ...
+
+    def __str__(self) -> str:
+        return f"Enumerable(*{self.source})"
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(*{self.source})"
