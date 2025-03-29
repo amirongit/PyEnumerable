@@ -12,7 +12,7 @@ class TestChunkMethod:
             four := 4,
             five := 5,
             six := 6,
-            seven := 7
+            seven := 7,
         )
 
         res = obj.chunk(size := 3)

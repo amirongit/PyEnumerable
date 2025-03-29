@@ -8,14 +8,14 @@ class TestJoinMethod:
         second_group_key = 3
 
         first_object = PurePythonEnumerable(
-            fgfo := Point(0, first_group_key),
-            sgfo := Point(0, second_group_key),
-            sgso := Point(1, second_group_key),
+            first_group_first_outer := Point(0, first_group_key),
+            second_group_first_outer := Point(0, second_group_key),
+            second_group_second_outer := Point(1, second_group_key),
         )
         second_object = PurePythonEnumerable(
-            fgfi := Point(first_group_key, 0),
-            fgsi := Point(first_group_key, 1),
-            sgfi := Point(second_group_key, 0),
+            first_group_first_inner := Point(first_group_key, 0),
+            first_group_second_inner := Point(first_group_key, 1),
+            second_group_first_inner := Point(second_group_key, 0),
         )
 
         res = first_object.join(
@@ -26,19 +26,10 @@ class TestJoinMethod:
         )
 
         assert res.source == (
-            (fgfo, fgfi),  # (first group first outer, first group first inner)
-            (
-                fgfo,
-                fgsi,
-            ),  # (first group first outer, first group second inner)
-            (
-                sgfo,
-                sgfi,
-            ),  # (second group first outer, second group first inner)
-            (
-                sgso,
-                sgfi,
-            ),  # (second group second outer, second group first inner)
+            (first_group_first_outer, first_group_first_inner),
+            (first_group_first_outer, first_group_second_inner),
+            (second_group_first_outer, second_group_first_inner),
+            (second_group_second_outer, second_group_first_inner),
         )
 
     def test_with_outcaster(self) -> None:
@@ -46,18 +37,18 @@ class TestJoinMethod:
         second_group_key = 3
 
         first_object = PurePythonEnumerable(
-            fgfo := Point(0, first_group_key),
+            first_group_first_outer := Point(0, first_group_key),
             Point(0, 2),
             Point(1, 2),
-            sgfo := Point(0, second_group_key),
-            sgso := Point(1, second_group_key),
+            second_group_first_outer := Point(0, second_group_key),
+            second_group_second_outer := Point(1, second_group_key),
         )
         second_object = PurePythonEnumerable(
-            fgfi := Point(first_group_key, 0),
-            fgsi := Point(first_group_key, 1),
+            first_group_first_inner := Point(first_group_key, 0),
+            first_group_second_inner := Point(first_group_key, 1),
             Point(4, 0),
             Point(4, 1),
-            sgfi := Point(second_group_key, 0),
+            second_group_first_inner := Point(second_group_key, 0),
         )
 
         res = first_object.join(
@@ -68,17 +59,8 @@ class TestJoinMethod:
         )
 
         assert res.source == (
-            (fgfo, fgfi),  # (first group first outer, first group first inner)
-            (
-                fgfo,
-                fgsi,
-            ),  # (first group first outer, first group second inner)
-            (
-                sgfo,
-                sgfi,
-            ),  # (second group first outer, second group first inner)
-            (
-                sgso,
-                sgfi,
-            ),  # (second group second outer, second group first inner)
+            (first_group_first_outer, first_group_first_inner),
+            (first_group_first_outer, first_group_second_inner),
+            (second_group_first_outer, second_group_first_inner),
+            (second_group_second_outer, second_group_first_inner),
         )
