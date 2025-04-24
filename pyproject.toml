@@ -63,6 +63,7 @@ lint.select = [
 ]
 lint.ignore = ["F401", "COM812"]
 lint.fixable = ["ALL"]
+extend-exclude = ["__init__.py"]
 
 [tool.pyright]
 typeCheckingMode = "strict"
