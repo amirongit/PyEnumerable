@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable, Sequence
-from contextlib import suppress
-from itertools import chain
+from itertools import chain, islice
 from typing import Any, Protocol
 
 from pyenumerable.protocol import Associable, Enumerable
@@ -251,9 +250,9 @@ class PurePythonEnumerable[TSource](Enumerable[TSource]):
     ) -> Enumerable[TSource]:
         return PurePythonEnumerable(
             *(
-                self.source[start_or_count:end]
+                islice(self.source, start_or_count, end)
                 if (end is not None)
-                else self.source[:start_or_count]
+                else islice(self.source, start_or_count)
             ),
         )
 
