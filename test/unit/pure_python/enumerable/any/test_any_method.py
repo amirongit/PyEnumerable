@@ -6,35 +6,35 @@ class TestAnyMethod:
     def test_without_predicate_when_empty(self) -> None:
         obj: PurePythonEnumerable[int] = PurePythonEnumerable()
 
-        res = obj.any()
+        res = obj.any_()
 
         assert res is False
 
     def test_pass_without_predicate(self) -> None:
         obj = PurePythonEnumerable(False, False, True)  # noqa: FBT003
 
-        res = obj.any()
+        res = obj.any_()
 
         assert res is True
 
     def test_fail_without_predicate(self) -> None:
         obj = PurePythonEnumerable(None, False, False)  # noqa: FBT003
 
-        res = obj.any()
+        res = obj.any_()
 
         assert res is False
 
     def test_with_predicate_when_empty(self) -> None:
         obj: PurePythonEnumerable[int] = PurePythonEnumerable()
 
-        res = obj.any(lambda _: True)
+        res = obj.any_(lambda _: True)
 
         assert res is False
 
     def test_pass_with_predicate(self) -> None:
         obj = PurePythonEnumerable(*range((threshold := 7) + 1))
 
-        res = obj.any(lambda x: x == threshold)
+        res = obj.any_(lambda x: x == threshold)
 
         assert res is True
 
@@ -46,7 +46,7 @@ class TestAnyMethod:
             Person("jane doe", 6, Person("harry doe", 28)),
         )
 
-        res = obj.any(
+        res = obj.any_(
             lambda person: (
                 person.parent is not None and person.parent.parent is not None
             ),

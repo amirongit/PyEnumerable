@@ -8,11 +8,11 @@ class TestSumMethod:
         obj = PurePythonEnumerable("should", "not", "work")
 
         with pytest.raises(TypeError):
-            obj.sum()
+            obj.sum_()
 
     def test_sum(self) -> None:
         obj = PurePythonEnumerable(*(items := tuple(range(7))))
 
-        res = obj.sum()
+        res = obj.sum_()
 
         assert res == sum(items)

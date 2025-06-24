@@ -19,7 +19,7 @@ class TestIntersectByMethod:
 
         assert res.source == ()
 
-    def test_intersect_by(self) -> None:
+    def test_with_comparer(self) -> None:
         first_object = PurePythonEnumerable(
             first := Point(5, 1),
             Point(3, 3),
@@ -34,6 +34,20 @@ class TestIntersectByMethod:
             lambda point: point.y,
             comparer=lambda first, second: abs(first) == abs(second),
         )
+
+        assert res.source == (first, second, third)
+
+    def test_without_comparer(self) -> None:
+        first_object = PurePythonEnumerable(
+            first := Point(5, 1),
+            Point(3, 3),
+            Point(4, 5),
+            second := Point(2, 7),
+            third := Point(3, 9),
+        )
+        second_object = PurePythonEnumerable(1, 7, 9)
+
+        res = first_object.intersect_by(second_object, lambda point: point.y)
 
         assert res.source == (first, second, third)
 

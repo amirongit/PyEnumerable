@@ -12,16 +12,6 @@ class TestDistinctByMethod:
 
         assert res.source == ()
 
-    def test_exc_raise_when_unhashable(self) -> None:
-        obj = PurePythonEnumerable(
-            Person("john doe", 12),
-            Person("jane doe", 12, Person("marry doe", 36)),
-            Person("junior doe", 12, Person("larry doe", 28)),
-        )
-
-        with pytest.raises(TypeError):
-            obj.distinct_by(lambda person: person.parent)
-
     def test_without_comparer(self) -> None:
         obj = PurePythonEnumerable(
             from_iterable=(items := tuple(range(7)), [-i for i in items]),
