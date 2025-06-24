@@ -61,7 +61,7 @@ lint.select = [
     "PERF",
     "RUF",
 ]
-lint.ignore = ["F401", "COM812"]
+lint.ignore = ["F401", "COM812", "PLW1641"]
 lint.fixable = ["ALL"]
 extend-exclude = ["__init__.py"]
 
