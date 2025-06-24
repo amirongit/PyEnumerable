@@ -9,14 +9,14 @@ def generate_random_args(length: int, range_: range) -> tuple[int, ...]:
     return tuple(choice(range_) for _ in range(length))
 
 
-@dataclass
+@dataclass(frozen=True, eq=True)
 class Person:
     name: str
     age: int
     parent: Person | None = None
 
 
-@dataclass
+@dataclass(frozen=True, eq=True)
 class Point:
     x: int
     y: int

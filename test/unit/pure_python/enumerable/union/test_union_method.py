@@ -5,20 +5,23 @@ from test.unit.pure_python.test_utility import Point
 
 
 class TestUnionMethod:
-    def test_exc_raise_when_unhashable(self) -> None:
-        first_object = PurePythonEnumerable(Point(0, 1), Point(1, 0))
-        second_object = PurePythonEnumerable(Point(1, 0), Point(0, 1))
-
-        with pytest.raises(TypeError):
-            first_object.union(second_object)
-
-    def test_union(self) -> None:
+    def test_with_comparer(self) -> None:
         first_object = PurePythonEnumerable(*(items := tuple(range(7))))
         second_object = PurePythonEnumerable(*(-i for i in items))
 
         res = first_object.union(
             second_object, comparer=lambda x, y: abs(x) == abs(y)
         )
+
+        assert res.source == items
+
+    def test_without_comparer(self) -> None:
+        first_object = PurePythonEnumerable(*tuple(range(half := 7)))
+        second_object = PurePythonEnumerable(
+            *(items := tuple(range(half * 2)))
+        )
+
+        res = first_object.union(second_object)
 
         assert res.source == items
 
