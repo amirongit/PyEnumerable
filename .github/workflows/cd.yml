@@ -19,6 +19,6 @@ jobs:
       - run: uv sync
       - run: uv run ruff check pyenumerable test
       - run: uv run pyright pyenumerable test
-      - run: uv run pytest -v --cov=pyenumerable.implementations --cov-report term-missing --cov-report term:skip-covered
+      - run: uv run pytest -v --cov=pyenumerable.implementations --cov-report term-missing
       - run: uv build
       - run: uv publish --trusted-publishing always
