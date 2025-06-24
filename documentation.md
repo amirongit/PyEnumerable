@@ -4,7 +4,7 @@ Implementation of .NET's [IEnumerable](https://learn.microsoft.com/en-us/dotnet/
 
 ## Architecture & Design
 
-PyEnumerable follows a relatively simple architecture, mainly because there isn't any reason to do otherwise!
+PyEnumerable follows a relatively simple architecture, mainly because there isn't any reason to do otherwise!<br/>
 Extension methods defined by `IEnumerable` interface are grouped by their functionality under protocols located `pyenumerable.protocol` package; The main advantage provided by protocols over ABCs (abstract base classes) is the ability to define overloads w/ different signatures.
 
 ### Protocols
@@ -23,7 +23,7 @@ A callable which accepts two arguments of type `TSource` & returns a `bool` valu
 
 #### `Enumerable`
 
-This protocol consolidates all other protocols into a single one, allowing implementations to reference it instead of listing each individual protocol. This approach minimizes the risk of omitting any methods due to oversight.
+This protocol consolidates all other protocols into a single one, allowing implementations to reference it instead of listing each individual protocol. This approach minimizes the risk of omitting any methods due to oversight.<br/>
 It also enforces the presence of a property called `source` which can be used to access actual items inside an instance of a particular implementation.
 
 #### `Associable`
@@ -242,8 +242,7 @@ assert one.group_join(
     two,
     lambda x: x,
     lambda point: point.y,
-    lambda x,
-    points: (x, points.source)
+    lambda x, points: (x, points.source)
 ).source == (
     (1, Point(1, 1), Point(2, 1)),
     (2, Point(3, 2), Point(4, 2), Point(5, 2))
@@ -707,7 +706,8 @@ type parameters:
 
 #### `PurePythonEnumerable`
 
-A basic implementation of Enumerable; Written without the assumption of `TSource` conforming to `collections.abc.Hashable` or being immutable; preserves order.
+Basic implementation of `pyenumerable.Enumerable`; Assumes that `TSource` conforms to `collections.abc.Hashable` & is immutable.<br/>
+Violating this assumption may lead to unpredictable behaviour.
 
 usage:
 ```py
