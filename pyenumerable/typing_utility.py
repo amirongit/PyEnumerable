@@ -5,9 +5,7 @@ type Comparer[T] = Callable[[T, T], bool]
 
 
 class Comparable(Protocol):
-    """
-    mimics `_typeshed.SupportsRichComparisonT`
-    """
+    # `_typeshed.SupportsRichComparisonT`
 
     def __eq__[T](self: T, other: T, /) -> bool: ...
 
