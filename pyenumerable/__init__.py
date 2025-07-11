@@ -1,7 +1,3 @@
-"""
-Implementation of .NET's IEnumerable interface in python W/ support for generics.
-"""  # noqa: E501
-
 from pyenumerable.constructors import pp_enumerable
 from pyenumerable.implementations import PurePythonEnumerable
 from pyenumerable.protocol import Enumerable

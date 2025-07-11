@@ -5,18 +5,12 @@ from contextlib import suppress
 from functools import cache
 from itertools import chain
 
-from pyenumerable.implementation_utility import assume_not_empty
+from pyenumerable.implementations.utils import assume_not_empty
 from pyenumerable.protocol import Associable, Enumerable
 from pyenumerable.typing_utility import Comparer
 
 
 class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
-    """
-    Basic implementation of `pyenumerable.Enumerable`; Assumes that `TSource`
-    conforms to `collections.abc.Hashable` & is immutable.
-    Violating this assumption may lead to unpredictable behaviour.
-    """
-
     def __init__(
         self,
         *items: TSource,
@@ -36,11 +30,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         selector: Callable[[int, TSource], TResult],
         /,
     ) -> Enumerable[TResult]:
-        """
-        Uses `PurePythonEnumerable.__init__`
-        O(n)
-        """
-
         return PurePythonEnumerable(
             *tuple(selector(i, v) for i, v in enumerate(self.source)),
         )
@@ -50,11 +39,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         selector: Callable[[int, TSource], Iterable[TResult]],
         /,
     ) -> Enumerable[TResult]:
-        """
-        Uses `PurePythonEnumerable.__init__`
-        O(n)
-        """
-
         return PurePythonEnumerable(
             from_iterable=[selector(i, v) for i, v in enumerate(self.source)],
         )
@@ -64,10 +48,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         other: Enumerable[TSource],
         /,
     ) -> Enumerable[TSource]:
-        """
-        Wraps `PurePythonEnumerable.__init__`
-        """
-
         return PurePythonEnumerable(from_iterable=(self.source, other.source))
 
     def max_(
@@ -76,15 +56,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> TSource:
-        """
-        If comparer is given
-            O(n)
-        Else
-            Assumes that `TSource` conforms
-            `pyenumerable.typing_utility.Comparable`
-            Wraps `builtins.max`
-        """
-
         assume_not_empty(self)
 
         if comparer is not None:
@@ -103,16 +74,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> TSource:
-        """
-        Uses `builtins.enumerate`
-        If comparer is given
-            O(n)
-        Else
-            Assumes that `TKey` conforms to
-            `pyenumerable.typing_utility.Comparable`
-            Wraps `builtins.max`
-        """
-
         assume_not_empty(self)
 
         enumerated = enumerate(key_selector(i) for i in self.source)
@@ -132,15 +93,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> TSource:
-        """
-        If comparer is given
-            O(n)
-        Else
-            Assumes that `TSource` conforms to
-            `pyenumerable.typing_utility.Comparable`
-            Wraps `builtins.min`
-        """
-
         assume_not_empty(self)
 
         if comparer is not None:
@@ -159,16 +111,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> TSource:
-        """
-        Uses `builtins.enumerate`
-        If comparer is given
-            O(n)
-        Else
-            Assumes that `TKey` conforms to
-            `pyenumerable.typing_utility.Comparable`
-            Wraps `builtins.min`
-        """
-
         assume_not_empty(self)
 
         enumerated = enumerate(key_selector(i) for i in self.source)
@@ -189,14 +131,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> bool:
-        """
-        If comparer is given
-            Wraps `builtins.any`
-            O(n)
-        Else
-            Wraps `in`
-        """
-
         return (
             (any(comparer(item, i) for i in self.source))
             if comparer is not None
@@ -208,14 +142,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> int:
-        """
-        If predicate is given
-            Wraps `builtins.sum`
-            O(n)
-        Else
-            Wraps `builtins.len`
-        """
-
         return (
             sum(1 for i in self.source if predicate(i))
             if predicate is not None
@@ -227,13 +153,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> TSource:
-        """
-        Uses `builtins.len`
-        If predicate is given
-            Uses `builtins.filter`
-            O(n)
-        """
-
         if (
             len(
                 items := tuple(filter(predicate, self.source))
@@ -255,13 +174,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> TSource:
-        """
-        Uses `builtins.len`
-        If predicate is given
-            Uses `builtins.filter`
-            O(n)
-        """
-
         if (
             length := len(
                 items := tuple(filter(predicate, self.source))
@@ -283,10 +195,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         end: int | None = None,
         /,
     ) -> Enumerable[TSource]:
-        """
-        Wraps slicing
-        """
-
         return PurePythonEnumerable(
             *(
                 self.source[:start_or_count] + self.source[end:]
@@ -296,10 +204,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         )
 
     def skip_last(self, count: int, /) -> Enumerable[TSource]:
-        """
-        Wraps slicing
-        """
-
         return PurePythonEnumerable(*self.source[:-count])
 
     def skip_while(
@@ -307,10 +211,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[int, TSource], bool],
         /,
     ) -> Enumerable[TSource]:
-        """
-        O(n)
-        """
-
         start = 0
         for index, item in enumerate(self.source):
             start = index
@@ -326,10 +226,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         end: int | None = None,
         /,
     ) -> Enumerable[TSource]:
-        """
-        Wraps slicing
-        """
-
         return PurePythonEnumerable(
             *(
                 self.source[start_or_count:end]
@@ -339,10 +235,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         )
 
     def take_last(self, count: int, /) -> Enumerable[TSource]:
-        """
-        Wraps slicing
-        """
-
         return PurePythonEnumerable(*self.source[-count:])
 
     def take_while(
@@ -350,10 +242,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[int, TSource], bool],
         /,
     ) -> Enumerable[TSource]:
-        """
-        O(n)
-        """
-
         stop = 0
         for index, item in enumerate(self.source):
             stop = index
@@ -368,10 +256,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         type_: type[TResult],
         /,
     ) -> Enumerable[TResult]:
-        """
-        Wraps `builtins.filter`
-        """
-
         return PurePythonEnumerable(  # type: ignore
             *filter(lambda i: isinstance(i, type_), self.source),
         )
@@ -381,12 +265,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> bool:
-        """
-        Wraps `builtins.all`
-        If predicate is given
-            O(n)
-        """
-
         return all(
             (predicate(i) for i in self.source)
             if (predicate is not None)
@@ -398,12 +276,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[TSource], bool] | None = None,
         /,
     ) -> bool:
-        """
-        Wraps `builtins.any`
-        If predicate is given
-            O(n)
-        """
-
         return any(
             (predicate(i) for i in self.source)
             if (predicate is not None)
@@ -411,11 +283,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         )
 
     def sum_(self, /) -> TSource:
-        """
-        Wraps `builtins.sum`
-        `TSource` should be usable as arugment of `builtins.sum`
-        """
-
         return sum(self.source)  # type: ignore
 
     def where(
@@ -423,11 +290,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         predicate: Callable[[int, TSource], bool],
         /,
     ) -> Enumerable[TSource]:
-        """
-        Wraps `builtins.filter`
-        O(n)
-        """
-
         return PurePythonEnumerable(
             *(
                 en[1]
@@ -443,17 +305,9 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         element: TSource,
         /,
     ) -> Enumerable[TSource]:
-        """
-        Wraps `PurePythonEnumerable.__init__`
-        """
-
         return PurePythonEnumerable(element, *self.source)
 
     def append(self, element: TSource, /) -> Enumerable[TSource]:
-        """
-        Wraps `PurePythonEnumerable.__init__`
-        """
-
         return PurePythonEnumerable(*self.source, element)
 
     def distinct(
@@ -462,13 +316,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(n^2)
-        Else
-            Wraps `builtins.dict.fromkeys`
-        """
-
         if comparer is not None:
             out: list[TSource] = []
             for item in self.source:
@@ -488,15 +335,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(n^2)
-        Else
-            Assumes that `TKey` conforms to `collections.abc.Hashable`
-            Uses `builtins.dict.fromkeys`
-            O(n)
-        """
-
         captured_dict: dict[TKey, TSource] = {}
 
         if comparer is not None:
@@ -520,15 +358,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        Uses `builtins.sorted`
-        If comparer is given
-            O(n^2)
-        Else
-            Assumes that `TSource` conforms
-            `pyenumerable.typing_utility.Comparable`
-        """
-
         if comparer is not None:
             rank_table: dict[int, list[TSource]] = {}
             for item in self.source:
@@ -551,15 +380,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        Uses `builtins.sorted`
-        If comparer is given
-            O(n^2)
-        Else
-            Assumes that `TSource` conforms to
-            `pyenumerable.typing_utility.Comparable`
-        """
-
         if comparer is not None:
             rank_table: dict[int, list[TSource]] = {}
             for item in self.source:
@@ -583,15 +403,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        Uses `builtins.sorted`
-        If comparer is given
-            O(n^2)
-        Else
-            Assumes that `TKey` conforms to
-            `pyenumerable.typing_utility.Comparable`
-        """
-
         cached_selector = cache(key_selector)
 
         if comparer is not None:
@@ -621,15 +432,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        Uses `builtins.sorted`
-        If comparer is given
-            O(n^2)
-        Else
-            Assumes that `TKey` conforms to
-            `pyenumerable.typing_utility.Comparable`
-        """
-
         cached_selector = cache(key_selector)
 
         if comparer is not None:
@@ -657,17 +459,9 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         second: Enumerable[TSecond],
         /,
     ) -> Enumerable[tuple[TSource, TSecond]]:
-        """
-        Wraps `builtins.zip`
-        """
-
         return PurePythonEnumerable(*zip(self.source, second.source))
 
     def reverse(self, /) -> Enumerable[TSource]:
-        """
-        Wraps `builtins.reversed`
-        """
-
         return PurePythonEnumerable(*reversed(self.source))
 
     def intersect(
@@ -677,14 +471,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(n*m)
-        Else
-            > DOESN'T PRESERVE ORDER <
-            Uses `builtins.set.intersect`
-        """
-
         if self.count_() == 0 or second.count_() == 0:
             return PurePythonEnumerable()
 
@@ -712,15 +498,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(n*m)
-        Else
-            Assumes that `TKey` conforms to `collections.abc.Hashable`
-            Uses `builtins.dict`
-            O(n)
-        """
-
         if self.count_() == 0 or second.count_() == 0:
             return PurePythonEnumerable()
 
@@ -754,11 +531,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] = lambda in_, out: in_ == out,
     ) -> bool:
-        """
-        Wraps `builtins.all`
-        O(max(n, m))
-        """
-
         if self.count_() != other.count_():
             return False
 
@@ -774,15 +546,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(n*m)
-        Else
-            > DOESN'T PRESERVE ORDER <
-            > REMOVES DUPLICATES <
-            Wraps `builtins.set`
-        """
-
         if comparer is not None:
             out: list[TSource] = []
             for inner in self.source:
@@ -803,15 +566,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(n*m)
-        Else
-            Assumes that `TKey` conforms to `collections.abc.Hashable`
-            Uses `builtins.dict`
-            O(max(n, m))
-        """
-
         if comparer is not None:
             out: list[TSource] = []
             key_table: dict[TSource, TKey] = {}
@@ -839,19 +593,9 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         )
 
     def average(self, /) -> float:
-        """
-        Wraps `builtins.sum` & `builtins.len`
-        `TSource` should be usable as arugment of `builtins.sum`
-        """
-
         return sum(self.source) / len(self.source)  # type: ignore
 
     def chunk(self, size: int, /) -> tuple[PurePythonEnumerable[TSource], ...]:
-        """
-        Uses slicing
-        O(n)
-        """
-
         return tuple(
             PurePythonEnumerable(*c)
             for c in (
@@ -867,10 +611,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         seed: TSource | None = None,
     ) -> TSource:
-        """
-        O(n)
-        """
-
         assume_not_empty(self)
 
         curr, start_idx = (
@@ -887,13 +627,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TSource] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(max(n, m)^2)
-        Else
-            Wraps `builtins.dict.fromkeys`
-        """
-
         if comparer is not None:
             out: list[TSource] = []
             for inner in self.source:
@@ -922,14 +655,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TSource]:
-        """
-        If comparer is given
-            O(max(n, m)^2)
-        Else
-            Uses `builtins.dict`
-            O(max(n, m))
-        """
-
         if comparer is not None:
             out: list[TSource] = []
             key_table: dict[TSource, TKey] = {}
@@ -965,14 +690,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[Associable[TKey, TSource]]:
-        """
-        If comparer is given
-            O(n^2)
-        Else
-            Assumes that `TKey` conforms to `collections.abc.Hashable`
-            O(n)
-        """
-
         cached_selector = cache(key_selector)
 
         if comparer is not None:
@@ -1014,13 +731,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TResult]:
-        """
-        O(n*m)
-        If comparer isn't given
-            Assumes that `TKey` conforms to `collections.abc.Hashable`
-            Uses `builtins.dict` & `builtins.set.intersection`
-        """
-
         cached_outer_selector = cache(outer_key_selector)
         cached_inner_selector = cache(inner_key_selector)
 
@@ -1068,14 +778,6 @@ class PurePythonEnumerable[TSource: Hashable](Enumerable[TSource]):
         *,
         comparer: Comparer[TKey] | None = None,
     ) -> Enumerable[TResult]:
-        """
-        If comparer is given
-            O(n^2+(n*m))
-        Else
-            Assumes that `TKey` conforms to `collections.abc.Hashable`
-            O(max(n, m))
-        """
-
         if comparer is not None:
             keys: list[tuple[TKey, TSource]] = []
             values: dict[int, list[TInner]] = {}
